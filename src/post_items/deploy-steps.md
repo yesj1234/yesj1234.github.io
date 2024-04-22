@@ -6,6 +6,8 @@ published: true
 date: 2024. 04. 22.
 ---
 
+---
+
 # 1. Sveltkit project setup
 
 ## Create a project
@@ -20,13 +22,13 @@ To use SveltKit as a _static site generator_(SSG)[^3], use _adapter-static_.
 
 Install with
 
-```
+```bash
 npm i -D @sveltejs/adapter-static
 ```
 
 Then add the adapter to your svelte.config.js:
 
-```
+```javascript
 import adapter from '@sveltejs/adapter-static';
 /** @type {import('@sveltejs/kit').Config} */
 const config  {
@@ -43,13 +45,13 @@ export default config
 
 Install with
 
-```
+```bash
 npm i -D mdsvex
 ```
 
 Add configuration file for mdsvex. Name it mdsvex.config.js
 
-```
+```javascript
 import { defineMDSveXConfig as defineConfig } from 'mdsvex';
 const config = defineConfig({
 	extensions: ['.svelte.md', '.md', '.svx'],
@@ -62,21 +64,19 @@ const config = defineConfig({
 	rehypePlugins: []
 });
 export default config;
-
 ```
 
 Then add the mdsvex preprocessor to svelte.config.js with the configuration defined above.
 
-```
-import {mdsvex} from 'mdsvex';
+```javascript
+import { mdsvex } from 'mdsvex';
 import mdsvexConfig from './mdsvex.config.js';
 const config = {
-    extensions: ['.svelte', ...mdsvexConfig.extensions],
-    preprocessors: [mdsvex(mdsvexConfig)]
-}
+	extensions: ['.svelte', ...mdsvexConfig.extensions],
+	preprocessors: [mdsvex(mdsvexConfig)]
+};
 
 export default config;
-
 ```
 
 # 2. Github Pages setup.
@@ -87,29 +87,29 @@ Create a repository and name it _username_.github.io, where _username_ is your u
 
 ## Set git remote in the sveltkit application you made in the previous step.
 
-```
+```bash
 git remote add origin https://github.com/username/username.github.io
 ```
 
 ## Install gh-pages.
 
-```
+```bash
 npm i -d gh-pages
 ```
 
 ## Add deploy command in package.json file.
 
-```
+```json
 {
-    "scripts": {
-        "deploy": "vite build & gh-pages -d build -t true"
-    }
+	"scripts": {
+		"deploy": "vite build & gh-pages -d build -t true"
+	}
 }
 ```
 
 ## Run the deploy command
 
-```
+```bash
 npm run deploy
 ```
 
