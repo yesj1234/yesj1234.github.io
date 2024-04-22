@@ -13,6 +13,9 @@
 	p {
 		margin: 0;
 		margin-bottom: calc(var(--spacing-unit) * 4);
+		margin-top: calc(var(--spacing-unit) * 2);
+		display: flex;
+		justify-content: end;
 	}
 	.author {
 		font-weight: bold;
