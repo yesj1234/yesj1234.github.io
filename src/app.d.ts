@@ -21,6 +21,7 @@ declare global {
 			description: string;
 			date: string;
 			published: string;
+			tags: string | string[];
 		}
 	}
 }

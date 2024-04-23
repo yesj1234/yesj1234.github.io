@@ -1,5 +1,6 @@
 import { defineMDSveXConfig as defineConfig } from 'mdsvex';
 import remarkFootnotes from 'remark-footnotes';
+import remarkToc from 'remark-toc';
 const config = defineConfig({
 	extensions: ['.svelte.md', '.md', '.svx'],
 
@@ -7,7 +8,7 @@ const config = defineConfig({
 		dashes: 'oldschool'
 	},
 
-	remarkPlugins: [remarkFootnotes],
+	remarkPlugins: [remarkFootnotes, [remarkToc, { heading: 'Table of Contents' }]],
 	rehypePlugins: []
 });
 

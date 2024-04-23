@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-
 	import PageHead from '$lib/components/PageHead.svelte';
 	import Article from '$lib/components/Article.svelte';
 	import ArticleTitle from '$lib/components/ArticleTitle.svelte';
