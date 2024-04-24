@@ -1,6 +1,6 @@
 ---
 title: Deploy SvelteKit + MDsveX with github pages step by step.
-description: How to deploy svelteKit + Mdsvex blog app in github pages.
+description: Step by step guide on how to setup SvelteKit + MDsveX and deploy it with github pages. Optional settings such as useful remark plugins, project structure setup etc. are also introduced.
 author: jack
 published: true
 date: 2024. 04. 22.

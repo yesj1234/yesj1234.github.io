@@ -41,7 +41,7 @@
 	}
 
 	:global(a:hover) {
-		text-decoration: underline;
+		text-decoration: none;
 		color: var(--color-hover);
 	}
 </style>
