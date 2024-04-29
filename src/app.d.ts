@@ -21,7 +21,21 @@ declare global {
 			description: string;
 			date: string;
 			published: string;
-			tags: string | string[];
+			tags: string;
+		}
+
+		interface MdsvexTags {
+			default: import('svelte/internal').SvelteComponent;
+			metadata: Record<string, string | Array[string]>;
+		}
+		type MdsvexTagsResolver = () => Promise<MdsvexTags>;
+		interface TagsPost {
+			title: string;
+			author: string;
+			description: string;
+			date: string;
+			published: string;
+			tags: Array[string];
 		}
 	}
 }

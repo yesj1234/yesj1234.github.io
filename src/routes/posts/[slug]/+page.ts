@@ -4,6 +4,7 @@ import { error } from '@sveltejs/kit';
 
 export const load: PageLoad = async ({ params }) => {
 	const modules = import.meta.glob(`/src/post_items/*.md`);
+
 	let match: { path?: string; resolver?: App.MdsvexResolver } = {};
 	for (const [path, resolver] of Object.entries(modules)) {
 		if (slugFromPath(path) === params.slug) {

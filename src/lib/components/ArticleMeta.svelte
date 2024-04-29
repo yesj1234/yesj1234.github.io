@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let author: string;
 	export let date: string;
-	export let tags: string | string[];
+	export let tags: string;
 	const formattedDate = new Date(date).toDateString();
 </script>
 
@@ -9,9 +9,11 @@
 	{#if tags}
 		<div class="tags">
 			<span>Tags: </span>
-			{#each tags as tag}
-				<span class="tag">{tag}</span>
-			{/each}
+			<div class="tag-items-container">
+				{#each tags as tag}
+					<span class="tag">{tag}</span>
+				{/each}
+			</div>
 		</div>
 	{/if}
 	<span class="author">{author}</span>
@@ -36,13 +38,17 @@
 		justify-content: center;
 		align-items: center;
 	}
+
 	.tag {
 		/* border: solid 1px black; */
-		background-color: aqua;
+		background-color: white;
 		border-radius: 10%;
 		padding-left: 5px;
 		padding-right: 5px;
-		margin-right: calc(var(--spacing-unit) * 1);
+		margin-right: 5px;
+	}
+	.tag-items-container {
+		margin-left: calc(var(--spacing-unit) * 1);
 	}
 	.author {
 		font-weight: bold;
