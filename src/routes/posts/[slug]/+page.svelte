@@ -10,11 +10,22 @@
 </script>
 
 <PageHead title={data.frontmatter.title} description={data.frontmatter.description} />
-<ArticleTitle title={data.frontmatter.title} />
-<ArticleMeta
-	author={data.frontmatter.author}
-	date={data.frontmatter.date}
-	tags={data.frontmatter.tags}
-/>
+<div class="metadata">
+	<ArticleTitle title={data.frontmatter.title} />
+	<ArticleMeta date={data.frontmatter.date} tags={data.frontmatter.tags} />
+</div>
 
-<svelte:component this={component} />
+<div class="component">
+	<svelte:component this={component} />
+</div>
+
+<style>
+	.metadata {
+		padding-left: calc(var(--spacing-unit) * 10);
+		padding-right: calc(var(--spacing-unit) * 10);
+	}
+	.component {
+		padding-left: calc(var(--spacing-unit) * 10);
+		padding-right: calc(var(--spacing-unit) * 10);
+	}
+</style>

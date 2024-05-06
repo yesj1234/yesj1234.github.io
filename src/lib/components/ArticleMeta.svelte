@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let author: string;
+	// export let author: string;
 	export let date: string;
 	export let tags: string;
 	const formattedDate = new Date(date).toDateString();
@@ -16,9 +16,10 @@
 			</div>
 		</div>
 	{/if}
-	<span class="author">{author}</span>
-	<span class="date">{formattedDate}</span>
 </p>
+<div class="metadata">
+	<span class="date">{formattedDate}</span>
+</div>
 
 <style>
 	p {
@@ -56,5 +57,9 @@
 	}
 	.date {
 		color: var(--color-text-secondary);
+	}
+	.metadata {
+		display: flex;
+		flex-direction: column;
 	}
 </style>

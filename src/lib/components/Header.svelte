@@ -1,17 +1,20 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import Logo from './Logo.svelte';
 </script>
 
 <div>
+	<Logo />
 	<a href="/"><h1 class:small={$page.url.pathname !== '/'}>Jack.dev.blog</h1></a>
 </div>
 
 <style>
-	.small {
-		font-size: 1.6rem;
-	}
 	div {
-		background-color: white;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		width: 100%;
+		/* background-color: var(--color-background); */
+		/* background-color: white; */
 	}
 </style>

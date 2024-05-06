@@ -11,11 +11,13 @@
 <PageHead title="Home" description="An awesome blog about development with Svelte" />
 
 {#each data.posts as { slug, title, author, description, date, tags }}
-	<Article>
-		<ArticleTitle {slug} {title} />
-		<ArticleMeta {author} {date} {tags} />
-		<ArticleDescription {description} {slug} />
-	</Article>
+	<div class="article">
+		<Article>
+			<ArticleTitle {slug} {title} />
+			<ArticleMeta {date} {tags} />
+			<ArticleDescription {description} {slug} />
+		</Article>
+	</div>
 {/each}
 
 <slot />

@@ -10,19 +10,19 @@
 <div class="header-container">
 	<Header></Header>
 </div>
-
-<div class="containers">
+<div class="sidebar-and-main">
 	<div class="sidebar-container">
 		<Sidebar tags={data.tags}></Sidebar>
 	</div>
-
 	<div class="main">
 		<main>
 			<slot></slot>
 		</main>
 	</div>
 </div>
-<Footer></Footer>
+<div class="footer-container">
+	<Footer></Footer>
+</div>
 
 <style>
 	:global(:root) {
@@ -35,11 +35,10 @@
 
 	:global(body) {
 		margin: 0;
-		padding: 10;
+		padding: 0;
 		box-sizing: border-box;
-
 		max-width: 100vw;
-		padding: calc(var(--spacing-unit) * 8);
+		/* padding: calc(var(--spacing-unit) * 8); */
 		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
 			'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 		-webkit-font-smoothing: antialiased;
@@ -48,7 +47,7 @@
 		color: var(--color-text-primary);
 		line-height: 1.51;
 		font-size: 18px;
-		height: 300vh;
+		height: 100vh;
 	}
 
 	:global(a, a:visited, a:active) {
@@ -61,24 +60,36 @@
 		text-decoration: none;
 		color: var(--color-hover);
 	}
-	.containers {
-		height: 100vh;
+	.sidebar-and-main {
 		display: flex;
 		flex-direction: row;
-		justify-content: flex-start;
-		gap: 10rem;
+		justify-content: start;
+		height: 100%;
 	}
 	.header-container {
+		/* position: sticky; */
+		position: fixed;
 		top: 0;
-		position: sticky;
+		border-bottom: 1px black solid;
 		width: 100%;
-		border: 1px black solid;
-		background-color: white;
+		height: 6rem;
+		background-color: #c3beb9;
 	}
 	.sidebar-container {
 		position: sticky;
-		top: 0;
-		border: black 1px dotted;
-		width: 23.6%;
+		top: 6rem;
+		align-self: flex-start;
+		padding-top: 10px;
+	}
+	.footer-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	main {
+		padding-top: 70px;
+	}
+	div.main {
+		width: 100%;
 	}
 </style>

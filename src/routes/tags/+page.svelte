@@ -7,5 +7,3 @@
 {#each data.tags as tags}
 	<h2><a href="/tags/{tags}">{tags}</a></h2>
 {/each}
-
-<slot />

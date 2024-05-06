@@ -6,12 +6,14 @@
 	import ArticleDescription from '$lib/components/ArticleDescription.svelte';
 
 	export let data: PageData;
+	// $: component = data.component;
 </script>
 
-{#each data.posts as { slug, title, author, description, date, tags }}
+{#each data.posts as { slug, title, description, date, tags }}
 	<Article>
 		<ArticleTitle {slug} {title} />
-		<ArticleMeta {author} {date} {tags} />
+		<ArticleMeta {date} {tags} />
 		<ArticleDescription {description} {slug} />
 	</Article>
 {/each}
+<!-- <svelte:component this={component} /> -->
