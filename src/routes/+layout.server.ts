@@ -1,5 +1,6 @@
 import type { PageServerLoad } from './$types';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const load: PageServerLoad = async ({ params }) => {
 	const modules = import.meta.glob(`/src/post_items/*.md`);
 

@@ -47,7 +47,7 @@
 		color: var(--color-text-primary);
 		line-height: 1.51;
 		font-size: 18px;
-		height: 100vh;
+		/* height: 100vh; */
 	}
 
 	:global(a, a:visited, a:active) {
@@ -64,7 +64,7 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: start;
-		height: 100%;
+		height: 100vh;
 	}
 	.header-container {
 		/* position: sticky; */
@@ -91,5 +91,7 @@
 	}
 	div.main {
 		width: 100%;
+		height: 100%;
+		overflow: auto;
 	}
 </style>

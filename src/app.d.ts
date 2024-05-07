@@ -9,7 +9,7 @@ declare global {
 		// interface Platform {}
 
 		interface MdsvexFile {
-			default: import('svelte/internal').SvelteComponent;
+			default: import('$lib/components/Page.svelte');
 			metadata: Record<string, string>;
 		}
 		type MdsvexResolver = () => Promise<MdsvexFile>;
@@ -17,7 +17,6 @@ declare global {
 		interface BlogPost {
 			slug: string;
 			title: string;
-			author: string;
 			description: string;
 			date: string;
 			published: string;

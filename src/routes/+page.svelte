@@ -10,7 +10,7 @@
 
 <PageHead title="Home" description="An awesome blog about development with Svelte" />
 
-{#each data.posts as { slug, title, author, description, date, tags }}
+{#each data.posts as { slug, title, description, date, tags }}
 	<div class="article">
 		<Article>
 			<ArticleTitle {slug} {title} />
