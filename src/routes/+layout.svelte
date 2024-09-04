@@ -27,7 +27,7 @@
 <style>
 	:global(:root) {
 		--spacing-unit: 4px;
-		--color-background: #e5e5e5;
+		--color-background: #ffffff;
 		--color-text-primary: #212121;
 		--color-text-secondary: #5a5a5a;
 		--color-hover: #007bff;
@@ -73,7 +73,7 @@
 		border-bottom: 1px black solid;
 		width: 100%;
 		height: 6rem;
-		background-color: #c3beb9;
+		background-color: #a9a9a9;
 	}
 	.sidebar-container {
 		position: sticky;

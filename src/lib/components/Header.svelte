@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import Logo from './Logo.svelte';
 </script>
 
 <div>
-	<Logo />
 	<a href="/"><h1 class:small={$page.url.pathname !== '/'}>Jack.dev.blog</h1></a>
 </div>
 
