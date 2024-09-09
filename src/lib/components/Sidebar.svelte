@@ -9,7 +9,8 @@
 	<SidebarWrapper>
 		<SidebarGroup class="list-none ">
 			{#each tags as tag}
-				<SidebarItem label={tag} href="/tags/{tag}" class="m-1 text-black"></SidebarItem>
+				<SidebarItem label={tag} href="/tags/{tag}" class="m-1 text-xl font-semibold text-black"
+				></SidebarItem>
 				<hr />
 			{/each}
 		</SidebarGroup>

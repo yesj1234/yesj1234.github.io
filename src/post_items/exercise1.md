@@ -7,9 +7,11 @@ date: 2024. 09. 04.
 tags: ['Dart']
 ---
 
-**Source**: https://hackmd.io/@kuzmapetrovich/S1x90jWGP#Practice-Dart---exercises-for-beginners
+# Table of Contents
 
-**Exercise #1**
+# Exercise1
+
+**Source**: https://hackmd.io/@kuzmapetrovich/S1x90jWGP#Practice-Dart---exercises-for-beginners
 
 **Description**: Create a program that asks the user to enter their name and their age. Print out a message that tells how many years they have to be 100 years old.
 
@@ -19,17 +21,18 @@ tags: ['Dart']
 
 1. 사용자로부터 입력을 받을 것.
 2. 받은 입력을 이용해 알맞은 문구를 출력할 것.
-   즉 Dart를 이용해 입출력 하는 방법을 연습하는 문제라고 볼 수 있을 것 같습니다.
+
+콘솔에 입출력 하는 방법을 연습하는 문제라고 볼 수 있을 것 같습니다.
 
 [dart:io 공식 문서](https://dart.dev/libraries/dart-io)를 보면 동기(synchronous) 방식의 메서드는 프로그램의 흐름을 방해할 가능성이 크기 때문에 비동기적으로 Future 혹은 Stream object로 결과를 받는 것을 권장하고 있고 또 이에 관한 API들에 대해서만 설명하고 있습니다.
 
-어떻게 보면 당연한 것도 같습니다. 지금 문제에서는 단순하게 이름이나 나이같은 간단한 입력만을 받지만 경우에 따라서는 용량이 큰 파일을 받을 수도 있고 실시간으로 스트리밍 하는 상황도 충분히 있을 수 있기 때문에 만약 메서드들이 동기적으로 설계되었다면 해당 파일을 다 받을 때까지 아무것도 할 수 없는 경우가 생길 수도 있겠군요.
+1번 문제에서는 단순하게 이름이나 나이같은 간단한 입력만을 받지만 경우에 따라서는 용량이 큰 파일을 받을 수도 있고 실시간으로 스트리밍 하는 상황도 있을 수 있기 때문에 만약 동기적인 메서드를 사용하게 되면 해당 파일을 다 받을 때까지 아무것도 할 수 없는 경우가 생길 수도 있을 것 같습니다.
 
-지금 사용하고자 하는 동기적인 방식의 readLineSync 나 write 과 같은 메서드는 따로 정리가 되어 있습니다. 또 동기적인 메서드들은 이름에서 명확하게 sync가 포함되어 있습니다.
+지금 사용하고자 하는 동기적인 방식의 stdin.readLineSync 나 stdout.write 과 같은 메서드는 따로 정리가 되어 있습니다. 또 동기적인 메서드들은 이름에 명확하게 sync가 포함되어 있습니다.
 
 readLineSync 메서드에 관한 설명부터 살펴보고 가도록 합시다.
 
-## **readLineSync method**
+## **stdin.readLineSync**
 
 ```dart
 String? readLineSync(
@@ -78,7 +81,7 @@ import 'dart:io';
 void main() {
 	stdout.write("What's your name? ");
 	String name = stdin.readLineSync();
-	stdout.write("Hi, $name! what is your name?");
+	stdout.write("Hi, $name! what is your age?");
 	int age = stdin.readLineSync();
 	if (age != null) {
 		try {
