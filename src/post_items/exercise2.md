@@ -7,8 +7,6 @@ date: 2024. 09. 09.
 tags: ['Dart']
 ---
 
-# Table of contents
-
 # Excercice2
 
 ## **Description**
@@ -245,6 +243,26 @@ void add(E value)
 
 List의 맨 뒤에 value를 추가하는 api입니다. 고정된 사이즈의 List에는 사용할 수 없는 것 같습니다. 기존 리스트에 값을 추가하는 것이고 반환값은 없습니다.
 
+### String.split
+
+```dart
+List<String> split(
+    Pattern pattern
+)
+```
+
+> Split the string at matches of `pattern` and returns a list of substrings
+> Finds all the matches of pattern in this string, and returns the list of substrings between the matches.
+
+String을 특정 패턴(정규표현식 등)을 기준으로 구분하여 String들의 List로 반환해줍니다. Pattern에 빈값('')을 넣어준다면 모든 단어들이 쪼개진 결과를 받을 수 있습니다.
+예시
+
+```dart
+String names = "jack,michael,andrew,peter";
+List<String> separatedNames = names.split(',');
+print(separatedNames) // ["jack", "michael", "andrew", "peter"];
+```
+
 ## Used properties
 
 ### List.length
@@ -265,23 +283,3 @@ set length(newLength);
 ```
 
 List class의 length라는 이름의 getter와 setter가 있습니다. length를 이용해서 현재 List안에 포함된 object들의 개수를 확인할 수도 있고(getter) List의 전체 길이를 조절할 수도 있습니다(setter). 길이를 조절하는 경우에는 기존 length보다 큰 값을 설정해야 하며 null로 초기화됩니다.
-
-### String.split
-
-```dart
-List<String> split(
-    Pattern pattern
-)
-```
-
-> Split the string at matches of `pattern` and returns a list of substrings
-> Finds all the matches of pattern in this string, and returns the list of substrings between the matches.
-
-String을 특정 패턴(정규표현식 등)을 기준으로 구분하여 String들의 List로 반환해줍니다. Pattern에 빈값('')을 넣어준다면 모든 단어들이 쪼개진 결과를 받을 수 있습니다.
-예시
-
-```dart
-String names = "jack,michael,andrew,peter";
-List<String> separatedNames = names.split(',');
-print(separatedNames) // ["jack", "michael", "andrew", "peter"];
-```

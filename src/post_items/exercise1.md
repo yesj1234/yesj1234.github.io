@@ -7,8 +7,6 @@ date: 2024. 09. 04.
 tags: ['Dart']
 ---
 
-# Table of Contents
-
 # Exercise1
 
 **Source**: https://hackmd.io/@kuzmapetrovich/S1x90jWGP#Practice-Dart---exercises-for-beginners
