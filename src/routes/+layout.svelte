@@ -15,9 +15,7 @@
 		<Sidebar tags={data.tags}></Sidebar>
 	</div>
 	<div class="main">
-		<main>
-			<slot></slot>
-		</main>
+		<slot></slot>
 	</div>
 </div>
 <div class="footer-container">
@@ -37,7 +35,11 @@
 		margin: 0;
 		padding: 0;
 		box-sizing: border-box;
+		width: 100vw;
+		height: 100vh;
 		max-width: 100vw;
+		max-height: 100vh;
+		overflow-x: hidden;
 		/* padding: calc(var(--spacing-unit) * 8); */
 		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
 			'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -73,7 +75,11 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: start;
-		height: 100vh;
+		width: 100%;
+		height: 100%;
+		padding-top: 5rem;
+		/* height: 100vh; */
+		/* max-height: 100vh; */
 	}
 	.header-container {
 		/* position: sticky; */

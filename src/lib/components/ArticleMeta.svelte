@@ -51,10 +51,7 @@
 	.tag-items-container {
 		margin-left: calc(var(--spacing-unit) * 1);
 	}
-	.author {
-		font-weight: bold;
-		margin-right: calc(var(--spacing-unit) * 2);
-	}
+
 	.date {
 		color: var(--color-text-secondary);
 	}
