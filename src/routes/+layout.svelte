@@ -60,6 +60,15 @@
 		text-decoration: none;
 		color: var(--color-hover);
 	}
+	:global(ol.toc-level-1) {
+		list-style: upper-roman;
+	}
+	:global(ol.toc-level-2) {
+		list-style: lower-roman;
+	}
+	:global(ol.toc-level-3) {
+		list-style: circle;
+	}
 	.sidebar-and-main {
 		display: flex;
 		flex-direction: row;
