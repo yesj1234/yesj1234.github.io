@@ -21,6 +21,8 @@
 <div class="footer-container">
 	<Footer></Footer>
 </div>
+// TODO: // 1. Add more realistic effect when scrolling the page up and down, like iPhone. // 2. Let
+the footer disappear when scrolling again from the very bottom to up.
 
 <style>
 	:global(:root) {
