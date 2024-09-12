@@ -67,6 +67,12 @@
 	:global(ol.toc-level-3) {
 		list-style: circle;
 	}
+	:global(blockquote) {
+		border-left-style: solid;
+		border-left-width: 1.5px;
+		border-left-color: rgb(37, 206, 21);
+		box-shadow: 2px 2px 15px #ccc;
+	}
 	.sidebar-and-main {
 		display: flex;
 		flex-direction: row;

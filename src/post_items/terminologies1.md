@@ -94,7 +94,7 @@ switch control flow 를 사용하여 가독성 있게 코드를 짤 수 있습�
 
 switch statement와 문법적인 차이와 기능적인 차이가 몇 가지 있습니다.
 
-문법적인 차이
+**문법적인 차이**
 
 1. 각각의 case 구분 시 case 키워드를 사용하지 않습니다.
 2. 각 case의 실행문 부분에 하나의 statement만 들어갈 수 있습니다.
@@ -102,7 +102,7 @@ switch statement와 문법적인 차이와 기능적인 차이가 몇 가지 있
 4. 각각의 케이스들을 comma(,) 을 이용해 구분합니다.
 5. switch statement의 경우 default, wildcard 를 둘 다 사용할 수 있지만 expression으로 사용 할 경우 wildcard만 사용할 수 있습니다.
 
-기능적인 차이
+**기능적인 차이**
 
 1. switch statement의 경우 case에 body가 없는 것이 허용됩니다. fallthrough 즉 다음케이스로 flow가 자연스럽게 넘어갑니다. 하지만 switch expression으로 사용할 경우 이 기능이 제한됩니다.
 

@@ -1,6 +1,6 @@
 ---
 title: Practice Dart - exercises for beginners (1)
-description: Exercises to practice Dart. First part of the series. Explain briefly about core libraries of Dart such as dart:io and dart:math.
+description: Exercises to practice Dart.
 author: jack
 published: true
 date: 2024. 09. 04.
