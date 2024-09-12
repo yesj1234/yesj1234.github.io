@@ -1,13 +1,11 @@
 <script lang="ts">
 	import '../app.pcss';
 	import Header from '$lib/components/Header.svelte';
-	import Footer from '$lib/components/Footer.svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 </script>
 
-// TODO 1. footnote link rehype plugin update 2. emojis rehype plugin update.
 <div class="header-container">
 	<Header></Header>
 </div>
@@ -18,9 +16,6 @@
 	<div class="main">
 		<slot></slot>
 	</div>
-</div>
-<div class="footer-container">
-	<Footer></Footer>
 </div>
 
 <style>
@@ -72,13 +67,6 @@
 	:global(ol.toc-level-3) {
 		list-style: circle;
 	}
-
-	:global(blockquote) {
-		border-left-style: solid;
-		border-left-width: 3px;
-
-		box-shadow: 2px 2px 15px #ccc;
-	}
 	.sidebar-and-main {
 		display: flex;
 		flex-direction: row;
@@ -99,22 +87,15 @@
 		background-color: #a9a9a9;
 	}
 	.sidebar-container {
-		position: sticky;
+		position: fixed;
 		top: 6rem;
 		align-self: flex-start;
 		padding-top: 10px;
 	}
-	.footer-container {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-	main {
-		padding-top: 70px;
-	}
+
 	div.main {
 		width: 100%;
 		height: 100%;
-		overflow: auto;
+		padding-left: 15rem;
 	}
 </style>
