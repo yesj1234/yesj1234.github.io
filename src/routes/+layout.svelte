@@ -7,6 +7,7 @@
 	export let data: PageData;
 </script>
 
+// TODO 1. footnote link rehype plugin update 2. emojis rehype plugin update.
 <div class="header-container">
 	<Header></Header>
 </div>
@@ -21,8 +22,6 @@
 <div class="footer-container">
 	<Footer></Footer>
 </div>
-// TODO: // 1. Add more realistic effect when scrolling the page up and down, like iPhone. // 2. Let
-the footer disappear when scrolling again from the very bottom to up.
 
 <style>
 	:global(:root) {
@@ -72,6 +71,13 @@ the footer disappear when scrolling again from the very bottom to up.
 	}
 	:global(ol.toc-level-3) {
 		list-style: circle;
+	}
+
+	:global(blockquote) {
+		border-left-style: solid;
+		border-left-width: 3px;
+
+		box-shadow: 2px 2px 15px #ccc;
 	}
 	.sidebar-and-main {
 		display: flex;
