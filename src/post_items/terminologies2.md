@@ -1,6 +1,6 @@
 ---
 title: 헷갈리는 용어들 정리(2) - parameter & argument
-description: Dart의 Function에 대해 알아보며 parameter 와 arguement 의 정확한 의미에 대해 알아봅니다.
+description: Dart의 Function에 대해 알아보며 parameter 와 argument 의 정확한 의미에 대해 알아봅니다.
 author: jack
 published: true
 date: 2024. 09. 21.
@@ -42,9 +42,9 @@ print(a) // '3'
 
 intToString 함수를 사용할 때 **3이라는 값**을 매개변수 i 자리에 넣어줬습니다. 이 3이 **argument**입니다.
 
-**parameter**는 함수의 선언 시에 사용되는 용어인 만큼 **형식적**이고
+**parameter**는 함수의 선언 시에 사용되는 **형식적**인 용어이고
 
-**argument**는 함수를 사용 시에 사용되는 용어인 만큼 **실제적**입니다(실제로 값을 갖는).
+**argument**는 함수를 사용 시에 사용되는 **실제적**인 용어입니다(실제로 값을 갖는).
 
 Dart에서는 parameter를 다음의 3가지로 구분하여 사용할 수 있습니다.
 
@@ -117,7 +117,7 @@ positional parameter를 optional하게 사용하고 싶은 경우가 있을 수 
 
 어떤 parameter는 함수 호출 시 값이 있을 수도 있고 없을 수도 있는 경우가 그렇습니다.
 
-**대괄호[]**를 이용해 parameter를 감싸주면 해당 parameter들은 positional optional parameter가 됩니다.
+**대괄호[ ]**를 이용해 parameter를 감싸주면 해당 parameter들은 positional optional parameter가 됩니다.
 
 named parameter와 마찬가지로 기본값을 할당하지 않으면 null이 기본값이기 때문에 nullable로 설정해주어야 합니다.
 
@@ -154,7 +154,3 @@ void stringConcatenater(String a, [String? b, String? c]) {
 하지만 optional positional parameter와 named parameter를 동시에 사용할 순 없습니다.
 
 Flutter에서는 대부분 named parameter를 사용합니다.
-
-```dart
-
-```
