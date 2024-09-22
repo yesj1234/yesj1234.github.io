@@ -26,6 +26,6 @@
 	}
 	.component {
 		padding-left: calc(var(--spacing-unit) * 10);
-		padding-right: calc(var(--spacing-unit) * 10);
+		width: 70%;
 	}
 </style>
