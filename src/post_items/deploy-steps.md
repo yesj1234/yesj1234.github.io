@@ -44,7 +44,7 @@ export default config
 
 > By default, adapter-static checks that either all pages and endpoints (if any) of your app were prerendered, or you have the fallback option set. This check exists to prevent you from accidentally publishing an app where some parts of it are not accessible, because they are not contained in the final output. If you know this is ok (for example, when a certain page only exists conditionally), you can set strict to false to turn off this check.
 
-## Install Mdsvex[^4] and configure.
+## Install Mdsvex and configure.
 
 Install with
 
@@ -52,7 +52,7 @@ Install with
 npm i -D mdsvex
 ```
 
-Add configuration file for mdsvex. Name it mdsvex.config.js
+Add configuration file for mdsvex[^4]. Name it mdsvex.config.js
 
 ```javascript
 import { defineMDSveXConfig as defineConfig } from 'mdsvex';

@@ -2,11 +2,32 @@
 	import '../app.pcss';
 	import Header from '$lib/components/Header.svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
+	import { Drawer, Button, CloseButton } from 'flowbite-svelte';
+	import { sineIn } from 'svelte/easing';
 	import type { PageData } from './$types';
 	export let data: PageData;
+
+	let hidden1 = true;
+	let transitionParams = {
+		x: -320,
+		duration: 200,
+		easing: sineIn
+	};
 </script>
 
 <div class="header-container">
+	<div class="sidebarNavBtn">
+		<button on:click={() => (hidden1 = false)}><i class="fa-solid fa-bars"></i></button>
+	</div>
+	<Drawer
+		transitionType="fly"
+		{transitionParams}
+		bind:hidden={hidden1}
+		id="sidebarNav"
+		width="w-70"
+	>
+		<Sidebar tags={data.tags}></Sidebar>
+	</Drawer>
 	<Header></Header>
 </div>
 <div class="sidebar-and-main">
@@ -83,6 +104,20 @@
 		/* height: 100vh; */
 		/* max-height: 100vh; */
 	}
+	.sidebarNavBtn {
+		display: block;
+		padding-top: 2rem;
+		@media only screen and (min-width: 1024px) {
+			display: none;
+		}
+	}
+	.sidebarNav {
+		display: block;
+		@media only screen and (min-width: 1024px) {
+			display: block;
+		}
+	}
+
 	.header-container {
 		/* position: sticky; */
 		position: fixed;
@@ -91,17 +126,24 @@
 		width: 100%;
 		height: 6rem;
 		background-color: #a9a9a9;
+		display: flex;
 	}
 	.sidebar-container {
-		position: fixed;
-		top: 6rem;
-		align-self: flex-start;
-		padding-top: 10px;
+		display: none;
+		@media only screen and (min-width: 1024px) {
+			position: fixed;
+			top: 6rem;
+			align-self: flex-start;
+			padding-top: 10px;
+			display: block;
+		}
 	}
 
 	div.main {
 		width: 100%;
 		height: 100%;
-		padding-left: 15rem;
+		@media only screen and (min-width: 1024px) {
+			padding-left: 15rem;
+		}
 	}
 </style>
