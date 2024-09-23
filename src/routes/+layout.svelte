@@ -94,6 +94,10 @@
 		border-left-color: rgb(37, 206, 21);
 		box-shadow: 2px 2px 15px #ccc;
 	}
+	:global(code) {
+		background-color: #f2f1f1;
+		opacity: 0.9;
+	}
 	.sidebar-and-main {
 		display: flex;
 		flex-direction: row;
