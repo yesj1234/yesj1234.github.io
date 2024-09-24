@@ -118,12 +118,6 @@
 			display: none;
 		}
 	}
-	.sidebarNav {
-		display: block;
-		@media only screen and (min-width: 1024px) {
-			display: block;
-		}
-	}
 
 	.header-container {
 		/* position: sticky; */
