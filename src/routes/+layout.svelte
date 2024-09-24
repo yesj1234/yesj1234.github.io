@@ -98,6 +98,9 @@
 		background-color: #f2f1f1;
 		opacity: 0.9;
 	}
+	:global(img) {
+		width: 20rem;
+	}
 	.sidebar-and-main {
 		display: flex;
 		flex-direction: row;
