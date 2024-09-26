@@ -97,6 +97,7 @@
 	:global(code) {
 		background-color: #f2f1f1;
 		opacity: 0.9;
+		z-index: 0;
 	}
 	:global(img) {
 		width: 20rem;
@@ -128,6 +129,7 @@
 		height: 6rem;
 		background-color: #a9a9a9;
 		display: flex;
+		z-index: 1;
 	}
 	.sidebar-container {
 		display: none;
