@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="../favicon.png" />
+		<link rel="stylesheet" href="/styles/app.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<link href="../_app/immutable/assets/0.BTKLaxqc.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/3.CIgjqQMH.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/ArticleMeta.CjiJ_kH8.css" rel="stylesheet">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.CTw2kUFf.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/entry.D4kN3on2.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/scheduler.B-IchvsE.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/control.CYgJF_JY.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.CK8Af8u2.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/preload-helper.D6kgxu3v.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index.Dd-P1WrH.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/0.BxKKVYd_.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/each.D6YF6ztN.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/3.CM2p8WAv.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index.CzR0xuCU.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/PageHead.CnBQ_XfR.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/ArticleMeta.DvuwmDBK.js"><title>new Flutter project의 main.dart 코드 파헤쳐보기(1) | SvelteKit + MDsveX Blog</title><!-- HEAD_svelte-1jfag13_START --><meta property="og:site_name" content="SvelteKit + MDsveX Blog"><meta property="og:title" content="new Flutter project의 main.dart 코드 파헤쳐보기(1)"><meta property="og:description" content="IDE를 이용해 만든 flutter project의 초기 main.dart 코드들을 보면서 Fluttter의 가장 기초가 되는 StatelessWidget, StatefulWidget, key에 대해 알아봅니다."><!-- HEAD_svelte-1jfag13_END -->
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">  <div class="header-container svelte-1i3n3qe"><div class="sidebarNavBtn svelte-1i3n3qe"><button data-svelte-h="svelte-1w5a5mz"><i class="fa-solid fa-bars"></i></button></div>   <div class="svelte-149edha"><a href="/"><h1 class="small" data-svelte-h="svelte-9gkbac">Jack.dev.blog</h1></a> </div></div> <div class="sidebar-and-main svelte-1i3n3qe"><div class="sidebar-container svelte-1i3n3qe"><aside class="w-64" aria-label="Sidebar"><div class="overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800"><ul class="space-y-2 list-none"><li><a class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 m-1 text-xl font-semibold text-black" href="/tags/Dart"> <span class="ms-3">Dart</span> </a></li>  <hr><li><a class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 m-1 text-xl font-semibold text-black" href="/tags/Flutter"> <span class="ms-3">Flutter</span> </a></li>  <hr><li><a class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 m-1 text-xl font-semibold text-black" href="/tags/SvelteKit"> <span class="ms-3">SvelteKit</span> </a></li>  <hr><li><a class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 m-1 text-xl font-semibold text-black" href="/tags/Mdsvex"> <span class="ms-3">Mdsvex</span> </a></li>  <hr><li><a class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 m-1 text-xl font-semibold text-black" href="/tags/Github"> <span class="ms-3">Github</span> </a></li>  <hr></ul> </div> </aside> </div> <div class="main svelte-1i3n3qe"> <div class="metadata svelte-bu3nzg"><h2 class="heading svelte-1ujuesn large" id="new-flutter-project-maindart--"><a href="#new-flutter-project-maindart--">new Flutter project의 main.dart 코드 파헤쳐보기(1)</a></h2> <p class="svelte-12qg6fb"><div class="tags svelte-12qg6fb"><span data-svelte-h="svelte-190wkx9">Tags:</span> <div class="tag-items-container svelte-12qg6fb"><span class="tag svelte-12qg6fb">Dart</span><span class="tag svelte-12qg6fb">Flutter</span></div></div></p> <div class="metadata svelte-12qg6fb"><span class="date svelte-12qg6fb">Fri Sep 27 2024</span> </div></div> <div class="component svelte-bu3nzg"><nav class="toc" data-svelte-h="svelte-1l7aarz"><ol class="toc-level toc-level-1"><li class="toc-item toc-item-h1"><a class="toc-link toc-link-h1" href="#create-new-flutter-project">Create new flutter project</a></li><li class="toc-item toc-item-h1"><a class="toc-link toc-link-h1" href="#void-main">void main()</a></li><li class="toc-item toc-item-h1"><a class="toc-link toc-link-h1" href="#class-myapp-extends-statelesswidget">class MyApp extends StatelessWidget</a><ol class="toc-level toc-level-2"><li class="toc-item toc-item-h2"><a class="toc-link toc-link-h2" href="#statelesswidget">StatelessWidget</a><ol class="toc-level toc-level-3"><li class="toc-item toc-item-h3"><a class="toc-link toc-link-h3" href="#widget">Widget</a></li></ol></li><li class="toc-item toc-item-h2"><a class="toc-link toc-link-h2" href="#key">Key</a><ol class="toc-level toc-level-3"><li class="toc-item toc-item-h3"><a class="toc-link toc-link-h3" href="#valuekey">ValueKey</a></li><li class="toc-item toc-item-h3"><a class="toc-link toc-link-h3" href="#localkey">LocalKey</a></li></ol></li></ol></li><li class="toc-item toc-item-h1"><a class="toc-link toc-link-h1" href="#sources">Sources</a></li></ol></nav> <h1 id="create-new-flutter-project" data-svelte-h="svelte-1x4hn8p">Create new flutter project</h1> <p data-svelte-h="svelte-1srqwel">Android studio와 같은 IDE를 이용해 새로운 flutter 프로젝트를 만들 경우 <code>lib</code> 폴더의 <code>main.dart</code> 파일 안에 자동으로 다음과 같은 코드가 작성되어 있는것을 확인 할 수 있습니다.</p> <pre class="language-dart"><!-- HTML_TAG_START --><code class="language-dart"><span class="token keyword">import</span> <span class="token string-literal"><span class="token string">'package:flutter/material.dart'</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">runApp</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token class-name">MyApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">MyApp</span> <span class="token keyword">extends</span> <span class="token class-name">StatelessWidget</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> <span class="token class-name">MyApp</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token keyword">super</span><span class="token punctuation">.</span>key<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">Widget</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token class-name">BuildContext</span> context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token class-name">MaterialApp</span><span class="token punctuation">(</span>
+      title<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">'Flutter Demo'</span></span><span class="token punctuation">,</span>
+      theme<span class="token punctuation">:</span> <span class="token class-name">ThemeData</span><span class="token punctuation">(</span>
+        useMaterial3<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+      home<span class="token punctuation">:</span> <span class="token keyword">const</span> <span class="token class-name">MyHomePage</span><span class="token punctuation">(</span>title<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">'Flutter Demo Home Page'</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">MyHomePage</span> <span class="token keyword">extends</span> <span class="token class-name">StatefulWidget</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> <span class="token class-name">MyHomePage</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token keyword">super</span><span class="token punctuation">.</span>key<span class="token punctuation">,</span> required <span class="token keyword">this</span><span class="token punctuation">.</span>title<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">final</span> <span class="token class-name">String</span> title<span class="token punctuation">;</span>
+
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">State</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">MyHomePage</span><span class="token punctuation">></span></span> <span class="token function">createState</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token function">_MyHomePageState</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> _MyHomePageState <span class="token keyword">extends</span> <span class="token class-name">State</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">MyHomePage</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+  int _counter <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">void</span> <span class="token function">_incrementCounter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	    _counter<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token metadata function">@override</span>
+  <span class="token class-name">Widget</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token class-name">BuildContext</span> context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	  <span class="token keyword">return</span> <span class="token class-name">Scaffold</span><span class="token punctuation">(</span>
+      appBar<span class="token punctuation">:</span> <span class="token class-name">AppBar</span><span class="token punctuation">(</span>
+			backgroundColor<span class="token punctuation">:</span> <span class="token class-name">Theme</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">.</span>colorScheme<span class="token punctuation">.</span>inversePrimary<span class="token punctuation">,</span>
+            title<span class="token punctuation">:</span> <span class="token class-name">Text</span><span class="token punctuation">(</span>widget<span class="token punctuation">.</span>title<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+      body<span class="token punctuation">:</span> <span class="token class-name">Center</span><span class="token punctuation">(</span>
+	      child<span class="token punctuation">:</span> <span class="token class-name">Column</span><span class="token punctuation">(</span>
+		      mainAxisAlignment<span class="token punctuation">:</span> <span class="token class-name">MainAxisAlignment</span><span class="token punctuation">.</span>center<span class="token punctuation">,</span>
+          children<span class="token punctuation">:</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Widget</span><span class="token punctuation">></span></span><span class="token punctuation">[</span>
+            <span class="token keyword">const</span> <span class="token class-name">Text</span><span class="token punctuation">(</span>
+              <span class="token string-literal"><span class="token string">'You have pushed the button this many times:'</span></span><span class="token punctuation">,</span>
+            <span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token class-name">Text</span><span class="token punctuation">(</span>
+              <span class="token string-literal"><span class="token string">'</span><span class="token interpolation"><span class="token punctuation">$</span><span class="token expression">_counter</span></span><span class="token string">'</span></span><span class="token punctuation">,</span>
+              style<span class="token punctuation">:</span> <span class="token class-name">Theme</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">.</span>textTheme<span class="token punctuation">.</span>headlineMedium<span class="token punctuation">,</span>
+            <span class="token punctuation">)</span><span class="token punctuation">,</span>
+          <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+      floatingActionButton<span class="token punctuation">:</span> <span class="token class-name">FloatingActionButton</span><span class="token punctuation">(</span>
+        onPressed<span class="token punctuation">:</span> _incrementCounter<span class="token punctuation">,</span>
+        tooltip<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">'Increment'</span></span><span class="token punctuation">,</span>
+        child<span class="token punctuation">:</span> <span class="token keyword">const</span> <span class="token class-name">Icon</span><span class="token punctuation">(</span><span class="token class-name">Icons</span><span class="token punctuation">.</span>add<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code><!-- HTML_TAG_END --></pre> <p data-svelte-h="svelte-trupl7">(코드를 한 눈에 보기 위해 주석은 제거 했습니다.)</p> <p data-svelte-h="svelte-pc2q68">처음 Flutter 프로젝트를 만들고 이 코드를 접했을 땐 생각보다 코드가 이해가 되지 않아 당황스러웠습니다.(<del>분명 Dart 문법은 어느 정도 익혔다고 생각했는데..</del>)</p> <p data-svelte-h="svelte-fsxuy6">StatelessWidget이 뭐지? super.key는 또 뭐지? BuildContext는 또 무슨 타입이지? StatefulWidget은 StatelessWidget이랑 다르게 바로 build를 안하네? 와 같은 질문들이 꼬리에 꼬리를 물면서 생겨났습니다.</p> <p data-svelte-h="svelte-11eo5d4">사실 위 코드가 이해되지 않는 이유는 Dart를 몰라서가 아니라 Flutter를 몰라서입니다.</p> <p data-svelte-h="svelte-93qsc0">코드를 한 줄 한 줄 따라가며 위의 코드가 어떤 의미인지 Flutter 소스코드를 보며 이해해보도록 합시다.</p> <h1 id="void-main" data-svelte-h="svelte-15d0zms">void main()</h1> <p data-svelte-h="svelte-jv78i">모든 dart 프로그램은 main 함수를 갖습니다. 프로그램의 진입점 역할을 하는 함수입니다.</p> <p data-svelte-h="svelte-7ck2v3"><code>runApp()</code> 함수는 Widget을 argument로 받아 화면에 해당 Widget 을 그려주는 역할을 하는 함수입니다.</p> <p data-svelte-h="svelte-4vlabf">보통은 위처럼 어플리케이션의 최상단에서 컨테이너의 역할을 하는 Widget을 넣어줍니다.</p> <h1 id="class-myapp-extends-statelesswidget" data-svelte-h="svelte-l5y447">class MyApp extends StatelessWidget</h1> <p data-svelte-h="svelte-1mxtmj3"><strong>MyApp</strong> 클래스는 <strong>StatelessWidget</strong>을 상속받고 있습니다.</p> <p data-svelte-h="svelte-28xqwy"><strong>StatelessWidget</strong>은 무슨 클래스일까요?</p> <h2 id="statelesswidget" data-svelte-h="svelte-uqwpvy">StatelessWidget</h2> <pre class="language-dart"><!-- HTML_TAG_START --><code class="language-dart"><span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">StatelessWidget</span> <span class="token keyword">extends</span> <span class="token class-name">Widget</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">const</span> <span class="token class-name">StatelessWidget</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token keyword">super</span><span class="token punctuation">.</span>key<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token metadata function">@override</span>
+	<span class="token class-name">StatelessElement</span> <span class="token function">createElement</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token class-name">StatelessElement</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token metadata function">@protected</span>
+	<span class="token class-name">Widget</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token class-name">BuildContext</span> context<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code><!-- HTML_TAG_END --></pre> <p data-svelte-h="svelte-1pbntzl"><strong>StatelessWidget</strong>은 <strong>Widget</strong>을 상속 받고 있는 <strong>추상 클래스</strong>군요.</p> <p data-svelte-h="svelte-t2vi5t">따라서 일반적인 클래스처럼 인스턴스화 하여 사용하는 용도가 아니라 StatelessWidget을 상속받는 하위 클래스에서 body 없이 이름만 덩그러니 선언되어 있는 메서드들의 구체적인 구현을 해주겠구나 짐작이 가능하겠습니다.</p> <p data-svelte-h="svelte-1l4skye">현재 MyApp이 StatelessWidget을 상속받고 있고 <code>Widget build(BuildContext context)</code>를 overriding 하고 있는 것을 확인 할 수 있습니다.</p> <pre class="language-dart"><!-- HTML_TAG_START --><code class="language-dart"><span class="token metadata function">@override</span>
+<span class="token class-name">Widget</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token class-name">BuildContext</span> context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">return</span> <span class="token class-name">MaterialApp</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token comment">// MarerialApp이라는 Widget을 return 하는군요.</span>
+<span class="token punctuation">&#125;</span></code><!-- HTML_TAG_END --></pre> <blockquote data-svelte-h="svelte-e6yoey"><p><strong>Question</strong> : <code>createElement()</code> 메서드는 MyApp에서 override 하지 않는데 왜 그런거죠?</p> <p><strong>Answer</strong> : <code>createElement()</code> 메서드는 body가 있는 메서드입니다.</p> <p>특별한 경우가 아니라면 StatelessWidget을 상속받는 하위 클래스에서는 이 메서드를 따로 정의해주지 않는 것이 일반적입니다.</p> <p><code>createElement()</code> 메서드는 Widget(blueprint 역할)을 받아 실제 화면에 그려지는 <strong>Element</strong>를 반환해주는 함수입니다.</p></blockquote> <p data-svelte-h="svelte-12ioowd">StatelessWidget이 어떤건지는 알겠으니 이제 <strong>Widget이</strong> 뭔지를 알아봐야겠군요.</p> <h3 id="widget" data-svelte-h="svelte-15zwjkc">Widget</h3> <pre class="language-dart"><!-- HTML_TAG_START --><code class="language-dart"><span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Widget</span> <span class="token keyword">extends</span> <span class="token class-name">DiagnosticableTree</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">const</span> <span class="token class-name">Widget</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token keyword">this</span><span class="token punctuation">.</span>key<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Initializes key for subclasses.</span>
+
+	<span class="token keyword">final</span> <span class="token class-name">Key</span><span class="token operator">?</span> key<span class="token punctuation">;</span>
+
+	<span class="token metadata function">@protected</span>
+	<span class="token metadata function">@factory</span>
+	<span class="token class-name">Element</span> <span class="token function">createElement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+	<span class="token metadata function">@override</span>
+	<span class="token class-name">String</span> <span class="token function">toStringShort</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">final</span> <span class="token class-name">String</span> type <span class="token operator">=</span> <span class="token function">objectRuntimeType</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token string-literal"><span class="token string">'Widget'</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> key <span class="token operator">==</span> <span class="token keyword">null</span> <span class="token operator">?</span> type<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">'</span><span class="token interpolation"><span class="token punctuation">$</span><span class="token expression">type</span></span><span class="token string">-</span><span class="token interpolation"><span class="token punctuation">$</span><span class="token expression">key</span></span><span class="token string">'</span></span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token metadata function">@override</span>
+	<span class="token keyword">void</span> <span class="token function">debugFillProperties</span><span class="token punctuation">(</span><span class="token class-name">DiagnosticPropertiesBuilder</span> properties<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">debugFillProperties</span><span class="token punctuation">(</span>properties<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		properties<span class="token punctuation">.</span>defaultDiagnosticsTreeStyle <span class="token operator">=</span> <span class="token class-name">DiagnosticsTreeStyle</span><span class="token punctuation">.</span>dense<span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token metadata function">@override</span>
+	<span class="token metadata function">@nonVirtual</span>
+	bool <span class="token keyword">operator</span> <span class="token operator">==</span><span class="token punctuation">(</span><span class="token class-name">Object</span> other<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">super</span> <span class="token operator">==</span> other<span class="token punctuation">;</span>
+
+	<span class="token metadata function">@override</span>
+	<span class="token metadata function">@nonVirtual</span>
+	int <span class="token keyword">get</span> hashCode <span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">super</span><span class="token punctuation">.</span>hashCode<span class="token punctuation">;</span>
+
+	<span class="token keyword">static</span> bool <span class="token function">canUpdate</span><span class="token punctuation">(</span><span class="token class-name">Widget</span> oldWidget<span class="token punctuation">,</span> <span class="token class-name">Widget</span> newWidget<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> oldWidget<span class="token punctuation">.</span>runtimeType <span class="token operator">==</span> newWidget<span class="token punctuation">.</span>runtimeType
+			<span class="token operator">&amp;&amp;</span> oldWidget<span class="token punctuation">.</span>key <span class="token operator">==</span> newWidget<span class="token punctuation">.</span>key<span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token keyword">static</span> int <span class="token function">_debugConcreteSubtype</span><span class="token punctuation">(</span><span class="token class-name">Widget</span> widget<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> widget <span class="token operator">is</span> <span class="token class-name">StatefullWidget</span> <span class="token operator">?</span> <span class="token number">1</span> <span class="token punctuation">:</span>
+			widget <span class="token operator">is</span> <span class="token class-name">StatelessWidget</span> <span class="token operator">?</span> <span class="token number">2</span> <span class="token punctuation">:</span> <span class="token number">0</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code><!-- HTML_TAG_END --></pre> <p data-svelte-h="svelte-trupl7">(코드를 한 눈에 보기 위해 주석은 제거 했습니다.)</p> <p data-svelte-h="svelte-1gsgh4v">Widget은 DiagnosticableTree를 상속받고 있는 추상 클래스이군요..</p> <p data-svelte-h="svelte-1phws24">글이 너무 장황해지는 것 같아 DiagnosticableTree에 대해서는 설명하지 않도록 하겠습니다.(<del>기회가 된다면 다음에..</del>)</p> <p data-svelte-h="svelte-111ipki">그 다음 줄부터 보도록 하겠습니다.</p> <pre class="language-dart"><!-- HTML_TAG_START --><code class="language-dart"><span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Widget</span> <span class="token keyword">extends</span> <span class="token class-name">DiagnosticableTree</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">const</span> <span class="token class-name">Widget</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token keyword">this</span><span class="token punctuation">.</span>key<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">final</span> <span class="token class-name">Key</span><span class="token operator">?</span> key<span class="token punctuation">;</span>
+
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span></code><!-- HTML_TAG_END --></pre> <p data-svelte-h="svelte-9hz7h2"><code>MyApp</code>과 <code>StatelessWidget</code>에서 super.key로 부르던 key가 Widget이 갖고 있던 variable이였군요.
+constant constructor의 parameter로 들어가기 때문에 final로 선언되며 <strong>Key</strong>라는 타입을 갖는 것을 알 수 있습니다.</p> <pre class="language-dart"><!-- HTML_TAG_START --><code class="language-dart"><span class="token keyword">const</span> <span class="token class-name">Widget</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token keyword">super</span><span class="token punctuation">.</span>key<span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token comment">// 이 부분은 다음과 같은 의미를 갖는 코드입니다.</span>
+<span class="token comment">// Redirecting to the parent class constructor with named parameter "key"</span>
+<span class="token keyword">const</span> <span class="token class-name">Widget</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token class-name">Key</span><span class="token operator">?</span> key<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token keyword">super</span><span class="token punctuation">(</span>key<span class="token punctuation">:</span> key<span class="token punctuation">)</span></code><!-- HTML_TAG_END --></pre> <p data-svelte-h="svelte-1r6uglr">(물론 두번째 줄 처럼 사용할 경우 IDE가 노란줄로 경고를 줍니다만, 문법적으로 간략하게 되어 있는 부분에는 사실 위와 같은 의미가 있다는 점을 알고 가면 좋을 것 같습니다.)</p> <p data-svelte-h="svelte-fx7ytc">음.. <strong>Key</strong>는 또 뭐하는 녀석일까요?</p> <h2 id="key" data-svelte-h="svelte-3ll8jc">Key</h2> <pre class="language-dart"><!-- HTML_TAG_START --><code class="language-dart"><span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Key</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">const</span> <span class="token keyword">factory</span> <span class="token class-name">Key</span><span class="token punctuation">(</span><span class="token class-name">String</span> value<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token class-name">ValueKey</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span><span class="token punctuation">;</span>
+
+	<span class="token metadata function">@protected</span>
+	<span class="token keyword">const</span> <span class="token class-name">Key</span><span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code><!-- HTML_TAG_END --></pre> <p data-svelte-h="svelte-1ska9pq">Key는 constant factory constructor와 constant named constructor를 갖는 abstract class이군요.</p> <p data-svelte-h="svelte-10gh58y">factory Key constructor는 String 타입의 value를 받고 <strong>ValueKey</strong> 타입의 인스턴스를 반환합니다.</p> <p data-svelte-h="svelte-1kl74ex">factory constructor이기 때문에 아마 ValueKey 은 Key를 상속받는 sub class일 것으로 추측이 됩니다.</p> <p data-svelte-h="svelte-ul3i4r">ValueKey가 뭔지를 봐야겠습니다.</p> <h3 id="valuekey" data-svelte-h="svelte-jee69g">ValueKey</h3> <pre class="language-dart"><!-- HTML_TAG_START --><code class="language-dart"><span class="token keyword">class</span> <span class="token class-name">ValueKey</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token keyword">extends</span> <span class="token class-name">LocalKey</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">const</span> <span class="token class-name">ValueKey</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">final</span> <span class="token class-name">T</span> value<span class="token punctuation">;</span>
+
+	<span class="token metadata function">@override</span>
+	bool <span class="token keyword">operator</span> <span class="token operator">==</span><span class="token punctuation">(</span><span class="token class-name">Object</span> object<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>other<span class="token punctuation">.</span>runtimeType <span class="token operator">!=</span> runtimeType<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">return</span> other <span class="token operator">is</span> <span class="token class-name">ValueKey</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token operator">&amp;&amp;</span> other<span class="token punctuation">.</span>value <span class="token operator">==</span> value<span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token metadata function">@override</span>
+	int <span class="token keyword">get</span> hashCode <span class="token operator">=</span><span class="token operator">></span> <span class="token class-name">Object</span><span class="token punctuation">.</span><span class="token function">hash</span><span class="token punctuation">(</span>runtimeType<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token metadata function">@override</span>
+	<span class="token class-name">String</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">final</span> <span class="token class-name">String</span> valueString <span class="token operator">=</span> <span class="token class-name">T</span> <span class="token operator">==</span> <span class="token class-name">String</span> <span class="token operator">?</span> <span class="token string-literal"><span class="token string">"&lt;'</span><span class="token interpolation"><span class="token punctuation">$</span><span class="token expression">value</span></span><span class="token string">'>"</span></span> <span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">'&lt;</span><span class="token interpolation"><span class="token punctuation">$</span><span class="token expression">value</span></span><span class="token string">>'</span></span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>runtimeType <span class="token operator">==</span> _TypeLiteral<span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">ValueKey</span><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			<span class="token keyword">return</span> <span class="token string-literal"><span class="token string">'[</span><span class="token interpolation"><span class="token punctuation">$</span><span class="token expression">valueString</span></span><span class="token string">]'</span></span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">return</span> <span class="token string-literal"><span class="token string">'[</span><span class="token interpolation"><span class="token punctuation">$</span><span class="token expression"><span class="token class-name">T</span></span></span><span class="token string"> </span><span class="token interpolation"><span class="token punctuation">$</span><span class="token expression">valueString</span></span><span class="token string">]'</span></span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code><!-- HTML_TAG_END --></pre> <p data-svelte-h="svelte-df33h8">예상과는 다르게 Key를 바로 상속받지 않고 <strong>LocalKey</strong>를 상속받는 클래스입니다.</p> <p data-svelte-h="svelte-100c8mj">Generic type인 T를 받아 value에 저장합니다.</p> <p data-svelte-h="svelte-u1c6i9">== 연산자를 오버라이딩하여 동등성 비교 로직을 커스텀하여 사용하고 있습니다. runtimeType이 같은지 우선 확인하고 만약 같은 runtimeType이라면 value가 같은지를 확인하여 두 인스턴스가 같은지를 확인하는 로직이군요.</p> <p data-svelte-h="svelte-azjr4m">hashCode getter도 오버라이딩 하고 있습니다. runtimeType과 value가 같다면 hashCode가 같을것이라고 예상할 수 있습니다. == 연산자의 로직과 일맥상통합니다.</p> <p data-svelte-h="svelte-1dy3usl">toString함수도 오버라이딩하여 print 함수를 호출했을 때 보여지는 모습도 커스텀해서 사용하고 있습니다.</p> <p data-svelte-h="svelte-19zh6k5">ValueKey가 뭔지는 알았으니 <strong>LocalKe</strong>y가 뭔지를 확인해보면 전체적인 그림을 파악할 수 있을 것 같습니다.</p> <h3 id="localkey" data-svelte-h="svelte-6s7ibg">LocalKey</h3> <pre class="language-dart"><!-- HTML_TAG_START --><code class="language-dart"><span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">LocalKey</span> <span class="token keyword">extends</span> <span class="token class-name">Key</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">const</span> <span class="token class-name">LocalKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code><!-- HTML_TAG_END --></pre> <p data-svelte-h="svelte-gm67y0">LocalKey는 Key를 상속받는 또 다른 추상 클래스입니다.</p> <p data-svelte-h="svelte-fq275x">constant constructor 하나만 선언되어있고 Key의 “empty” named constructor로 리다이렉팅하고 있습니다.</p> <p data-svelte-h="svelte-ernrc0">Key의 전체적인 상속관계는 다음과 같습니다.</p> <p data-svelte-h="svelte-1spiwiu"><img src="/key_hierarchy.jpg" alt="key_hierarchy"></p> <blockquote data-svelte-h="svelte-asugjd"><p><strong>Question</strong>:</p> <p>LocalKey는 굳이 왜 필요한가요? 그냥 바로 ValueKey에서 Key를 상속받아서 사용하면 안되나요?</p> <p><strong>Answer</strong>:</p> <p>정답은 안된다 입니다.</p> <p>클래스들간의 상속관계를 지키면서 factory constructor와 constant constructor를 동시에 사용하기 위해서는 LocalKey와 같은 클래스가 반드시 필요합니다.</p> <p>factory constructor는 const로 선언될 수 없기 때문에 Key를 상속받는 하위 클래스들에서 constant constructor를 사용하기 위해서는 중간에 constant constructor를 갖는 LocalKey와 같은 클래스가 매개해주어야 합니다.</p> <p>만약 LocalKey없이 바로 상속받아 사용한다면 다음과 같은 에러를 볼 수 있습니다.</p></blockquote> <blockquote><pre class="language-dart"><!-- HTML_TAG_START --><code class="language-dart"><span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Key</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">factory</span> <span class="token class-name">Key</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">ValueKey</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token keyword">extends</span> <span class="token class-name">Key</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">//The generative constructor 'Key Key(String value)' is expected, but a factory was found.</span>
+  <span class="token keyword">const</span> <span class="token class-name">ValueKey</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// This is not allowed.</span>
+
+  <span class="token keyword">final</span> <span class="token class-name">T</span> value<span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span></code><!-- HTML_TAG_END --></pre></blockquote> <p data-svelte-h="svelte-1c13b2k">Widget이 fianl variable로 갖고 있던 key에 대해 어느정도 파악한 것 같습니다.</p> <p data-svelte-h="svelte-ktdwmn">이제 다시 Widget으로 돌아와서.. (다음 글로 이어집니다!)</p> <h1 id="sources" data-svelte-h="svelte-22jvrw">Sources</h1> <p data-svelte-h="svelte-16na6ru"><a href="https://www.youtube.com/watch?v=wE7khGHVkYY" rel="nofollow">Flutter Widgets 101 EP.1</a></p> <p data-svelte-h="svelte-56ew44"><a href="https://www.youtube.com/watch?v=AqCMFXEmf3w" rel="nofollow">Flutter Widget 101 EP.2</a></p> <p data-svelte-h="svelte-1nql4lr"><a href="https://www.youtube.com/watch?v=kn0EOS-ZiIc&t=300s" rel="nofollow">Flutter Widget 101 EP.4</a></p> </div></div> </div> 
+			
+			<script>
+				{
+					__sveltekit_am7eji = {
+						base: new URL("..", location).pathname.slice(0, -1)
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [{"type":"data","data":{tags:new Set(["Dart","Flutter","SvelteKit","Mdsvex","Github"])},"uses":{}},null];
+
+					Promise.all([
+						import("../_app/immutable/entry/start.CTw2kUFf.js"),
+						import("../_app/immutable/entry/app.CK8Af8u2.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 3],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+	<script src="https://kit.fontawesome.com/56837ace2e.js" crossorigin="anonymous"></script>
+</html>
