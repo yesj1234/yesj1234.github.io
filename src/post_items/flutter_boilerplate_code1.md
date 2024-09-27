@@ -1,6 +1,6 @@
 ---
 title: new Flutter project의 main.dart 코드 파헤쳐보기(1)
-description: IDE를 이용해 만든 flutter project의 초기 main.dart 코드들을 보면서 Fluttter의 가장 기초가 되는 StatelessWidget, StatefulWidget, key에 대해 알아봅니다.
+description: IDE를 이용해 만든 flutter project의 초기 main.dart 코드들을 보면서 StatelessWidget, StatefulWidget, key에 대해 알아봅니다.
 author: jack
 date: 2024.09. 27.
 published: true
