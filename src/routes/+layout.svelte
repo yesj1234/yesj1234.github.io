@@ -99,9 +99,9 @@
 		opacity: 0.9;
 		z-index: 0;
 	}
-	:global(img) {
+	/* :global(img) {
 		width: 20rem;
-	}
+	} */
 	.sidebar-and-main {
 		display: flex;
 		flex-direction: row;
