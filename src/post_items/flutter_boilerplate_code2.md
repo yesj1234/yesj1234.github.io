@@ -398,7 +398,7 @@ abstract class Element extends DiagnosticableTree implements BuildContext {
 
 2. [inside flutter](https://docs.flutter.dev/resources/inside-flutter)
 
-3. [BuildOwner](<(https://github.com/flutter/flutter/blob/main/packages/flutter/lib/src/widgets/framework.dart#L2838)>)
+3. [BuildOwner](https://github.com/flutter/flutter/blob/main/packages/flutter/lib/src/widgets/framework.dart#L2838)
 
 4. [WidgetBinding](https://github.com/flutter/flutter/blob/main/packages/flutter/lib/src/widgets/binding.dart#L409)
 

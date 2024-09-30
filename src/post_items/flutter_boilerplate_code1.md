@@ -326,7 +326,7 @@ Key의 전체적인 상속관계는 다음과 같습니다.
 
 Widget이 fianl variable로 갖고 있던 key에 대해 어느정도 파악한 것 같습니다.
 
-이제 다시 Widget으로 돌아와서.. [다음 글로 이어집니다!](/posts/flutter_boilerplate_code2)
+이제 다시 Widget으로 돌아와서.. 다음 글로 이어집니다!
 
 # Sources
 
