@@ -89,10 +89,11 @@
 		list-style: circle;
 	}
 	:global(blockquote) {
-		border-left-style: solid;
+		/* border-left-style: solid;
 		border-left-width: 1.5px;
-		border-left-color: rgb(37, 206, 21);
-		box-shadow: 2px 2px 15px #ccc;
+		border-left-color: rgb(37, 206, 21); */
+		/* box-shadow: 2px 2px 15px #ccc; */
+		color: lightseagreen;
 	}
 	:global(code) {
 		background-color: #f2f1f1;
