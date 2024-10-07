@@ -100,7 +100,14 @@ class _CounterState extends State<Counter> {
 
 ## CustomPaint
 
-> A widget that provides a canvas on which to draw during the paint phase.
+> A widget that provides a **canvas** on which to draw during the **paint phase**.
+>
+> When asked to paint, CustomPaint first asks its painter to paint on the current canvas,then, it paints its child, and then, after painting its child, it asks its foregroundPainter to paint.
+>
+> The **coordinate system of the canvas** matches the **coordinate system of the CustomPaint object**.
+> The painters are **expected to paint within a rectangle** starting at the origin and encompassing a region of the given size.(If the painters paint outside those bounds, there might be insufficient memory allocated to rasterize the painting commands and resulting behavior is undefined.)
+>
+> To enforce painting within those **bounds**, consider wrapping this CustomPaint with a **ClipRect** widget.
 
 ## CustomPainter
 
