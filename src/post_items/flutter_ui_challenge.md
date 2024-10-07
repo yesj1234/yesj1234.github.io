@@ -1,6 +1,6 @@
 ---
 title: Flutter UI Challenge(1)
-description: Learn the basic layouts with Flutter challenges post by Andrea. Some basic layout of flutter encludes Row, Column, Stack, Expanded, Padding, and so on.
+description: Learn the basic layouts with Flutter challenges posted by Andrea. Some basic layout of flutter includes Row, Column, Stack, Expanded, Padding, etc...
 author: jack
 date: 2024. 10. 02.
 published: true
