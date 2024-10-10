@@ -387,11 +387,347 @@ class _CounterAppState extends State<CounterApp> with SingleTickerProviderMixin{
 
 ## AnimatedWidget
 
-## Timer
+> A widget that rebuilds when the given Listenable changes value.
+>
+> AnimatedWidget is most commonly used with Animation objects, which are Listenable, but it can be used with any Listenable, including ChangeNotifier and ValueNotifier.
+>
+> AnimatedWidget is most useful for widgets that are otherwise stateless. To use AnimatedWidget, subclass it and implement the build function.
 
-# Code
+# 개선1. Using prebuilt animation widget (CircularProgressIndicator)
 
-# 개선점
+정확히 이런 종류의 애니메이션을 위해 미리 만들어진 위젯이 있습니다.
+
+찾을 수만 있다면 이처럼 미리 만들어진 위젯을 사용하는게 가장 좋다고 생각합니다.
+
+Flutter의 Widget of the week 시리즈에도 소개된 위젯이니 한번 봐보면 좋을 것 같습니다.
+
+[Flutter Widget of the Week - CircularProgressIndicator & LinearProgressIndicator](https://youtu.be/O-rhXZLtpv0)
+
+# 개선2. Refactoring with AnimatedBuilder
+
+AnimatedBuilder를 각 클래스가 담당하는 부분이 좀 더 명확하게 보이도록 분리시킬 수 있습니다.
+
+1. 실제로 보여주고자 하는 도형에 대한 클래스 (이 경우 **CustomCircle과 CustomPaint**)
+2. 해당 도형에 적용될 애니메이션 (`animation = Tween<double>(begin: 0, end: -2 * pi).animate(controller);`)
+3. 해당 애니메이션의 렌더링에 대한 클래스 (**RadialTransition**)
+
+```dart
+import 'package:flutter/material.dart';
+import 'dart:math';
+import 'dart:async';
+// refactoring with AnimatedBuilder
+// The main advantage of using AnimatedBuilder is separating the responsibilities into different classes.
+// 1. Render the Actual object
+// 2. Define the animation object
+// 3. Render the transition
+
+class CounterRefactor extends StatefulWidget {
+  const CounterRefactor({super.key});
+
+  @override
+  State<CounterRefactor> createState() => _CounterState();
+}
+
+class _CounterState extends State<CounterRefactor>
+    with SingleTickerProviderStateMixin {
+  late Animation<double> animation;
+  late AnimationController controller;
+  late Stopwatch _stopwatch;
+  Timer? _timer;
+  final int maxTimeOut = 10;
+  int elapsedTimeInSeconds = 0;
+  int _elapsed = 0;
+
+  void restart() {
+    controller.reset();
+    _stopwatch.reset();
+    setState(() => elapsedTimeInSeconds = 0);
+    _stopwatch.start();
+    // Periodic timer의 duration이 1초마다 바뀌는게 아닌 가능한 빨리(Duration.zero) 바뀌도록 설정해주고 있습니다.
+    // AnimatedWidget을 사용할 때와는 달리 RadialTransition의 child로 CustomPaint를 넣어주고
+    // 있기 때문에 기존처럼 1초마다 바뀌도록 하면 애니메이션이 뚝뚝 끊기듯이 재생됩니다.
+    // Stopwatch를 새롭게 추가해 elapsed time을 구해서 사용하도록 바꿔주었습니다.
+    _timer = Timer.periodic(Duration.zero, (timer) {
+      setState(() {
+        _elapsed = _stopwatch.elapsedMilliseconds;
+        if (_elapsed ~/ 1000 != elapsedTimeInSeconds) {
+          elapsedTimeInSeconds = _elapsed ~/ 1000;
+        }
+        if (maxTimeOut - elapsedTimeInSeconds < 1) {
+          timer.cancel();
+          _stopwatch.stop();
+        }
+      });
+    });
+    controller.forward();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _stopwatch = Stopwatch();
+    controller =
+        AnimationController(vsync: this, duration: const Duration(seconds: 10));
+    animation = Tween<double>(begin: 0, end: -2 * pi).animate(controller);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        width: 400,
+        height: 400,
+        child: Column(
+          children: [
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  width: 300,
+                  height: 300,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    border: Border.all(width: 30, color: Colors.deepPurple),
+                  ),
+                ),
+                RadialTransition(
+                    animation: animation,
+                    child: CustomPaint(
+                      painter: CustomCircle(
+                          startAngle: -pi / 2, sweepAngle: animation.value),
+                      size: const Size(300, 300),
+                    )),
+                Container(
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      shape: BoxShape.circle),
+                  width: 265,
+                  height: 265,
+                ),
+                Text(
+                  '${maxTimeOut - elapsedTimeInSeconds}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 80,
+                    color: Colors.deepPurple,
+                  ),
+                )
+              ],
+            ),
+            ElevatedButton(onPressed: restart, child: const Text("Restart"))
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+}
+
+class RadialTransition extends StatelessWidget {
+  final Animation animation;
+  final Widget child;
+  const RadialTransition(
+      {super.key, required this.animation, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: animation,
+      builder: (context, child) {
+        return Container(
+          decoration: const BoxDecoration(
+            color: Colors.deepPurple,
+            shape: BoxShape.circle,
+          ),
+          width: 300,
+          height: 300,
+          child: child,
+        );
+      },
+      child: child,
+    );
+  }
+}
+
+class CustomCircle extends CustomPainter {
+  double startAngle;
+  double sweepAngle;
+
+  CustomCircle({required this.startAngle, required this.sweepAngle});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint();
+    paint.color = Colors.deepPurple.shade300;
+    paint.strokeWidth = 2;
+    Offset canvasCenter = Offset(size.width / 2, size.height / 2);
+    canvas.drawArc(
+        Rect.fromCenter(
+            center: canvasCenter, width: size.width, height: size.height),
+        startAngle,
+        sweepAngle,
+        true,
+        paint);
+  }
+
+  @override
+  bool shouldRepaint(oldDelegate) {
+    return true;
+  }
+}
+
+```
+
+# 개선3. Using Ticker instead of Timer (Counter)
+
+Flutter의 대부분의 Animation 관련 위젯들은 내부적으로 Ticker를 사용하고 있습니다.
+
+예를 들어 지금까지 사용하던 AnimationController도 사실은 Ticker를 이용해 스케줄링을 하고 있습니다.
+
+```dart
+class AnimationController extends Animation<double>
+with AnimationEagerListenerMixin,
+AnimationLocalListenerMixin,
+AnimationLocalStatusListenerMixin{
+    ...
+
+    Ticker? _ticker;
+
+    ...
+
+    void resync(TickerProvider vsync) {
+        final Ticker oldTicker = _ticker;
+        _ticker = vsync.createTicker(_tick);
+        _ticker!.absorbTicker(oldTicker);
+    }
+
+    ...
+}
+```
+
+Ticker를 사용하면 animation을 사용할 때와는 다른 custom painter가 필요합니다.
+
+또한 Timer와는 다르게 elapsed time을 알 수 있어 stopwatch를 별도로 만들지 않아도 됩니다.
+
+```dart
+import 'package:flutter/material.dart';
+import 'dart:math';
+import 'package:flutter/scheduler.dart';
+
+class CounterRefactor2 extends StatefulWidget {
+  const CounterRefactor2({super.key});
+
+  @override
+  State<CounterRefactor2> createState() => _CounterRefactor2State();
+}
+
+class _CounterRefactor2State extends State<CounterRefactor2>
+    with SingleTickerProviderStateMixin {
+  late Ticker _ticker;
+  final int maxTimeOut = 10;
+  int elapsedTimeInSeconds = 0;
+  Duration _elapsed = Duration.zero;
+  double progress = 0.0;
+  int get remainingTime => max(0, maxTimeOut - _elapsed.inSeconds);
+
+  @override
+  void initState() {
+    super.initState();
+    _ticker = createTicker((elapsed) {
+      setState(() {
+        _elapsed = elapsed;
+        progress = _elapsed.inMilliseconds / (1000 * maxTimeOut);
+        if (_elapsed.inSeconds > 10) {
+          _ticker.stop();
+        }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _ticker.dispose();
+  }
+
+  void restart() {
+    _ticker.stop();
+    _ticker.start();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              CustomPaint(
+                painter: CustomCircle(progress: progress),
+                size: const Size(400, 400),
+              ),
+              Text(
+                '$remainingTime',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 80,
+                  color: Colors.deepPurple,
+                ),
+              ),
+            ],
+          ),
+          ElevatedButton(
+            onPressed: restart,
+            child: const Text("Restart"),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CustomCircle extends CustomPainter {
+  final double progress;
+
+  CustomCircle({required this.progress});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Offset canvasCenter = Offset(size.width / 2, size.height / 2);
+
+    final Paint background = Paint();
+    background.strokeWidth = 25;
+    background.color = Colors.deepPurple.shade300;
+    background.style = PaintingStyle.stroke;
+    canvas.drawCircle(canvasCenter, size.width / 2, background);
+
+    Paint foreground = Paint();
+    foreground.color = Colors.deepPurple.shade700;
+    foreground.strokeWidth = 25;
+    foreground.style = PaintingStyle.stroke;
+    canvas.drawArc(
+        Rect.fromCenter(
+            center: canvasCenter, width: size.width, height: size.height),
+        -pi / 2,
+        -2 * pi * progress,
+        false,
+        foreground);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomCircle oldDelegate) {
+    return oldDelegate.progress != progress;
+  }
+}
+```
 
 # Sources
 
@@ -406,3 +742,7 @@ class _CounterAppState extends State<CounterApp> with SingleTickerProviderMixin{
 - [Timer](https://api.flutter.dev/flutter/dart-async/Timer-class.html)
 
 - [Ticker](https://api.flutter.dev/flutter/scheduler/Ticker-class.html)
+
+- [Stopwatch](https://api.flutter.dev/flutter/dart-core/Stopwatch-class.html)
+
+- [CircularProgressIndicator](https://api.flutter.dev/flutter/material/CircularProgressIndicator-class.html)
