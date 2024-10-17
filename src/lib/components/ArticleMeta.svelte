@@ -2,7 +2,12 @@
 	// export let author: string;
 	export let date: string;
 	export let tags: string;
-	const formattedDate = new Date(date).toDateString();
+	const publishedDate = new Date(date);
+
+	const localeDate = publishedDate.toLocaleDateString();
+
+	const days = ['일', '월', '화', '수', '목', '금', '토'];
+	const day = publishedDate.getDay();
 </script>
 
 <p>
@@ -18,13 +23,13 @@
 	{/if}
 </p>
 <div class="metadata">
-	<span class="date">{formattedDate}</span>
+	<span class="date">{localeDate} ({days[day]})</span>
 </div>
 
 <style>
 	p {
 		margin: 0;
-		margin-bottom: calc(var(--spacing-unit) * 4);
+		margin-bottom: calc(var(--spacing-unit) * 2);
 		margin-top: calc(var(--spacing-unit) * 2);
 		display: flex;
 		flex-direction: row;

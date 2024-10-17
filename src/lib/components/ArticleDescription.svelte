@@ -7,11 +7,10 @@
 <p>
 	{description}
 </p>
-<hr />
 
 <style>
 	p {
 		margin: 0;
-		margin-bottom: calc(var(--spacing-unit) * 8);
+		margin-bottom: calc(var(--spacing-unit) * 3);
 	}
 </style>

@@ -11,13 +11,26 @@
 <PageHead title="Home" description="An awesome blog about development with Svelte" />
 
 {#each data.posts as { slug, title, description, date, tags }}
-	<div class="article">
-		<Article>
-			<ArticleTitle {slug} {title} />
-			<ArticleMeta {date} {tags} />
-			<ArticleDescription {description} {slug} />
-		</Article>
-	</div>
+	<Article>
+		<ArticleTitle {slug} {title} />
+		<ArticleMeta {date} {tags} />
+		<ArticleDescription {description} {slug} />
+	</Article>
+	<hr />
 {/each}
 
 <slot />
+
+<style>
+	hr {
+		border: 0;
+		height: 1px;
+		background-image: linear-gradient(
+			to right,
+			rgba(0, 0, 0, 0),
+			rgba(0, 0, 0, 0.75),
+			rgba(0, 0, 0, 0)
+		);
+		width: 90%;
+	}
+</style>
