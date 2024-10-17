@@ -42,9 +42,9 @@ onFlip의 구현이 StatelessWidget인 LightHomePage 혹은 DarkHomePage에 없�
 
 만약 LightHomePage 혹은 DarkHomePage 안에서 onFlip을 구현하려고 한다면 다음과 같은 문제가 생김
 
-1. 코드가 중복
-2. animation controller를 사용하기 위해서 구조자체를 바꿔야함.
-3. 요구사항 변경에 대응하기 어려움
+1. **코드가 중복**
+2. **animation controller를 사용하기 위해서 구조자체를 바꿔야함**
+3. **요구사항 변경에 대응하기 어려움**
 
 확장성있고 재활용 가능한 위젯으로 활용하기 위해서는 위처럼 Key를 이용해 State 안에서 onFlip을 정의해서 사용하는 것이 좋음.
 
@@ -132,15 +132,15 @@ tilt값을 설정해준다고 하면서 실제로 한 것은 Matrix4의 3행, 0�
 
 우선 Flutter가 어떤식으로 화면의 한 점을 나타내는지 알아야 합니다.
 
-Flutter는 기본적으로 모든 화면을 3d공간상의 좌표로 표현하는데, 좌표의 한 점을 표현할 때 x값, y값, z값 에 추가로 한 가지 값을 더 넣어서 4개의 값으로 한 점을 표현합니다.
+Flutter는 기본적으로 모든 화면을 3d공간상의 좌표로 표현하는데, 좌표의 한 점을 표현할 때 x값, y값, z값 에 추가로 한 가지 값을 더 넣어서 **4개의 값으로 한 점을 표현**합니다.
 
-이런식으로 좌표를 표현하는 것을 **동차좌표**(homogeneous coordinates)라고 합니다.
+이런식으로 좌표를 표현하는 것을 동차좌표(homogeneous coordinates)라고 합니다.
 
 예를 들어 한 점(a, b, c)은 (aw, bw, cw, w)로 표현합니다. w값이 1이라면 (a, b, c, 1) 이 되는 식입니다.
 
 따라서, Flutter가 그려내는 화면의 어떤 한 점은 1 x 4 모양의 행렬이됩니다. (사실은 4 x 1 행렬입니다.)
 
-Matrix4는 보이는 화면의 특정한 한 점을 나타내는 것이 아니라 어떤 요소에 적용할 변환(transform) 행렬(matrix)입니다.
+**Matrix4**는 보이는 화면의 특정한 한 점을 나타내는 것이 아니라 어떤 요소에 적용할 **변환(transform) 행렬(matrix)**입니다.
 
 예를 들어, Matrix4.rotationY(pi/4) 는 pi /4 radian (45도) 만큼 y축을 기준으로 회전시키는 변환을 나타내는 4x4 행렬입니다.
 
@@ -212,16 +212,16 @@ void flip() {
 
 flip은 wasFrontSide와 showFrontSide를 property를 이용해 현재 보여지는 페이지의 상태를 바꿔주는 콜백함수입니다.
 
-로직자체는 어렵지 않지만 왜 저렇게 썼는지 바로 이해하기엔 헷갈릴 수 있습니다.
+로직자체는 어렵지 않지만 왜 이렇게 썼는지 바로 이해하기엔 헷갈릴 수 있습니다.
 
 showFrontSide 가 true라면 controller.forward 즉, 페이지를 뒤집는 애니메이션이 실행됩니다.
 
 애니메이션은 다음의 4가지 상태값을 갖습니다.
 
-- **dismissed** : animation이 시작 지점에서 멈췄을 때
-- **forward** : animation이 시작지점에서 끝지점으로 진행중 일 때
-- **reverse** : animation이 끝에서 시작지점으로 진행중 일 때
-- **completed** : animation이 끝 지점에서 멈췄을 때
+- **dismissed** : animation이 **시작 지점**에서 **멈췄을 때**
+- **forward** : animation이 **시작지점**에서 **끝지점**으로 **진행중** 일 때
+- **reverse** : animation이 **끝지점**에서 **시작지점**으로 **진행중** 일 때
+- **completed** : animation이 **끝지점**에서 **멈췄을 때**
 
 ```dart
 ...
@@ -281,11 +281,13 @@ PageFlipBuilder는 flip이 완료됐을 때 최종적으로 실행시킬 함수�
 
 함수의 이름처럼 flip이 완료됐을 때를 판단하기 위해서는 현재 보여지는 페이지가 이전 페이지와는 다른 페이지라는 정보를 알아야 하기 때문에 wasFrontSide가 필요하게 된 것입니다.
 
+---
+
 **GestureDetector callbacks**
 
 GestureDetector는 이름처럼 스크린에 감지되는 행동에 반응할 수 있는 widget입니다.
 
-다양한 제스처들이 있지만 지금 하고자 하는 것은 수평(horizontal)으로 혹은 수직(vertical)으로 잡아끄는(drag) 모션을 감지하고 그에 맞게 페이지를 뒤집는듯한 애니메이션을 넣고 싶습니다.
+다양한 제스처들이 있지만 지금 하고자 하는 것은 **수평(horizontal)**으로 혹은 **수직(vertical)**으로 **잡아끄는(drag)** 모션을 감지하고 그에 맞게 페이지를 뒤집는듯한 애니메이션을 넣고 싶습니다.
 
 이를 위해선 GestureDetector에 다음과 같은 콜백을 등록해주어야합니다.
 
@@ -301,7 +303,7 @@ GestureDetector는 이름처럼 스크린에 감지되는 행동에 반응할 �
 
 - **GestureDragEndCallback?** onVerticalEnd
 
-  이 콜백함수들은 해당 제스처에 맞는 로직을 구현하기 위한 상세값(detail)을 파라미터로 갖습니다.
+  이 콜백함수들은 해당 제스처에 맞는 로직을 구현하기 위한 **상세값(detail)**을 파라미터로 갖습니다.
 
   예를 들어 **GestureDragUpdateCallback은** DragUpdateDetails 를 파라미터로 갖습니다.
 
@@ -329,11 +331,12 @@ void _handleDragUpdate(DragUpdateDetails details, double crossAxisLength) {
 ```
 
 controller 시작 지점 값과 끝 지점의 값을 갖는 애니메이션입니다.
+
 시작 지점은 0이고 끝지점은 처음 controller를 만들때 1(upperBound) 또는 -1(lowerBound)로 설정해주었습니다.
 
-primaryDelta는 이전 업데이트로부터 마우스(또는 손가락)가 메인 축을 따라(horizontal drag일 경우 x축) 얼마만큼 움직였는지를 알려줍니다.
+**primaryDelta**는 이전 업데이트로부터 마우스(또는 손가락)가 메인 축을 따라(horizontal drag일 경우 x축) **얼마만큼 움직였는지**를 알려줍니다.
 
-primaryDelta 값을 crossAxisLength로 나누어주고 있는데 crossAxisLength는 horizontal drag일 경우 x축의 max width, vertical drag일 경우 y축의 max height이 됩니다.
+primaryDelta 값을 **crossAxisLength**로 나누어주고 있는데 crossAxisLength는 **horizontal drag일 경우 x축의 max width**, **vertical drag일 경우 y축의 max height**이 됩니다.
 현재 코드상 crossAxisLength는 다음과 같이 구해집니다.
 
 ```dart
@@ -342,11 +345,11 @@ final crossAxisLength = isHorizontal ? constraints.maxWidth : constraints.maxHei
 
 (변수명을 좀 헷갈리게 만든것 같긴 하네요..^^; )
 
-primaryDelta값을 crossAxisLength값으로 나눠주는 이유는 정규화를 해주기 위해서입니다.
+primaryDelta값을 crossAxisLength값으로 나눠주는 이유는 **정규화**를 해주기 위해서입니다.
 
-값을 0~1사이로 보정해 다른 사이즈의 스크린에서도 동일한 애니메이션 효과를 얻을 수 있습니다.
+값을 **0~1사이로 보정**해 다른 사이즈의 스크린에서도 동일한 애니메이션 효과를 얻을 수 있습니다.
 
-controller.value에 값을 누적해서 더하고 있는데 upperBound, lowerBound가 설정되어 있기 때문에 범위를 넘어설 걱정은 안해도 됩니다.
+controller.value에 값을 누적해서 더하고 있는데 **upperBound**, **lowerBound**가 설정되어 있기 때문에 범위를 넘어설 걱정은 안해도 됩니다.
 
 **handleDragEnd**
 
@@ -394,22 +397,24 @@ void _handleDragEnd(DragEndDetails details, double crossAxisLength) {
 
 드래그를 하다가 어떤 시점에 마우스(또는 손가락)를 화면에서 떼면 페이지를 다시 원점으로(드래그 하기 직전으로) 되돌리는 애니메이션(fling)을 실행시키도록 합니다.
 
-fling은 velocity값을 파라미터로 받습니다.
+**fling은** **velocity**값을 파라미터로 받습니다.
 
 velocity가 양수일 경우 animation forward, 음수일 경우 animation reverse 한다고 생각할 수 있습니다.
 
-velocityThreshold는 얼마나 빠르게 드래그 했냐를 판단하는 기준값입니다.
+**velocityThreshold**는 얼마나 빠르게 드래그 했냐를 판단하는 기준값입니다.
 
 현재는 pixelsPerSecond / crossAxisLength 값을 이용해 2(velocityThreshold)보다 큰지 작은지를 보아 빠르냐 느리냐를 판단하고 있습니다.
 
 가능한 상황은 다음과 같습니다.
 
-1. fling 애니메이션이 실행될 필요가 없는 경우.
-2. fling 애니메이션이 필요한 경우
-   1. 화면을 180도 넘게 돌렸거나 매우 빠르게 우측으로 drag한 경우
-   2. 화면을 -180도 넘게 돌렸거나 매우 빠르게 좌측으로 drag한 경우
-   3. 화면을 0~180도 돌렸거나 혹은 180도 넘게 돌렸으나 다시 좌측으로 매우 빠르게 drag한 경우
-   4. 화면을 -180 ~ 0도 돌렸거나 혹은 -180도 넘게 돌렸으나 다시 우측으로 매우 빠르게 drag한 경우
+1. **fling 애니메이션이 실행될 필요가 없는 경우.**
+2. **fling 애니메이션이 필요한 경우**
+   1. 화면을 **180도 넘게 돌렸거나** 혹은 **매우 빠르게 우측으로 drag**한 경우
+   2. 화면을 **-180도 넘게 돌렸거나** 혹은 **매우 빠르게 좌측으로 drag**한 경우
+   3. 화면을 **0~180도 돌렸거나** 혹은 **180도 넘게 돌렸으나 다시 좌측으로 매우 빠르게 drag**한 경우
+   4. 화면을 **-180 ~ 0도 돌렸거나** 혹은 **-180도 넘게 돌렸으나 다시 우측으로 매우 빠르게 drag**한 경우
+
+---
 
 ## AnimatedPageFlipBuilder
 
@@ -454,6 +459,14 @@ double _scale() {
 ---
 
 보이는 것과는 달리 생각보다 어려운 문제였습니다.
+
+단순하게 한번 실행되고 종료되는 애니메이션이 아니기 때문에 ticker 하나만으로는 구현이 어렵습니다.
+
+유저의 입력이 어떤 식으로 들어올지 각 케이스를 자세하게 분류해야 하며,
+
+실감나는 3D 애니메이션을 만들기 위해 적절한 변환을 적용해주어야 합니다.
+
+구현 과정에서는 변동 가능성을 염두에 두고 위젯의 유연한 설계를 위한 고민도 필요했습니다.
 
 andrea의 예시 답안을 나름대로 분석해보며 많이 배우는 시간이었습니다.
 
