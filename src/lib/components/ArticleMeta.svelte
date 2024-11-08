@@ -2,9 +2,12 @@
 	// export let author: string;
 	export let date: string;
 	export let tags: string;
+
+	// TODO: Fix Safari new Date returning invalid date error.
+
 	const publishedDate = new Date(date);
 
-	const localeDate = publishedDate.toLocaleDateString();
+	const localeDate = publishedDate.toLocaleDateString('ko-KR');
 
 	const days = ['일', '월', '화', '수', '목', '금', '토'];
 	const day = publishedDate.getDay();

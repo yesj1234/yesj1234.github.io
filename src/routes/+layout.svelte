@@ -125,10 +125,9 @@
 		/* position: sticky; */
 		position: fixed;
 		top: 0;
-		border-bottom: 1px black solid;
 		width: 100%;
 		height: 6rem;
-		background-color: #a9a9a9;
+		background-color: #c0c0c0;
 		display: flex;
 		z-index: 1;
 	}
