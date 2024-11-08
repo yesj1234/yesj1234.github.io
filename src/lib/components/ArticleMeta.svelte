@@ -2,15 +2,11 @@
 	// export let author: string;
 	export let date: string;
 	export let tags: string;
+	import moment from 'moment';
 
-	// TODO: Fix Safari new Date returning invalid date error.
+	const [year, month, day, _] = date.split('.');
 
-	const publishedDate = new Date(date);
-
-	const localeDate = publishedDate.toLocaleDateString('ko-KR');
-
-	const days = ['일', '월', '화', '수', '목', '금', '토'];
-	const day = publishedDate.getDay();
+	const publishedDate = moment(`${year.trim()}-${month.trim()}-${day.trim()}`);
 </script>
 
 <p>
@@ -26,7 +22,7 @@
 	{/if}
 </p>
 <div class="metadata">
-	<span class="date">{localeDate} ({days[day]})</span>
+	<span class="date">{publishedDate.format('YYYY. MM. DD. (ddd)')}</span>
 </div>
 
 <style>
