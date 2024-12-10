@@ -26,6 +26,7 @@
 	}
 	.component {
 		padding-left: calc(var(--spacing-unit) * 10);
-		width: 70%;
+		width: 80%;
+		border: 1px black;
 	}
 </style>
