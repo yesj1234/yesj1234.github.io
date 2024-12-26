@@ -14,12 +14,12 @@ tags: ['Dart']
 상황은 다음과 같았습니다.
 
 1. 포스트는 이미지 파일, 제목, 내용을 포함할 수 있습니다.
-2. 이미지는 image picker 패키지를 통해 사진첩에서 XFile 타입으로 가져올 수 있으며 Image.File 위젯을 사용하여 보여줍니다.
-3. 이미지를 포스트에 포함하여 저장할 경우에는 firestorage에 이미지 파일을 저장하고 download url을 받아 데이터베이스 해당 url을 String으로 저장합니다.
-4. 이미지를 포함하는 기존의 포스트를 수정할 경우에는 원본 내용을 보여줘야 합니다. 이 경우 이미지는 download url을 string으로 받아서 Image.network 위젯을 통해 보여줍니다.
-5. 만약 새로운 사진을 추가할 경우 이미지를 보여주는 위젯은 이제 download url(String) 과 XFile 두가지 타입을 동시에 처리할 수 있어야 합니다.
+2. 이미지는 image picker 패키지를 통해 사진첩에서 **XFile** 타입으로 가져올 수 있으며 Image.File 위젯을 사용하여 보여줍니다.
+3. 이미지를 포스트에 포함하여 저장할 경우에는 firestorage에 이미지 파일을 저장하고 download url을 받아 데이터베이스 해당 **url을 String으로 저장**합니다.
+4. 이미지를 포함하는 기존의 포스트를 수정할 경우에는 원본 내용을 보여줘야 합니다. 이 경우 이미지는 download url을 string으로 받아서 Image.network 위젯을 통해 보여줍니다.
+5. 만약 새로운 사진을 추가할 경우 이미지를 보여주는 위젯은 이제 **download url(String)** 과 **XFile** 두가지 타입을 동시에 처리할 수 있어야 합니다.
 
-따라서 String, XFile 두 가지 타입을 받기 위해 dynamic 타입으로 받아와서 타입이 String일 경우에는 Image.network위젯을, XFile일 경우에는 Image.file을 사용하도록 해놨습니다.
+따라서 String, XFile 두 가지 타입을 받기 위해 dynamic 타입으로 받아와서 타입이 String일 경우에는 Image.network위젯을, XFile일 경우에는 Image.file을 사용하도록 했습니다.
 
 위와 같은 방식은 코드를 짜기 편리하다는 장점이 있지만 단점 또한 적지 않습니다.
 
@@ -36,24 +36,26 @@ tags: ['Dart']
 Union type을 알아보기 전에 type에 대한 몇 가지 개념들에 대해 보고 가도록 합시다.
 
 개발 언어마다 type을 다루는 방식이 상이합니다.
-예를 들어 typescript는 shape based type을 사용하고 java는 nominal type을 사용합니다.
-shape based type과 nominal type은 타입간의 호환성(Type Compatibility), 유연성(Flexibility), 에러를 처리하는 방식에 차이가 있습니다.
+
+예를 들어 typescript는 **shape based typ**e을 사용하고 java는 **nominal type**을 사용합니다.
+
+shape based type과 nominal type은 **타입간의 호환성**(Type Compatibility), **유연성**(Flexibility), **에러를 처리하는 방식**에 차이가 있습니다.
 
 ## Nominal types
 
-Nominal type 은...
+**Nominal type** 은...
 
-- 선언된 타입의 이름 혹은 identity에 기반합니다.
-- 타입의 이름 혹은 선언이 같은 경우에 두 가지 타입이 호환됩니다.
-- 상속(Inheritance)이나 서브 타이핑(subtyping) 관계는 명시적으로 선언되어야 합니다.
+- 선언된 타입의 **이름** 혹은 **identity**에 기반합니다.
+- 타입의 **이름 혹은 선언이 같은 경우**에 두 가지 타입이 **호환**됩니다.
+- 상속(Inheritance)이나 서브 타이핑(subtyping) **관계는 명시적으로 선언**되어야 합니다.
 - Java, C++, C#과 같은 언어가 nominal type을 사용합니다.
 
 ## Shaped based types
 
-Shaped based type은...
+**Shaped based type**은...
 
-- 타입의 이름이나 선언이 아닌 구조 / 모양(properties, method)으로 타입을 결정합니다.
-- 만약 이름이 서로 다른 두 타입이 같은 구조를 갖고 있다면 같은 타입으로 간주합니다.
+- 타입의 이름이나 선언이 아닌 **구조 / 모양(properties, method)**으로 타입을 결정합니다.
+- 만약 이름이 서로 다른 두 타입이 **같은 구조를 갖고 있다면 같은 타입**으로 간주합니다.
 - typescript, Go, OCaml 언어가 shaped based type을 사용합니다.
 - python과 같은 동적인 언어에서는 duck typing("If it looks like a duck and quacks like a duck, it's a duck.") 이라고도 합니다.
 
@@ -130,11 +132,16 @@ Untagged union type은 타입간의 구별을 위한 명시적인 이름이나 �
 # Dart support for Union types
 
 Dart는 typescript의 `|` 와 같이 Union type을 사용하기 위한 문법은 없긴하지만 Union type을 아예 배제하고 있진 않습니다.
+
 Dart는 특정 상황에서 필요한 몇 가지 union type을 정의해놨습니다.
 
 ## `FutureOr<T>`
 
-> A type representing values that are either Future of type T or T. This class declaration is a public stand-in for an internal future - or - value generic type, which is not a class type. References to this class are resolved to the internal type. It is a compile-time error for any class to extend, mix in or implement FutureOr.
+> A type representing values that are either Future of type T or T.
+>
+> This class declaration is a public stand-in for an internal future - or - value generic type, which is not a class type. References to this class are resolved to the internal type.
+>
+> It is a compile-time error for any class to extend, mix in or implement FutureOr.
 
 `Future<T>` 혹은 `<T>` 타입입니다.
 
@@ -145,17 +152,21 @@ Dart는 특정 상황에서 필요한 몇 가지 union type을 정의해놨습�
 ## Sealed class modifier - Tagged union types
 
 **sealed modifier**
-sealed modifier는 이산적(enumerable)이고 다른 타입과는 구별되는(known) 서브타입들의 집합을 만들기 위해 사용됩니다.
-sealed modifier로 정의된 클래스는 switch문과 함께 사용할 때 enum을 사용하는 것처럼 exhaustive checking을 보장해줍니다.
+
+sealed modifier는 이산적(enumerable)이고 다른 타입과는 구별되는(known) **서브타입들의 집합**을 만들기 위해 사용됩니다.
+
+sealed modifier로 정의된 클래스는 switch문과 함께 사용할 때 enum을 사용하는 것처럼 **exhaustive checking**을 보장해줍니다.
 
 sealed class는 다음과 같은 성격을 갖습니다.
 
-- 내부적으로 abstract이기 때문에 직접 instance화 하여 사용할 수 없습니다.
+- 내부적으로 **abstract**이기 때문에 직접 instance화 하여 사용할 수 없습니다.
 - factory constructor를 가질 수 있습니다.
 - subclass들이 사용할 constructor를 정의할 수 있습니다.
 - library외부에서 sealed class를 상속(extend 혹은 implement) 할 수 없습니다.
 
-이처럼 sealed class는 library내부에서만 사용할 수 있기 때문에 compiler가 해당 클래스의 서브 클래스들을 모두 정확하게 파악할 수 있습니다. 따라서 compile 타임에서 switch를 통한 exhaustive checking 기능을 사용할 수 있는 것입니다.
+이처럼 sealed class는 library내부에서만 사용할 수 있기 때문에 compiler가 해당 클래스의 서브 클래스들을 모두 정확하게 파악할 수 있습니다.
+
+따라서 compile 타임에서 switch를 통한 exhaustive checking 기능을 사용할 수 있는 것입니다.
 
 ## package - Either
 
@@ -192,8 +203,7 @@ class PreviousFormState extends State<PreviousForm> {
 /// AFTER
 /// To utilize the sealed class to represent union types,
 /// define ImageType and let UrlImage and XFileImage inherit ImageType
-/// so that the compiler can check if all the type is checked is switch
-/// exhuastive checking.
+/// so that the compiler can check if all the type is checked within switch syntax
 import 'package:image_picker/image_picker.dart';
 
 sealed class ImageType {}
