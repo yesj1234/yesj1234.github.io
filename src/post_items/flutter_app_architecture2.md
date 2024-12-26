@@ -3,7 +3,7 @@ title: Flutter App Architecture(2) - Riverpod Architecture
 author: jack
 description: Riverpod 아키텍처에 대해 알아봅니다.
 published: true
-date: 2024. 12. 09.
+date: 2024. 12. 10.
 tags: ['Flutter']
 ---
 
