@@ -470,6 +470,281 @@ double _scale() {
 
 andrea의 예시 답안을 나름대로 분석해보며 많이 배우는 시간이었습니다.
 
+# Example
+
+![animation_example](/animation_example.gif)
+
+## animation controller 정의
+
+```dart
+class DayViewCard extends ConsumerStatefulWidget {
+  const DayViewCard({super.key, required this.journal});
+
+  final Journal journal;
+
+  @override
+  ConsumerState<_DayViewCard> createState() => _DayViewCardState();
+}
+
+class _DayViewCardState extends ConsumerState<DayViewCard> with SingleTickerProviderMixin {
+
+  // define animation controller to handle the user drag gesture.
+  late final AnimationController<double> _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+      lowerBound: -400,
+      upperBound: 0, // Prevent dragging to right.
+    );
+    _controller.value = 0.0;
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose(); // Make sure to dispose the controller.
+    super.dispose();
+  }
+}
+```
+
+## GestureDetector의 horizontal drag callback 정의
+
+```dart
+class _DayViewCardState extends ConsumerState<DayViewCard> with SingleTickerProviderMixin {
+  ...
+
+  void handleDragUpdate(DragUpdateDetails details) {
+    // Update the animation controllers value continuously on user's gesture.
+    _controller.value += details.primaryDelta!;
+
+    // If the user has dragged the journal over deleteOnDragThreshold,
+    // vibrate the phone to indicate that this drag action will fire the delete callback.
+    if (_controller.value.abs() > deleteOnDragThreshold && !didVibrate) {
+      HapticFeedback.heavyImpact();
+      didVibrate = true;
+    }
+
+    // if the user has dragged the journal over deleteOnDragThreshold,
+    // and thus the phone has vibrated, and did not end the drag gesture
+    // but dragged back to the point where the controller's value to under deleteOnDragThreshold,
+    // reset the didVibrate boolean, so that dragging the journal over the threshold
+    // will again make the phone vibrate.
+    if (_controller.value.abs() < deleteOnDragThreshold && didVibrate) {
+      didVibrate = false;
+    }
+
+  }
+
+  void handleDragEnd(DragEndDetails details) {
+
+    // If previous animation is still on progress, block further animation updates.
+    if (_controller.isAnimating || _controller.status == AnimationStatus.completed) {
+      return;
+    }
+
+    // If the phone has vibrated, indicating that the user wants to delete the journal,
+    // execute the on delete callback and reset the journal to the original point,
+    // where Offset is 0 from right.
+    if (didVibrate) {
+      _handleOnDelete(context);
+      _controller.forward();
+      return;
+    }
+
+    // Reset the didVibrate bool to false.
+    didVibrate = false;
+
+
+    // Threshold of which to decide user's intention whether to open the icon menus or not.
+    const velocityThreshold = 2.0;
+
+    // If user has dragged the journal fast enough to overcome the velocityThreshold,
+    // which is 2 logical pixcels per second, then reset the position of the journal.
+    // This gets called only when dragging to right.
+    if (details.primaryVelocity! >= velocityThreshold) {
+      _controller.fling();
+      return;
+    }
+
+    // If user has not dragged the journal good enough to show the delete icon button,
+    // than reset the journal's position.
+    if (_controller.value.abs() < deleteIconStartFrom) {
+      _controller.forward();
+      return;
+    }
+
+
+
+    if (_controller.value.abs() >= deleteIconStartFrom || details.primaryVelocity! >= velocityThreshold) {
+      _controller.animateTo(
+        -dragEndsAt,
+        curve: Curves.easeOutCirc,
+        duration: const Duration(milliseconds: 500),
+      );
+      return ;
+    }
+
+    if (details.primaryVelocity! > velocityThreshold) {
+      _controller.animateTo(-dragEndsAt);
+      return;
+    }
+    return;
+  }
+}
+```
+
+variables used for handling the animation.
+
+```dart
+class _DayViewCardState extends ConsumerState<DayViewCard> with SingleTickerProviderMixin {
+  /// Whether the user dragged the journal over [deleteOnDragThreshold] offset value.
+  bool didVibrate = false;
+
+  /// Distance of which the icon
+  double opacityDistance = 25;
+
+  double get iconSize => 45;
+
+  /// delete icon will start appearing from this offset to the right
+  /// Since 8 is the default padding applied to the IconButton, adjust the logical
+  /// pixels based on this value.
+  double get deleteIconStartFrom => iconSize - 24;
+
+  /// delete icon will start appearing from this offset to the right
+  /// Since 8 is the default padding applied to the IconButton, adjust the logical
+  /// pixels based on this value.
+  double get editIconStartFrom => iconSize * 2;
+
+  /// Position of which the drag will end up on user drag gesture to open edit and delete icon buttons.
+  double get dragEndsAt => editIconStartFrom + opacityDistance + 10;
+
+  /// Threshold of which the drag gesture fires the on delete callback.
+  double get deleteOnDragThreshold => 2 * (iconSize + (opacityDistance)) + 40;
+}
+```
+
+## AnimatedWidget으로 완성하기
+
+```dart
+class AnimatedDayViewBuilder extends AnimatedWidget {
+  const AnimatedDayViewBuilder({
+    super.key,
+    required this.animation,
+    required this.journal,
+    required this.iconSize,
+    required this.deleteIconOpacity,
+    required this.editIconOpacity,
+    required this.deleteIconStartFrom,
+    required this.editIconStartFrom,
+    required this.deleteOnDragThreshold,
+    this.opacityDistance,
+    this.onEditCallback,
+    this.onDeleteCallback,
+    this.onTapCallback,
+    this.isOverThreshold,
+  }) : super(listenable: animation);
+
+  final Animation<double> animation;
+  final Journal journal;
+  final double iconSize;
+  final double Function(double value) deleteIconOpacity;
+  final double Function(double value) editIconOpacity;
+  final double deleteIconStartFrom;
+  final double editIconStartFrom;
+  final double deleteOnDragThreshold;
+  final double? opacityDistance;
+  final void Function()? onEditCallback;
+  final void Function(BuildContext)? onDeleteCallback;
+  final void Function()? onTapCallback;
+  final bool? isOverThreshold;
+
+  @override
+  Widget build(BuildContext context) {
+    final Widget deleteIconButton = IconButton(
+      onPressed: () => onDeleteCallback?.call(context),
+      iconSize: iconSize,
+      style: IconButton.styleFrom(
+        shape: const CircleBorder(),
+        backgroundColor: Colors.redAccent,
+        foregroundColor: Theme.of(context).scaffoldBackgroundColor,
+      ),
+      icon: const Icon(Icons.delete_forever),
+    );
+    final Widget deleteIcon = animation.value < -deleteIconStartFrom
+        ? AnimatedPositioned(
+            top: 0,
+            bottom: 0,
+            right: animation.value < -deleteOnDragThreshold
+                ? -(animation.value + 72)
+                : 0,
+            duration: const Duration(milliseconds: 100),
+            curve: Curves.decelerate,
+            child: Center(
+              child: AnimatedOpacity(
+                  opacity: deleteIconOpacity(animation.value),
+                  duration: const Duration(milliseconds: 100),
+                  child: deleteIconButton),
+            ),
+          )
+        : const SizedBox.shrink();
+
+    final editIconButton = IconButton(
+      onPressed: () {
+        onEditCallback?.call();
+        context.push('/update/${journal.id}');
+      },
+      style: IconButton.styleFrom(
+        shape: const CircleBorder(),
+        backgroundColor: Colors.lightGreen,
+        foregroundColor: Theme.of(context).scaffoldBackgroundColor,
+      ),
+      iconSize: iconSize,
+      icon: const Icon(Icons.edit),
+    );
+    final Widget editIcon = animation.value < -editIconStartFrom &&
+            animation.value > -deleteOnDragThreshold
+        ? Positioned(
+            top: 0,
+            bottom: 0,
+            right: iconSize + 24,
+            child: Center(
+              child: AnimatedOpacity(
+                opacity: editIconOpacity(animation.value),
+                duration: const Duration(milliseconds: 100),
+                child: editIconButton,
+              ),
+            ),
+          )
+        : const SizedBox.shrink();
+    return Stack(
+      children: [
+        deleteIcon,
+        editIcon,
+        Transform.translate(
+          offset: Offset(animation.value, 0),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 4.0),
+            child: Center(
+              child: DayViewCard(
+                verticalPadding: 0,
+                journal: journal,
+                onTapCallback: onTapCallback,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+```
+
+예시에 사용된 전체 코드는 [여기](https://github.com/yesj1234/farmers_journal)에서 확인하실 수 있습니다.
+
 # Sources
 
 [Andrea Flutter Challenge 3](https://pro.codewithandrea.com/flutter-ui-challenges/003-page-flip/01-intro)
