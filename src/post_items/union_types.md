@@ -198,8 +198,9 @@ class PreviousFormState extends State<PreviousForm> {
 			)
 		)
 	}
-
 }
+
+
 /// AFTER
 /// To utilize the sealed class to represent union types,
 /// define ImageType and let UrlImage and XFileImage inherit ImageType
@@ -217,27 +218,7 @@ final class XFileImage extends ImageType {
   XFileImage(this.value);
   final XFile value;
 }
-/// each items of the images should be of type ImageType
-class PreviousFormState extends State<PreviousForm> {
-	List<dynamic>? images;
 
-	...
-	@override
-	Widget build(BuildContext context) {
-		return Form(
-			child: ImageWidgetLayout(
-				images: images!.map((item) {
-						  if (item is String) {
-						    return UrlImage(item as String);
-						  } else {
-						    return XFileImage(item);
-						  }
-						}).toList(),
-			)
-		);
-	}
-
-}
 ```
 
 ```dart
