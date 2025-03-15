@@ -9,16 +9,16 @@
 		<link href="../_app/immutable/assets/0.Bs5QCvu5.css" rel="stylesheet">
 		<link href="../_app/immutable/assets/3.KdkzbpVi.css" rel="stylesheet">
 		<link href="../_app/immutable/assets/ArticleMeta.VMQ7KKaF.css" rel="stylesheet">
-		<link rel="modulepreload" href="../_app/immutable/entry/start.CXgIfTXn.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/entry.CAsn5CxL.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.Bov6PXN8.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/entry.pDLT2cAQ.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/scheduler.B-IchvsE.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/control.CYgJF_JY.js">
-		<link rel="modulepreload" href="../_app/immutable/entry/app.B4Mf3DZh.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.C69DJSqQ.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/preload-helper.D6kgxu3v.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index.BXAsoQ_g.js">
-		<link rel="modulepreload" href="../_app/immutable/nodes/0.Dv8jq0v4.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/0.C0F_HRvh.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/each.D6YF6ztN.js">
-		<link rel="modulepreload" href="../_app/immutable/nodes/3.BRDOs9Z0.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/3.Eepw89tl.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index.CzR0xuCU.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/PageHead.lOwxy8xl.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/ArticleMeta.CnvR0XDo.js"><title>Union types in dart | SvelteKit + MDsveX Blog</title><!-- HEAD_svelte-1jfag13_START --><meta property="og:site_name" content="SvelteKit + MDsveX Blog"><meta property="og:title" content="Union types in dart"><meta property="og:description" content="Union type에 대해 알아봅시다."><!-- HEAD_svelte-1jfag13_END -->
@@ -87,8 +87,9 @@ This library supports async “map” and async “then” hiding the boilerplat
 			<span class="token punctuation">)</span>
 		<span class="token punctuation">)</span>
 	<span class="token punctuation">&#125;</span>
-
 <span class="token punctuation">&#125;</span>
+
+
 <span class="token comment">/// AFTER</span>
 <span class="token comment">/// To utilize the sealed class to represent union types,</span>
 <span class="token comment">/// define ImageType and let UrlImage and XFileImage inherit ImageType</span>
@@ -106,27 +107,7 @@ sealed <span class="token keyword">class</span> <span class="token class-name">I
   <span class="token class-name">XFileImage</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token keyword">final</span> <span class="token class-name">XFile</span> value<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
-<span class="token comment">/// each items of the images should be of type ImageType</span>
-<span class="token keyword">class</span> <span class="token class-name">PreviousFormState</span> <span class="token keyword">extends</span> <span class="token class-name">State</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">PreviousForm</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
-	<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token keyword">dynamic</span><span class="token punctuation">></span></span><span class="token operator">?</span> images<span class="token punctuation">;</span>
-
-	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-	<span class="token metadata function">@override</span>
-	<span class="token class-name">Widget</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token class-name">BuildContext</span> context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-		<span class="token keyword">return</span> <span class="token class-name">Form</span><span class="token punctuation">(</span>
-			child<span class="token punctuation">:</span> <span class="token class-name">ImageWidgetLayout</span><span class="token punctuation">(</span>
-				images<span class="token punctuation">:</span> images<span class="token operator">!</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-						  <span class="token keyword">if</span> <span class="token punctuation">(</span>item <span class="token operator">is</span> <span class="token class-name">String</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-						    <span class="token keyword">return</span> <span class="token class-name">UrlImage</span><span class="token punctuation">(</span>item <span class="token operator">as</span> <span class="token class-name">String</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-						  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-						    <span class="token keyword">return</span> <span class="token class-name">XFileImage</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span>
-						  <span class="token punctuation">&#125;</span>
-						<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-			<span class="token punctuation">)</span>
-		<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">&#125;</span>
-
-<span class="token punctuation">&#125;</span></code><!-- HTML_TAG_END --></pre> <pre class="language-dart"><!-- HTML_TAG_START --><code class="language-dart"><span class="token comment">/// BEFORE</span>
+</code><!-- HTML_TAG_END --></pre> <pre class="language-dart"><!-- HTML_TAG_START --><code class="language-dart"><span class="token comment">/// BEFORE</span>
 <span class="token comment">///</span>
 <span class="token keyword">class</span> <span class="token class-name">ImageWidgetLayout</span> <span class="token keyword">extends</span> <span class="token class-name">StatelessWidget</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">const</span> <span class="token class-name">ImageWidgetLayout</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token keyword">super</span><span class="token punctuation">.</span>key<span class="token punctuation">,</span> required <span class="token keyword">this</span><span class="token punctuation">.</span>images<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -178,7 +159,7 @@ sealed <span class="token keyword">class</span> <span class="token class-name">I
 			
 			<script>
 				{
-					__sveltekit_fanivm = {
+					__sveltekit_t4wwhf = {
 						base: new URL("..", location).pathname.slice(0, -1)
 					};
 
@@ -187,8 +168,8 @@ sealed <span class="token keyword">class</span> <span class="token class-name">I
 					const data = [{"type":"data","data":{tags:new Set(["Dart","Flutter","SvelteKit","Mdsvex","Github"])},"uses":{}},null];
 
 					Promise.all([
-						import("../_app/immutable/entry/start.CXgIfTXn.js"),
-						import("../_app/immutable/entry/app.B4Mf3DZh.js")
+						import("../_app/immutable/entry/start.Bov6PXN8.js"),
+						import("../_app/immutable/entry/app.C69DJSqQ.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 3],
