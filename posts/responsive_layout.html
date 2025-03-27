@@ -9,19 +9,19 @@
 		<link href="../_app/immutable/assets/0.Bs5QCvu5.css" rel="stylesheet">
 		<link href="../_app/immutable/assets/3.KdkzbpVi.css" rel="stylesheet">
 		<link href="../_app/immutable/assets/ArticleMeta.VMQ7KKaF.css" rel="stylesheet">
-		<link rel="modulepreload" href="../_app/immutable/entry/start.BjhjVQzG.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/entry.JkwHn8AC.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/scheduler.B-IchvsE.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.1vWnlqSu.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/entry.C_J07z_Q.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/scheduler.Bch89ZIZ.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/control.CYgJF_JY.js">
-		<link rel="modulepreload" href="../_app/immutable/entry/app.B85OFcYo.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.C30KLBp7.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/preload-helper.D6kgxu3v.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/index.BXAsoQ_g.js">
-		<link rel="modulepreload" href="../_app/immutable/nodes/0.dGyn6rsR.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index.WsbZAp97.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/0.DEh66XDO.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/each.D6YF6ztN.js">
-		<link rel="modulepreload" href="../_app/immutable/nodes/3.Eepw89tl.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/3.D3sOBkQe.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index.CzR0xuCU.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/PageHead.lOwxy8xl.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/ArticleMeta.CnvR0XDo.js"><title>Responsive layout in Flutter(1) | SvelteKit + MDsveX Blog</title><!-- HEAD_svelte-1jfag13_START --><meta property="og:site_name" content="SvelteKit + MDsveX Blog"><meta property="og:title" content="Responsive layout in Flutter(1)"><meta property="og:description" content="How to build responsive layout in flutter application. Learn about SafeArea, MediaQuery, LayoutBuilder and some best practices."><!-- HEAD_svelte-1jfag13_END -->
+		<link rel="modulepreload" href="../_app/immutable/chunks/PageHead.Dmg_1VQW.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/ArticleMeta.Cy7mv_X5.js"><title>Responsive layout in Flutter(1) | SvelteKit + MDsveX Blog</title><!-- HEAD_svelte-1jfag13_START --><meta property="og:site_name" content="SvelteKit + MDsveX Blog"><meta property="og:title" content="Responsive layout in Flutter(1)"><meta property="og:description" content="How to build responsive layout in flutter application. Learn about SafeArea, MediaQuery, LayoutBuilder and some best practices."><!-- HEAD_svelte-1jfag13_END -->
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">  <div class="header-container svelte-8sye89"><div class="sidebarNavBtn svelte-8sye89"><button data-svelte-h="svelte-1w5a5mz"><i class="fa-solid fa-bars"></i></button></div>   <div class="svelte-149edha"><a href="/"><h1 class="small" data-svelte-h="svelte-9gkbac">Jack.dev.blog</h1></a> </div></div> <div class="sidebar-and-main svelte-8sye89"><div class="sidebar-container svelte-8sye89"><aside class="w-64" aria-label="Sidebar"><div class="overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800"><ul class="space-y-2 list-none"><li><a class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 m-1 text-xl font-semibold text-black" href="/tags/Dart"> <span class="ms-3">Dart</span> </a></li>  <hr><li><a class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 m-1 text-xl font-semibold text-black" href="/tags/Flutter"> <span class="ms-3">Flutter</span> </a></li>  <hr><li><a class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 m-1 text-xl font-semibold text-black" href="/tags/SvelteKit"> <span class="ms-3">SvelteKit</span> </a></li>  <hr><li><a class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 m-1 text-xl font-semibold text-black" href="/tags/Mdsvex"> <span class="ms-3">Mdsvex</span> </a></li>  <hr><li><a class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 m-1 text-xl font-semibold text-black" href="/tags/Github"> <span class="ms-3">Github</span> </a></li>  <hr></ul> </div> </aside> </div> <div class="main svelte-8sye89"> <div class="metadata svelte-1nrt46a"><h2 class="heading svelte-1ujuesn large" id="responsive-layout-in-flutter"><a href="#responsive-layout-in-flutter">Responsive layout in Flutter(1)</a></h2> <p class="svelte-1uy9i9h"><div class="tags svelte-1uy9i9h"><span data-svelte-h="svelte-190wkx9">Tags:</span> <div class="tag-items-container svelte-1uy9i9h"><span class="tag svelte-1uy9i9h">Flutter</span></div></div></p> <div class="metadata svelte-1uy9i9h"><span class="date svelte-1uy9i9h">2024. 10. 30. (Wed)</span> </div></div> <div class="component svelte-1nrt46a"><nav class="toc" data-svelte-h="svelte-b2p7io"><ol class="toc-level toc-level-1"><li class="toc-item toc-item-h1"><a class="toc-link toc-link-h1" href="#responsive-layout">Responsive layout</a></li><li class="toc-item toc-item-h1"><a class="toc-link toc-link-h1" href="#safearea">SafeArea</a></li><li class="toc-item toc-item-h1"><a class="toc-link toc-link-h1" href="#mediaquery">MediaQuery</a></li><li class="toc-item toc-item-h1"><a class="toc-link toc-link-h1" href="#layoutbuilder">LayoutBuilder</a></li><li class="toc-item toc-item-h1"><a class="toc-link toc-link-h1" href="#code-refactor-example">Code refactor example</a></li><li class="toc-item toc-item-h1"><a class="toc-link toc-link-h1" href="#sources">Sources</a></li></ol></nav> <h1 id="responsive-layout" data-svelte-h="svelte-om1mw1">Responsive layout</h1> <p data-svelte-h="svelte-1486607"><strong>Responsive(반응형) 이란?</strong></p> <blockquote data-svelte-h="svelte-1ysth9u"><p><strong>Responsive web design</strong>(RWD) or <strong>responsive design</strong> is an approach to web design that aims to make web pages render well on a <strong>variety of devices and window or screen sizes</strong> from minimum to maximum display size to ensure <strong>usability and satisfaction</strong>. (<a href="https://en.wikipedia.org/wiki/Responsive_web_design" rel="nofollow">wikipedia</a>)</p></blockquote> <p data-svelte-h="svelte-6jjynw">반응형 디자인이란 다양한 종류의 화면 사이즈에 맞춰 적절한 화면을 그려줌으로서 앱을 사용하는 사람의 편의성과 만족감을 높여주는 디자인을 의미합니다.</p> <p data-svelte-h="svelte-41hftz">Flutter는 Android, IOS 같은 모바일 환경 뿐만 아니라 웹에서도 같은 코드베이스로 동작합니다.</p> <p data-svelte-h="svelte-114ni9y">따라서 다양한 크기의 스크린 사이즈를 고려하여 코드를 작성해야 완성도 높은 앱을 만들 수 있습니다.</p> <p data-svelte-h="svelte-1a55bp7">Flutter에서 반응형 디자인을 다루는 몇 가지 방식에 대해서 알아보도록 하겠습니다.</p> <h1 id="safearea" data-svelte-h="svelte-1hdwdjg">SafeArea</h1> <blockquote data-svelte-h="svelte-dl0ned"><p>A widget that <strong>insets its child by sufficient padding</strong> to avoid intrusions by the operating system.</p> <p>…</p> <p>When a minimum padding is specified, the greater of the minimum padding or the safe area padding will be applied. (<a href="https://api.flutter.dev/flutter/widgets/SafeArea-class.html" rel="nofollow"><strong>Document</strong></a>)</p></blockquote> <p data-svelte-h="svelte-xn1ogz">SafeArea 자식요소가 확실하게 화면에 보여지도록 도와주는 위젯입니다.</p> <p data-svelte-h="svelte-1xvg60b">아이폰X의 노치디자인, 아이폰15의 Dynamic Island 등의 <strong>요소들이 화면을 가리지 않도록 공간을 확보</strong>해주는 역할이라고 생각 할 수 있습니다.</p> <p data-svelte-h="svelte-7q2bgb">SafeArea constructor를 통해 화면의 상, 하, 좌, 우 어디에 “Safe area”를 적용할지 선택할 수 있습니다.</p> <p data-svelte-h="svelte-d1oht9">기본적으로는 상, 하, 좌, 우 전체에 적용이 됩니다.</p> <p data-svelte-h="svelte-285nue">또한 최소값(minimum)값을 이용해 기본적으로 적용될 padding의 최소값을 정할 수 있습니다.</p> <hr> <p data-svelte-h="svelte-yban0d"><strong>SafeArea Constructor</strong></p> <pre class="language-dart"><!-- HTML_TAG_START --><code class="language-dart"><span class="token keyword">const</span> <span class="token class-name">SafeArea</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
@@ -83,7 +83,7 @@ Therefore, unless you are concerned with the entire MediaQueryData object changi
 			
 			<script>
 				{
-					__sveltekit_dsni6z = {
+					__sveltekit_im270b = {
 						base: new URL("..", location).pathname.slice(0, -1)
 					};
 
@@ -92,8 +92,8 @@ Therefore, unless you are concerned with the entire MediaQueryData object changi
 					const data = [{"type":"data","data":{tags:new Set(["Dart","Flutter","SvelteKit","Mdsvex","Github"])},"uses":{}},null];
 
 					Promise.all([
-						import("../_app/immutable/entry/start.BjhjVQzG.js"),
-						import("../_app/immutable/entry/app.B85OFcYo.js")
+						import("../_app/immutable/entry/start.1vWnlqSu.js"),
+						import("../_app/immutable/entry/app.C30KLBp7.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 3],

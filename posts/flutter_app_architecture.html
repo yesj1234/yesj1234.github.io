@@ -9,19 +9,19 @@
 		<link href="../_app/immutable/assets/0.Bs5QCvu5.css" rel="stylesheet">
 		<link href="../_app/immutable/assets/3.KdkzbpVi.css" rel="stylesheet">
 		<link href="../_app/immutable/assets/ArticleMeta.VMQ7KKaF.css" rel="stylesheet">
-		<link rel="modulepreload" href="../_app/immutable/entry/start.BjhjVQzG.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/entry.JkwHn8AC.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/scheduler.B-IchvsE.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.1vWnlqSu.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/entry.C_J07z_Q.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/scheduler.Bch89ZIZ.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/control.CYgJF_JY.js">
-		<link rel="modulepreload" href="../_app/immutable/entry/app.B85OFcYo.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.C30KLBp7.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/preload-helper.D6kgxu3v.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/index.BXAsoQ_g.js">
-		<link rel="modulepreload" href="../_app/immutable/nodes/0.dGyn6rsR.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index.WsbZAp97.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/0.DEh66XDO.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/each.D6YF6ztN.js">
-		<link rel="modulepreload" href="../_app/immutable/nodes/3.Eepw89tl.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/3.D3sOBkQe.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index.CzR0xuCU.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/PageHead.lOwxy8xl.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/ArticleMeta.CnvR0XDo.js"><title>Flutter App Architecture(1) - MVVM | SvelteKit + MDsveX Blog</title><!-- HEAD_svelte-1jfag13_START --><meta property="og:site_name" content="SvelteKit + MDsveX Blog"><meta property="og:title" content="Flutter App Architecture(1) - MVVM"><meta property="og:description" content="MVVM(Model View ViewModel)아키텍처에 대해 알아봅니다."><!-- HEAD_svelte-1jfag13_END -->
+		<link rel="modulepreload" href="../_app/immutable/chunks/PageHead.Dmg_1VQW.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/ArticleMeta.Cy7mv_X5.js"><title>Flutter App Architecture(1) - MVVM | SvelteKit + MDsveX Blog</title><!-- HEAD_svelte-1jfag13_START --><meta property="og:site_name" content="SvelteKit + MDsveX Blog"><meta property="og:title" content="Flutter App Architecture(1) - MVVM"><meta property="og:description" content="MVVM(Model View ViewModel)아키텍처에 대해 알아봅니다."><!-- HEAD_svelte-1jfag13_END -->
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">  <div class="header-container svelte-8sye89"><div class="sidebarNavBtn svelte-8sye89"><button data-svelte-h="svelte-1w5a5mz"><i class="fa-solid fa-bars"></i></button></div>   <div class="svelte-149edha"><a href="/"><h1 class="small" data-svelte-h="svelte-9gkbac">Jack.dev.blog</h1></a> </div></div> <div class="sidebar-and-main svelte-8sye89"><div class="sidebar-container svelte-8sye89"><aside class="w-64" aria-label="Sidebar"><div class="overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800"><ul class="space-y-2 list-none"><li><a class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 m-1 text-xl font-semibold text-black" href="/tags/Dart"> <span class="ms-3">Dart</span> </a></li>  <hr><li><a class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 m-1 text-xl font-semibold text-black" href="/tags/Flutter"> <span class="ms-3">Flutter</span> </a></li>  <hr><li><a class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 m-1 text-xl font-semibold text-black" href="/tags/SvelteKit"> <span class="ms-3">SvelteKit</span> </a></li>  <hr><li><a class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 m-1 text-xl font-semibold text-black" href="/tags/Mdsvex"> <span class="ms-3">Mdsvex</span> </a></li>  <hr><li><a class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 m-1 text-xl font-semibold text-black" href="/tags/Github"> <span class="ms-3">Github</span> </a></li>  <hr></ul> </div> </aside> </div> <div class="main svelte-8sye89"> <div class="metadata svelte-1nrt46a"><h2 class="heading svelte-1ujuesn large" id="flutter-app-architecture--mvvm"><a href="#flutter-app-architecture--mvvm">Flutter App Architecture(1) - MVVM</a></h2> <p class="svelte-1uy9i9h"><div class="tags svelte-1uy9i9h"><span data-svelte-h="svelte-190wkx9">Tags:</span> <div class="tag-items-container svelte-1uy9i9h"><span class="tag svelte-1uy9i9h">Flutter</span></div></div></p> <div class="metadata svelte-1uy9i9h"><span class="date svelte-1uy9i9h">2024. 11. 23. (Sat)</span> </div></div> <div class="component svelte-1nrt46a"><nav class="toc" data-svelte-h="svelte-ywqxgp"><ol class="toc-level toc-level-1"><li class="toc-item toc-item-h1"><a class="toc-link toc-link-h1" href="#separation-of-concerns">Separation of concerns</a></li><li class="toc-item toc-item-h1"><a class="toc-link toc-link-h1" href="#layered-architectures-in-flutter-app">Layered Architectures in Flutter App</a><ol class="toc-level toc-level-2"><li class="toc-item toc-item-h2"><a class="toc-link toc-link-h2" href="#mvvm-architecture">MVVM Architecture</a><ol class="toc-level toc-level-3"><li class="toc-item toc-item-h3"><a class="toc-link toc-link-h3" href="#ui-layer">UI Layer</a><ol class="toc-level toc-level-4"><li class="toc-item toc-item-h4"><a class="toc-link toc-link-h4" href="#view">View</a></li><li class="toc-item toc-item-h4"><a class="toc-link toc-link-h4" href="#viewmodel">ViewModel</a></li></ol></li><li class="toc-item toc-item-h3"><a class="toc-link toc-link-h3" href="#datamodel-layer">Data(Model) Layer</a><ol class="toc-level toc-level-4"><li class="toc-item toc-item-h4"><a class="toc-link toc-link-h4" href="#repository">Repository</a></li><li class="toc-item toc-item-h4"><a class="toc-link toc-link-h4" href="#service">Service</a></li></ol></li></ol></li></ol></li><li class="toc-item toc-item-h1"><a class="toc-link toc-link-h1" href="#best-practices">Best practices</a><ol class="toc-level toc-level-2"><li class="toc-item toc-item-h2"><a class="toc-link toc-link-h2" href="#separation-of-concerns-1">Separation of concerns</a></li><li class="toc-item toc-item-h2"><a class="toc-link toc-link-h2" href="#handling-data">Handling data</a></li><li class="toc-item toc-item-h2"><a class="toc-link toc-link-h2" href="#app-structure">App structure</a></li><li class="toc-item toc-item-h2"><a class="toc-link toc-link-h2" href="#testing">Testing</a></li></ol></li><li class="toc-item toc-item-h1"><a class="toc-link toc-link-h1" href="#sources">Sources</a></li></ol></nav> <p data-svelte-h="svelte-1eusmwg">Architecture란 용어는 문맥에 따라 다양한 의미를 지니는 단어이기 때문에 한 문장으로 정의하기 애매한 단어입니다.<br>
@@ -39,7 +39,7 @@ Serivce로 부터 데이터를 받아오고 Domain model로 변환한 후 ViewMo
 			
 			<script>
 				{
-					__sveltekit_dsni6z = {
+					__sveltekit_im270b = {
 						base: new URL("..", location).pathname.slice(0, -1)
 					};
 
@@ -48,8 +48,8 @@ Serivce로 부터 데이터를 받아오고 Domain model로 변환한 후 ViewMo
 					const data = [{"type":"data","data":{tags:new Set(["Dart","Flutter","SvelteKit","Mdsvex","Github"])},"uses":{}},null];
 
 					Promise.all([
-						import("../_app/immutable/entry/start.BjhjVQzG.js"),
-						import("../_app/immutable/entry/app.B85OFcYo.js")
+						import("../_app/immutable/entry/start.1vWnlqSu.js"),
+						import("../_app/immutable/entry/app.C30KLBp7.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 3],
