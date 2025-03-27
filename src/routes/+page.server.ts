@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { slugFromPath } from '$lib/slugFromPath';
 
-const MAX_POSTS = 20;
+const MAX_POSTS = 50;
 
 export const load: PageServerLoad = async ({ url }) => {
 	const modules = import.meta.glob(`/src/post_items/*.md`);
