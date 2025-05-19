@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { openedHeaderFiles } from '$lib/stores/header';
+	import type { HeaderFile } from '$lib/stores/header';
 	export let slug = '';
 	export let title: string;
 
@@ -8,11 +10,21 @@
 		.replace(/\s/g, '-');
 
 	const href = slug ? `/posts/${slug}` : '#' + id;
+	function addHeaderFile() {
+		openedHeaderFiles.update((prev) => {
+			const isDuplicate = prev.some((file: HeaderFile) => file.title === title);
+			if (isDuplicate) {
+				return prev;
+			} else {
+				return [...prev, { href, title: title }];
+			}
+		});
+	}
 </script>
 
 {#if slug}
 	<h3 class="heading" class:large={!slug} {id}>
-		<a {href}>
+		<a on:click={addHeaderFile} {href}>
 			{title}
 		</a>
 	</h3>

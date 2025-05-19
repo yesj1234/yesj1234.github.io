@@ -4,7 +4,7 @@ author: jack
 date: 2024-04-26
 published: false
 description: Frontmatter in Mdsvex explained.
-tags: [SvelteKit, Mdsvex]
+tags: [Mdsvex]
 ---
 
 # Table of Contents

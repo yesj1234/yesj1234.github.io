@@ -1,12 +1,17 @@
+import { slugFromPath } from '$lib/slugFromPath';
 import type { PageServerLoad } from './$types';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const load: PageServerLoad = async ({ params }) => {
 	const modules = import.meta.glob(`/src/post_items/*.md`);
 
-	const postPromises = Object.entries(modules).map(([, resolver]) =>
+	const postPromises = Object.entries(modules).map(([path, resolver]) =>
 		resolver().then(
-			(post) => ({ ...(post as unknown as App.MdsvexTags).metadata }) as unknown as App.TagsPost
+			(post) =>
+				({
+					slug: slugFromPath(path),
+					...(post as unknown as App.MdsvexTags).metadata
+				}) as unknown as App.TagsPost
 		)
 	);
 	const posts = await Promise.all(postPromises);
@@ -20,7 +25,7 @@ export const load: PageServerLoad = async ({ params }) => {
 			}
 		}
 	});
-	return { tags: tags };
+	return { publishedPosts, tags };
 };
 
 export const prerender = 'auto';

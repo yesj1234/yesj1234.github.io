@@ -4,7 +4,7 @@ author: jack
 description: Dart에서 비동기를 구현하는 방식에 대해 알아보고 예시를 통해 학습 해봅니다.
 published: true
 date: 2025. 03. 27.
-tags: ['Dart', 'Flutter']
+tags: ['Dart']
 ---
 
 # Basic concepts

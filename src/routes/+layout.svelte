@@ -1,40 +1,19 @@
 <script lang="ts">
+	import '@fortawesome/fontawesome-free/css/all.min.css';
 	import '../app.pcss';
-	import Header from '$lib/components/Header.svelte';
-	import Sidebar from '$lib/components/Sidebar.svelte';
-	import { Drawer, Button, CloseButton } from 'flowbite-svelte';
-	import { sineIn } from 'svelte/easing';
+	import Sidebar2 from '$lib/components/sidebar/Sidebar.svelte';
 	import type { PageData } from './$types';
+	import Header2 from '$lib/components/header/Header.svelte';
 	export let data: PageData;
-
-	let hidden1 = true;
-	let transitionParams = {
-		x: -320,
-		duration: 200,
-		easing: sineIn
-	};
 </script>
 
-<div class="header-container">
-	<div class="sidebarNavBtn">
-		<button on:click={() => (hidden1 = false)}><i class="fa-solid fa-bars"></i></button>
-	</div>
-	<Drawer
-		transitionType="fly"
-		{transitionParams}
-		bind:hidden={hidden1}
-		id="sidebarNav"
-		width="w-70"
-	>
-		<Sidebar tags={data.tags}></Sidebar>
-	</Drawer>
-	<Header></Header>
-</div>
 <div class="sidebar-and-main">
-	<div class="sidebar-container">
-		<Sidebar tags={data.tags}></Sidebar>
+	<div class="sidebar2">
+		<Sidebar2 {data} tags={data.tags}></Sidebar2>
 	</div>
+
 	<div class="main">
+		<div class="header-container"><Header2></Header2></div>
 		<slot></slot>
 	</div>
 </div>
@@ -45,7 +24,9 @@
 		--color-background: #ffffff;
 		--color-text-primary: #212121;
 		--color-text-secondary: #5a5a5a;
+		--color-text-sidebar-item: grey;
 		--color-hover: #007bff;
+		--color-default: #90a4ae;
 	}
 
 	:global(body) {
@@ -57,7 +38,6 @@
 		max-width: 100vw;
 		max-height: 100vh;
 		overflow-x: hidden;
-		/* padding: calc(var(--spacing-unit) * 8); */
 		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
 			'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 		-webkit-font-smoothing: antialiased;
@@ -66,12 +46,11 @@
 		color: var(--color-text-primary);
 		line-height: 1.51;
 		font-size: 18px;
-		/* height: 100vh; */
 	}
 
 	:global(a, a:visited, a:active) {
 		text-decoration: none;
-		color: var(--color-text-primary);
+		color: var(--color-text-sidebar-item);
 		font-weight: 700;
 	}
 
@@ -89,10 +68,6 @@
 		list-style: circle;
 	}
 	:global(blockquote) {
-		/* border-left-style: solid;
-		border-left-width: 1.5px;
-		border-left-color: rgb(37, 206, 21); */
-		/* box-shadow: 2px 2px 15px #ccc; */
 		color: lightseagreen;
 	}
 	:global(code) {
@@ -100,53 +75,33 @@
 		opacity: 0.9;
 		z-index: 0;
 	}
-	/* :global(img) {
-		width: 20rem;
-	} */
+
 	.sidebar-and-main {
 		display: flex;
 		flex-direction: row;
 		justify-content: start;
-		width: 100%;
-		height: 100%;
-		padding-top: 5rem;
-		/* height: 100vh; */
-		/* max-height: 100vh; */
-	}
-	.sidebarNavBtn {
-		display: block;
-		padding-top: 2rem;
-		@media only screen and (min-width: 1024px) {
-			display: none;
-		}
+		width: 100vw;
 	}
 
 	.header-container {
-		/* position: sticky; */
 		position: fixed;
 		top: 0;
-		width: 100%;
-		height: 6rem;
-		background-color: #c0c0c0;
-		display: flex;
-		z-index: 1;
-	}
-	.sidebar-container {
-		display: none;
-		@media only screen and (min-width: 1024px) {
-			position: fixed;
-			top: 6rem;
-			align-self: flex-start;
-			padding-top: 10px;
-			display: block;
-		}
+		left: 50px;
+		width: 100vw;
 	}
 
-	div.main {
-		width: 100%;
+	.sidebar2 {
+		position: fixed;
+		top: 0;
+	}
+	.main {
+		width: 100vw;
 		height: 100%;
+		padding-top: rem;
+		padding-left: 7rem;
 		@media only screen and (min-width: 1024px) {
-			padding-left: 15rem;
+			margin-left: auto;
+			margin-right: auto;
 		}
 	}
 </style>

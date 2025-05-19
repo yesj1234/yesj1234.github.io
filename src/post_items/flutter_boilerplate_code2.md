@@ -4,7 +4,7 @@ description: IDE를 이용해 만든 flutter project의 초기 main.dart 코드�
 author: jack
 date: 2024.09. 29.
 published: true
-tags: [Dart, Flutter]
+tags: [Flutter]
 ---
 
 지난 글에서 Widget이 field로 가지고 있던 Key까지 알아보았습니다.

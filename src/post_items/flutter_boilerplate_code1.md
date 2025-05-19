@@ -4,7 +4,7 @@ description: IDE를 이용해 만든 flutter project의 초기 main.dart 코드�
 author: jack
 date: 2024.09. 27.
 published: true
-tags: [Dart, Flutter]
+tags: [Flutter]
 ---
 
 # Create new flutter project

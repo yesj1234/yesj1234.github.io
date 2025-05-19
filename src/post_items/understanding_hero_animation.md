@@ -4,7 +4,7 @@ description: Flutter Hero animation에 대해 알아봅니다.
 author: jack
 published: true
 date: 2025. 02. 22.
-tags: ['Dart', 'Flutter']
+tags: ['Flutter']
 ---
 
 Flutter에서 hero animation은 다른 페이지로 이동 할 때 두 페이지 간의 공통되는 widget(대표적으로 이미지)이 화면에서 사라지지 않고 자연스럽게 시작 페이지에서 목표 페이지로 넘어가는 듯한 효과를 주는 애니메이션입니다.

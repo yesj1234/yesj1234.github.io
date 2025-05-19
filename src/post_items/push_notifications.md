@@ -4,7 +4,7 @@ author: jack
 date: 2025. 05. 16
 published: true
 description: Flutter 앱에서 사용자에게 알림을 보내는 방법에 대해 알아봅니다.
-tags: [Flutter, Firebase]
+tags: [Firebase]
 ---
 
 > [!info]

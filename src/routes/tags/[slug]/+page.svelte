@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import Article from '$lib/components/Article.svelte';
-	import ArticleTitle from '$lib/components/ArticleTitle.svelte';
-	import ArticleMeta from '$lib/components/ArticleMeta.svelte';
-	import ArticleDescription from '$lib/components/ArticleDescription.svelte';
+	import Article from '$lib/components/article/Article.svelte';
+	import ArticleTitle from '$lib/components/article/ArticleTitle.svelte';
+	import ArticleMeta from '$lib/components/article/ArticleMeta.svelte';
+	import ArticleDescription from '$lib/components/article/ArticleDescription.svelte';
 
 	export let data: PageData;
 </script>
