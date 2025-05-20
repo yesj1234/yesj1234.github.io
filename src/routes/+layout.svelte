@@ -74,6 +74,7 @@
 		background-color: #f2f1f1;
 		opacity: 0.9;
 		z-index: 0;
+		font-size: 15px;
 	}
 
 	.sidebar-and-main {

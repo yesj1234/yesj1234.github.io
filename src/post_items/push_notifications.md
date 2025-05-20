@@ -40,7 +40,7 @@ Flutter 애플리케이션에서 푸시 알림을 구현하면 다양한 이점�
 
 ## 푸시 알림 구현 원리
 
-![push_notification_overview](/flutter_push_overview.png)
+<img src='/flutter_push_overview.png' width='120%' alt='push_notification_overview.png'>
 
 Flutter에서 푸시 알림을 구현하기 위해서는 그 기반이 되는 기술에 대한 기초적인 이해가 필수적입니다. 이 과정은 일반적으로 여러 핵심 단계를 포함하며, 메시지가 대상 사용자에게 안정적으로 전달되도록 보장합니다.
 
