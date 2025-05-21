@@ -43,6 +43,9 @@
 	.heading {
 		margin: 0;
 		font-size: 1.8rem;
+		@media screen and (max-width: 768px) {
+			font-size: 1.2rem;
+		}
 	}
 	.large {
 		margin-top: calc(var(--spacing-unit) * 12);

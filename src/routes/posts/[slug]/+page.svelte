@@ -33,16 +33,27 @@
 		@media only screen and (min-width: 1024px) {
 			margin-left: auto;
 			margin-right: auto;
-			width: calc(100%-20rem);
+		}
+		@media only screen and (max-width: 768px) {
+			width: 100vw;
+			font-size: 1rem;
 		}
 	}
 	.metadata {
 		width: 80%;
 		padding-left: calc(var(--spacing-unit) * 10);
+		@media only screen and (max-width: 768px) {
+			padding-left: 0;
+			margin-left: auto;
+			margin-right: auto;
+		}
 	}
 	.component {
 		padding-left: calc(var(--spacing-unit) * 10);
 		width: 80%;
 		border: 1px black;
+		@media only screen and (max-width: 768px) {
+			padding-left: 0;
+		}
 	}
 </style>

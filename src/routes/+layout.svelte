@@ -89,11 +89,17 @@
 		top: 0;
 		left: 50px;
 		width: 100vw;
+		@media screen and (max-width: 768px) {
+			display: none;
+		}
 	}
 
 	.sidebar2 {
 		position: fixed;
 		top: 0;
+		@media screen and (max-width: 768px) {
+			display: none;
+		}
 	}
 	.main {
 		width: 100vw;
@@ -103,6 +109,9 @@
 		@media only screen and (min-width: 1024px) {
 			margin-left: auto;
 			margin-right: auto;
+		}
+		@media only screen and (max-width: 768px) {
+			padding-left: 0;
 		}
 	}
 </style>

@@ -45,11 +45,17 @@
 			margin-left: auto;
 			margin-right: auto;
 		}
+		@media only screen and (max-width: 768px) {
+			width: 100vw;
+		}
 	}
 
 	.jack {
 		font-size: 30px;
 		font-weight: bold;
+		@media only screen and (max-width: 768px) {
+			font-size: 15px;
+		}
 	}
 	.blog-title {
 		display: flex;
@@ -58,6 +64,9 @@
 		padding-right: calc(var(--spacing-unit) * 20);
 		align-items: center;
 		place-content: space-between;
+		@media only screen and (max-width: 768px) {
+			font-size: 1rem;
+		}
 	}
 
 	.image {
@@ -74,6 +83,10 @@
 		width: 50px;
 		height: 50px;
 		margin-left: 10px;
+		@media only screen and (max-width: 768px) {
+			width: 30px;
+			height: 30px;
+		}
 	}
 	hr {
 		border: 0;
