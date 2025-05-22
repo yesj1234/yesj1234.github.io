@@ -1,1 +1,0 @@
-import{w as i}from"./index.CXVSoEhx.js";const t="openedHeaderFiles";function n(){const o=JSON.parse(localStorage.getItem(t)||"[]"),{subscribe:e,set:r,update:a}=i(o);return e(s=>{localStorage.setItem(t,JSON.stringify(s))}),{subscribe:e,set:r,update:a}}const l=n();export{l as o};
