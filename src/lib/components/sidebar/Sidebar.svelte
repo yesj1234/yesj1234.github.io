@@ -1,31 +1,57 @@
 <script lang="ts">
 	import SidebarFolder from '$lib/components/sidebar/SidebarFolder.svelte';
+	import SidebarSearch from '$lib/components/sidebar/SidebarSearch.svelte';
 	import { slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
-	let isOpen = false;
-	function toggleFolders() {
-		isOpen = !isOpen;
-		if (isOpen) {
-			onSelectMenu('folders');
-		}
-		if (!isOpen) {
-			onSelectMenu(null);
-		}
-	}
 
+	export let data;
+	export let tags;
+
+	let isOpen = false;
 	let is_root_folder_open = false;
-	function toggleRootFolder() {
-		is_root_folder_open = !is_root_folder_open;
-	}
+	let selectedMenu: string | null = null;
+	let searchQuery = '';
+
+	const openSidebarFoldersWidth = '250px';
 
 	const root_folder_transition = {
 		duration: 300,
 		easing: quintOut
 	};
-
-	let selectedMenu: String | null = null;
-	function onSelectMenu(itemName: String | null) {
+	function onSelectMenu(itemName: string | null) {
 		selectedMenu = itemName;
+	}
+	function openFolderFinder() {
+		// if the sidebar nav was opened, and clicking again the same nav tap, should close the sidebar nav.
+		if (isOpen) {
+			if (selectedMenu === 'folders') {
+				isOpen = !isOpen;
+				return;
+			} else {
+				onSelectMenu('folders');
+				return;
+			}
+		}
+		// else open the selected sidebar nav.
+		onSelectMenu('folders');
+		isOpen = !isOpen; // isOpen is now true;
+	}
+
+	function openSearchBar() {
+		if (isOpen) {
+			if (selectedMenu === 'search') {
+				isOpen = !isOpen;
+				return;
+			} else {
+				onSelectMenu('search');
+				return;
+			}
+		}
+		onSelectMenu('search');
+		isOpen = !isOpen;
+	}
+	function toggleRootFolder() {
+		is_root_folder_open = !is_root_folder_open;
 	}
 
 	function extractTagSpecificTitles(data: { publishedPosts: [App.BlogPost] }, targetTag: string) {
@@ -33,9 +59,11 @@
 		return matchingPosts;
 	}
 
-	const openSidebarFoldersWidth = '250px';
-	export let data;
-	export let tags;
+	$: filteredPosts = searchQuery
+		? data.publishedPosts.filter((post: any) =>
+				(post.title + post.content).toLowerCase().includes(searchQuery.toLowerCase())
+			)
+		: [];
 </script>
 
 <div class="container">
@@ -44,38 +72,47 @@
 			<button
 				type="button"
 				class="menu-item"
-				on:click={toggleFolders}
+				on:click={openFolderFinder}
 				class:selected={selectedMenu === 'folders'}
 			>
 				<i class="fa-regular fa-copy"></i>
 			</button>
-			<div class="menu-item" class:selected={selectedMenu === 'search'}>
+			<button class="menu-item" on:click={openSearchBar} class:selected={selectedMenu === 'search'}>
 				<i class="fa-solid fa-magnifying-glass"></i>
-			</div>
+			</button>
 			<button class="menu-item" class:selected={selectedMenu === 'home'}>
 				<a href="/"><i class="fa-solid fa-house"></i></a>
 			</button>
 		</div>
 	</div>
+
 	<div
 		class:closed={!isOpen}
-		class="sidebar-folders"
+		class="sidebar-selected"
 		style={`width: ${isOpen ? openSidebarFoldersWidth : '0px'}; transition: width 0.3s ease;`}
 	>
-		<button on:click={toggleRootFolder} class="root-folder"
-			><div class="root-folder-title">
-				<span class="arrow-icon" class:rotated={is_root_folder_open}>
-					<i class="fa-solid fa-chevron-right"></i>
-				</span>
-				<span class="root-folder">YESJ1234.GITHUB.IO</span>
-			</div>
-		</button>
-		{#if is_root_folder_open}
-			<div class="root-items" transition:slide={root_folder_transition}>
-				{#each tags as tag}
-					<SidebarFolder name={tag} data={extractTagSpecificTitles(data, tag)}></SidebarFolder>
-				{/each}
-			</div>
+		{#if selectedMenu === 'folders'}
+			<button on:click={toggleRootFolder} class="root-folder"
+				><div class="root-folder-title">
+					<span class="arrow-icon" class:rotated={is_root_folder_open}>
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+					<span class="root-folder">YESJ1234.GITHUB.IO</span>
+				</div>
+			</button>
+			{#if is_root_folder_open}
+				<div class="root-items" transition:slide={root_folder_transition}>
+					{#each tags as tag}
+						<SidebarFolder name={tag} data={extractTagSpecificTitles(data, tag)}></SidebarFolder>
+					{/each}
+				</div>
+			{/if}
+		{:else if selectedMenu === 'search'}
+			<SidebarSearch
+				{searchQuery}
+				onQueryChange={(val) => (searchQuery = val)}
+				posts={data.publishedPosts}
+			></SidebarSearch>
 		{/if}
 	</div>
 </div>
@@ -115,7 +152,7 @@
 		border-radius: 4px; /* optional: gives a soft edge */
 	}
 
-	.sidebar-folders {
+	.sidebar-selected {
 		display: flex;
 		flex-direction: column;
 		padding-top: 10px;
@@ -151,13 +188,6 @@
 		transform: scale(0.97); /* optional: subtle press animation */
 	}
 
-	div.menu-item {
-		padding-left: 10px;
-		padding-bottom: 5px;
-		padding-right: 10px;
-		font-size: 30px;
-	}
-
 	.container {
 		display: flex;
 		max-width: 400px;
@@ -178,5 +208,38 @@
 	.selected {
 		color: black;
 		border-radius: 4px;
+	}
+
+	.search-bar {
+		padding: 10px;
+	}
+
+	.search-input {
+		width: 90%;
+		padding: 8px;
+		font-size: 16px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		outline: none;
+	}
+
+	.search-results {
+		padding: 10px;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		overflow-y: auto;
+	}
+
+	.search-result {
+		color: #444;
+		text-decoration: none;
+		font-size: 16px;
+		padding: 4px;
+		border-radius: 4px;
+	}
+
+	.search-result:hover {
+		background-color: #dcdcdc;
 	}
 </style>
