@@ -209,37 +209,4 @@
 		color: black;
 		border-radius: 4px;
 	}
-
-	.search-bar {
-		padding: 10px;
-	}
-
-	.search-input {
-		width: 90%;
-		padding: 8px;
-		font-size: 16px;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-		outline: none;
-	}
-
-	.search-results {
-		padding: 10px;
-		display: flex;
-		flex-direction: column;
-		gap: 8px;
-		overflow-y: auto;
-	}
-
-	.search-result {
-		color: #444;
-		text-decoration: none;
-		font-size: 16px;
-		padding: 4px;
-		border-radius: 4px;
-	}
-
-	.search-result:hover {
-		background-color: #dcdcdc;
-	}
 </style>

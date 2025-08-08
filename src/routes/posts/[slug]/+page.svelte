@@ -7,7 +7,6 @@
 	export let data: PageData;
 
 	$: component = data.component;
-	console.log(data);
 </script>
 
 <div class="container">
