@@ -2,7 +2,7 @@
 title: 'CocoaPods 에서 SPM 으로 옮기며 깨진 것들'
 author: jack
 date: 2026. 11. 18.
-published: false
+published: true
 description: 'Flutter 앱의 iOS 의존성을 CocoaPods 에서 Swift Package Manager 로 옮기면서, CocoaPods 가 조용히 대신 해 주던 일들이 하나씩 드러난 기록이에요.'
 cover: /posts/cocoapods_to_spm_migration/cover.webp
 tags: [Flutter, iOS, SPM, CocoaPods, Xcode]

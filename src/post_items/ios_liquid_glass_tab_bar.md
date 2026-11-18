@@ -2,7 +2,7 @@
 title: 'Flutter 앱의 탭바만 iOS 네이티브로: Liquid Glass 를 PlatformView 로 붙이기'
 author: jack
 date: 2026. 11. 18.
-published: false
+published: true
 description: 'Flutter 로 흉내 내던 유리 탭바를 iOS 26 시스템 UITabBar 로 바꿨어요. 화면은 Flutter 에 두고 탭바 한 장만 PlatformView 로 띄우면서 겪은 제스처 경쟁, 선택 어긋남, 시스템 배지를 버린 이유를 정리했어요.'
 cover: /posts/ios_liquid_glass_tab_bar/cover.webp
 tags: [iOS, Flutter, PlatformView, UIKit, Liquid Glass, UITabBar]

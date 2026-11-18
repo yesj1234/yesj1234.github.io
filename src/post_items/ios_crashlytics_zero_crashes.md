@@ -2,7 +2,7 @@
 title: iOS 크래시가 0건이었던 진짜 이유
 author: jack
 date: 2026. 11. 18.
-published: false
+published: true
 description: CocoaPods 에서 SPM 으로 옮긴 뒤 Crashlytics 에 iOS 크래시가 한 건도 잡히지 않았어요. 조용히 실패하던 빌드 단계 하나를 찾아간 기록이에요.
 cover: /posts/ios_crashlytics_zero_crashes/cover.webp
 tags: [Flutter, iOS, Crashlytics]
