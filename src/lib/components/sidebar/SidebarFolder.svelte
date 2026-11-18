@@ -1,110 +1,102 @@
 <script lang="ts">
-	import { slide } from 'svelte/transition';
-	import { quintOut } from 'svelte/easing';
-	import { openedHeaderFiles } from '$lib/stores/header';
-	import type { HeaderFile } from '$lib/stores/header';
-	let is_folder_open = false;
-	function toggleFolder() {
-		is_folder_open = !is_folder_open;
-	}
-	const folder_transition = {
-		duration: 300,
-		easing: quintOut
-	};
+	import { page } from '$app/stores';
 
-	function addHeaderFile(post: App.BlogPost) {
-		let href = post.slug
-			? `/posts/${post.slug}`
-			: '#' +
-				post.title
-					.toLowerCase()
-					.replace(/[^a-zA-Z ]/g, '')
-					.replace(/\s/g, '-');
+	export let name: string;
+	export let posts: App.BlogPost[] = [];
 
-		openedHeaderFiles.update((prev) => {
-			const isDuplicate = prev.some((file: HeaderFile) => file.title === post.title);
-			if (isDuplicate) {
-				return prev;
-			} else {
-				return [...prev, { href, title: post.title }];
-			}
-		});
-	}
-	export let name: String;
-	export let data;
+	$: containsActive = posts.some((post) => $page.url.pathname === `/posts/${post.slug}`);
+	let isOpen = false;
+	// 지금 보고 있는 글이 들어 있는 폴더는 펼쳐 둔다
+	$: if (containsActive) isOpen = true;
 </script>
 
-<button class="tag-folder" on:click={toggleFolder}>
-	<span class="arrow-icon" class:rotated={is_folder_open}>
-		<i class="fa-solid fa-chevron-right"></i>
-	</span>
-	{#if !is_folder_open}
-		<i class="fa-solid fa-folder"></i>
-	{:else}
-		<i class="fa-solid fa-folder-open"></i>
-	{/if}
-
-	<span>{name}</span>
+<button type="button" class="row folder" on:click={() => (isOpen = !isOpen)}>
+	<i class="fa-solid fa-chevron-right chevron" class:open={isOpen}></i>
+	<span class="label">{name}</span>
+	<span class="count">{posts.length}</span>
 </button>
-<div class:closed={!is_folder_open} class="title">
-	{#if is_folder_open}
-		<div class="items" transition:slide={folder_transition}>
-			{#each data as post}
-				<div class="item">
-					<a
-						on:click={() => addHeaderFile(post)}
-						href={post.slug
-							? `/posts/${post.slug}`
-							: '#' +
-								post.title
-									.toLowerCase()
-									.replace(/[^a-zA-Z ]/g, '')
-									.replace(/\s/g, '-')}>{post.title}.md</a
-					>
-				</div>
-			{/each}
-		</div>
-	{/if}
-</div>
+
+{#if isOpen}
+	<ul class="files">
+		{#each posts as post (post.slug)}
+			<li>
+				<a
+					class="row file"
+					class:active={$page.url.pathname === `/posts/${post.slug}`}
+					href={`/posts/${post.slug}`}
+					title={post.title}
+				>
+					<i class="fa-brands fa-markdown md-icon"></i>
+					<span class="label">{post.title}</span>
+				</a>
+			</li>
+		{/each}
+	</ul>
+{/if}
 
 <style>
-	.item {
-		padding-left: 10px;
-		padding-bottom: 10px;
-	}
-	.arrow-icon {
-		display: inline-block;
-		margin-right: 0.5rem;
-		transition: transform 0.3s ease;
-		color: gray;
+	.row {
+		all: unset;
+		box-sizing: border-box;
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		width: 100%;
+		height: 22px;
+		cursor: pointer;
+		color: var(--text);
+		white-space: nowrap;
 	}
 
-	.item {
-		display: flex;
-		flex-direction: column;
-		color: gray;
+	.row:hover {
+		background: var(--bg-hover);
 	}
-	.title {
-		padding-left: 35px;
-		overflow: hidden;
-		font-size: 15px;
+
+	.folder {
+		padding: 0 12px 0 16px;
 	}
-	.rotated {
+
+	.file {
+		padding: 0 12px 0 38px;
+	}
+
+	.file.active {
+		background: var(--bg-selected);
+	}
+
+	.chevron {
+		width: 16px;
+		font-size: 10px;
+		text-align: center;
+		color: var(--text-muted);
+		transition: transform 0.15s ease;
+	}
+
+	.chevron.open {
 		transform: rotate(90deg);
 	}
-	button.tag-folder {
-		all: unset;
-		cursor: pointer;
-		padding-left: 20px;
-		padding-right: 5px;
+
+	.label {
+		flex: 1;
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
-	button.tag-folder:hover,
-	button.tag-folder:focus-visible {
-		outline: none; /* prevents default blue outline */
-		border-radius: 4px; /* optional: gives a soft edge */
+
+	.count {
+		font-size: 11px;
+		color: var(--text-faint);
 	}
-	.closed {
-		height: 0px;
-		transition: height 0.3s ease;
+
+	.md-icon {
+		flex: none;
+		font-size: 12px;
+		color: var(--accent);
+	}
+
+	.files {
+		list-style: none;
+		margin: 0;
+		padding: 0;
 	}
 </style>

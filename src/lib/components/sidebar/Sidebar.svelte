@@ -1,212 +1,96 @@
 <script lang="ts">
 	import SidebarFolder from '$lib/components/sidebar/SidebarFolder.svelte';
 	import SidebarSearch from '$lib/components/sidebar/SidebarSearch.svelte';
-	import { slide } from 'svelte/transition';
-	import { quintOut } from 'svelte/easing';
+	import { activePanel } from '$lib/stores/sidebar';
 
-	export let data;
-	export let tags;
+	export let posts: App.BlogPost[] = [];
+	export let tags: string[] = [];
 
-	let isOpen = false;
-	let is_root_folder_open = false;
-	let selectedMenu: string | null = null;
-	let searchQuery = '';
+	let isRootOpen = true;
 
-	const openSidebarFoldersWidth = '250px';
+	$: panel = $activePanel ?? 'explorer';
 
-	const root_folder_transition = {
-		duration: 300,
-		easing: quintOut
-	};
-	function onSelectMenu(itemName: string | null) {
-		selectedMenu = itemName;
+	function postsOf(tag: string) {
+		return posts.filter((post) => post.tags?.includes(tag));
 	}
-	function openFolderFinder() {
-		// if the sidebar nav was opened, and clicking again the same nav tap, should close the sidebar nav.
-		if (isOpen) {
-			if (selectedMenu === 'folders') {
-				isOpen = !isOpen;
-				return;
-			} else {
-				onSelectMenu('folders');
-				return;
-			}
-		}
-		// else open the selected sidebar nav.
-		onSelectMenu('folders');
-		isOpen = !isOpen; // isOpen is now true;
-	}
-
-	function openSearchBar() {
-		if (isOpen) {
-			if (selectedMenu === 'search') {
-				isOpen = !isOpen;
-				return;
-			} else {
-				onSelectMenu('search');
-				return;
-			}
-		}
-		onSelectMenu('search');
-		isOpen = !isOpen;
-	}
-	function toggleRootFolder() {
-		is_root_folder_open = !is_root_folder_open;
-	}
-
-	function extractTagSpecificTitles(data: { publishedPosts: [App.BlogPost] }, targetTag: string) {
-		const matchingPosts = data.publishedPosts.filter((post) => post.tags.includes(targetTag));
-		return matchingPosts;
-	}
-
-	$: filteredPosts = searchQuery
-		? data.publishedPosts.filter((post: any) =>
-				(post.title + post.content).toLowerCase().includes(searchQuery.toLowerCase())
-			)
-		: [];
 </script>
 
-<div class="container">
-	<div class="sidebar">
-		<div class="menu">
-			<button
-				type="button"
-				class="menu-item"
-				on:click={openFolderFinder}
-				class:selected={selectedMenu === 'folders'}
-			>
-				<i class="fa-regular fa-copy"></i>
-			</button>
-			<button class="menu-item" on:click={openSearchBar} class:selected={selectedMenu === 'search'}>
-				<i class="fa-solid fa-magnifying-glass"></i>
-			</button>
-			<button class="menu-item" class:selected={selectedMenu === 'home'}>
-				<a href="/"><i class="fa-solid fa-house"></i></a>
-			</button>
-		</div>
-	</div>
+<div class="panel">
+	<div class="panel-title">{panel === 'search' ? '검색' : '탐색기'}</div>
 
-	<div
-		class:closed={!isOpen}
-		class="sidebar-selected"
-		style={`width: ${isOpen ? openSidebarFoldersWidth : '0px'}; transition: width 0.3s ease;`}
-	>
-		{#if selectedMenu === 'folders'}
-			<button on:click={toggleRootFolder} class="root-folder"
-				><div class="root-folder-title">
-					<span class="arrow-icon" class:rotated={is_root_folder_open}>
-						<i class="fa-solid fa-chevron-right"></i>
-					</span>
-					<span class="root-folder">YESJ1234.GITHUB.IO</span>
-				</div>
-			</button>
-			{#if is_root_folder_open}
-				<div class="root-items" transition:slide={root_folder_transition}>
-					{#each tags as tag}
-						<SidebarFolder name={tag} data={extractTagSpecificTitles(data, tag)}></SidebarFolder>
-					{/each}
-				</div>
-			{/if}
-		{:else if selectedMenu === 'search'}
-			<SidebarSearch
-				{searchQuery}
-				onQueryChange={(val) => (searchQuery = val)}
-				posts={data.publishedPosts}
-			></SidebarSearch>
+	{#if panel === 'explorer'}
+		<button type="button" class="section" on:click={() => (isRootOpen = !isRootOpen)}>
+			<i class="fa-solid fa-chevron-right chevron" class:open={isRootOpen}></i>
+			<span>YESJ1234.GITHUB.IO</span>
+		</button>
+		{#if isRootOpen}
+			<div class="tree">
+				{#each tags as tag (tag)}
+					<SidebarFolder name={tag} posts={postsOf(tag)} />
+				{/each}
+			</div>
 		{/if}
-	</div>
+	{:else}
+		<SidebarSearch {posts} />
+	{/if}
 </div>
 
 <style>
-	div.root-folder-title {
-		display: flex;
-		flex-direction: row;
-		padding-top: 20px;
-	}
-
-	span.root-folder {
-		font-size: 20px;
-		color: #8a8a8a;
-	}
-	.arrow-icon {
-		display: inline-block;
-		margin-right: 0.5rem;
-		transition: transform 0.3s ease;
-		color: gray;
-	}
-	.rotated {
-		transform: rotate(90deg);
-	}
-	div.root-items {
+	.panel {
+		height: 100%;
 		display: flex;
 		flex-direction: column;
-		color: #8a8a8a;
-	}
-	button.root-folder {
-		all: unset;
-		cursor: pointer;
-	}
-	button.root-folder:hover,
-	button.root-folder:focus-visible {
-		outline: none; /* prevents default blue outline */
-		border-radius: 4px; /* optional: gives a soft edge */
-	}
-
-	.sidebar-selected {
-		display: flex;
-		flex-direction: column;
-		padding-top: 10px;
+		overflow-y: auto;
 		overflow-x: hidden;
+		font-size: 13px;
+		color: var(--text-muted);
 	}
-	.closed {
-		/* width: 0px; */
-		overflow: hidden;
-		/* transition: width 0.3s ease; */
-	}
-	.menu {
-		width: 50px;
-	}
-	.menu-item {
-		all: unset;
-		cursor: pointer;
-		padding-left: 10px;
-		margin-bottom: 20px;
-		padding-right: 10px;
-		font-size: 30px;
+
+	.panel-title {
+		flex: none;
+		height: var(--tabs-h);
 		display: flex;
 		align-items: center;
-		color: #8a8a8a;
-	}
-	button.menu-item:hover,
-	button.menu-item:focus-visible {
-		background-color: lightgrey;
-		outline: none; /* prevents default blue outline */
-		border-radius: 4px; /* optional: gives a soft edge */
-	}
-	button.menu-item:active {
-		background-color: #444;
-		transform: scale(0.97); /* optional: subtle press animation */
+		padding: 0 20px;
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--text-muted);
 	}
 
-	.container {
+	.section {
+		all: unset;
+		box-sizing: border-box;
 		display: flex;
-		max-width: 400px;
-		height: 100vh;
-		background-color: #e9e9e8;
-		flex-direction: row;
+		align-items: center;
+		gap: 4px;
+		width: 100%;
+		height: 22px;
+		padding: 0 8px;
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		color: var(--text);
+		cursor: pointer;
 	}
 
-	.sidebar {
-		background-color: #e9e9e8;
-		transition: width 0.3s ease;
-		overflow: auto;
-		overflow-x: hidden;
-		display: flex;
-		flex-direction: column;
-		padding-top: 1rem;
+	.section:hover {
+		background: var(--bg-hover);
 	}
-	.selected {
-		color: black;
-		border-radius: 4px;
+
+	.chevron {
+		width: 16px;
+		font-size: 10px;
+		text-align: center;
+		transition: transform 0.15s ease;
+	}
+
+	.chevron.open {
+		transform: rotate(90deg);
+	}
+
+	.tree {
+		padding: 2px 0 12px;
 	}
 </style>

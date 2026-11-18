@@ -1,117 +1,326 @@
 <script lang="ts">
 	import '@fortawesome/fontawesome-free/css/all.min.css';
 	import '../app.pcss';
-	import Sidebar2 from '$lib/components/sidebar/Sidebar.svelte';
-	import type { PageData } from './$types';
-	import Header2 from '$lib/components/header/Header.svelte';
-	export let data: PageData;
+	import { page } from '$app/stores';
+	import { afterNavigate } from '$app/navigation';
+	import Sidebar from '$lib/components/sidebar/Sidebar.svelte';
+	import Header from '$lib/components/header/Header.svelte';
+	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import { activePanel, togglePanel, type SidebarPanel } from '$lib/stores/sidebar';
+	import type { LayoutData } from './$types';
+
+	export let data: LayoutData;
+
+	$: posts = (data.publishedPosts ?? []) as unknown as App.BlogPost[];
+	$: tags = Array.from((data.tags ?? []) as Iterable<string>);
+
+	// 모바일에서는 패널을 서랍으로 띄운다. 데스크톱 패널 상태(activePanel)와 따로 둬서 첫 화면에 서랍이 열리지 않게 한다
+	let drawerOpen = false;
+
+	function openDrawer(panel: SidebarPanel) {
+		activePanel.set(panel);
+		drawerOpen = true;
+	}
+
+	afterNavigate(() => {
+		drawerOpen = false;
+	});
+
+	$: isPost = $page.url.pathname.startsWith('/posts/');
 </script>
 
-<div class="sidebar-and-main">
-	<div class="sidebar2">
-		<Sidebar2 {data} tags={data.tags}></Sidebar2>
+<div class="shell" class:panel-open={$activePanel !== null} class:drawer-open={drawerOpen}>
+	<nav class="activity" aria-label="활동 바">
+		<button
+			type="button"
+			class="activity-item"
+			class:selected={$activePanel === 'explorer'}
+			on:click={() => togglePanel('explorer')}
+			title="탐색기"
+			aria-label="탐색기"
+		>
+			<i class="fa-regular fa-copy"></i>
+		</button>
+		<button
+			type="button"
+			class="activity-item"
+			class:selected={$activePanel === 'search'}
+			on:click={() => togglePanel('search')}
+			title="검색"
+			aria-label="검색"
+		>
+			<i class="fa-solid fa-magnifying-glass"></i>
+		</button>
+		<div class="activity-spacer"></div>
+		<a
+			class="activity-item"
+			href="https://github.com/yesj1234"
+			target="_blank"
+			rel="noreferrer"
+			title="GitHub"
+			aria-label="GitHub"
+		>
+			<i class="fa-brands fa-github"></i>
+		</a>
+		<div class="activity-item"><ThemeToggle /></div>
+	</nav>
+
+	<aside class="panel" aria-label="사이드 패널">
+		<Sidebar {posts} {tags} />
+	</aside>
+
+	<button
+		type="button"
+		class="backdrop"
+		aria-label="패널 닫기"
+		tabindex="-1"
+		on:click={() => (drawerOpen = false)}
+	></button>
+
+	<div class="editor">
+		<header class="mobile-bar">
+			<button type="button" class="mobile-btn" on:click={() => openDrawer('explorer')} aria-label="글 목록 열기">
+				<i class="fa-solid fa-bars"></i>
+			</button>
+			<a href="/" class="mobile-title">Jack.dev.blog</a>
+			<button type="button" class="mobile-btn" on:click={() => openDrawer('search')} aria-label="검색 열기">
+				<i class="fa-solid fa-magnifying-glass"></i>
+			</button>
+			<div class="mobile-btn"><ThemeToggle /></div>
+		</header>
+
+		<div class="tabs-bar"><Header /></div>
+
+		<main class="content">
+			<slot />
+		</main>
 	</div>
 
-	<div class="main">
-		<div class="header-container"><Header2></Header2></div>
-		<slot></slot>
-	</div>
+	<footer class="statusbar">
+		<span class="status-item"><i class="fa-solid fa-code-branch"></i> main</span>
+		<span class="status-item">글 {posts.length}개</span>
+		<span class="status-spacer"></span>
+		{#if isPost}<span class="status-item">Markdown</span>{/if}
+		<span class="status-item">UTF-8</span>
+	</footer>
 </div>
 
 <style>
-	:global(:root) {
-		--spacing-unit: 4px;
-		--color-background: #ffffff;
-		--color-text-primary: #212121;
-		--color-text-secondary: #5a5a5a;
-		--color-text-sidebar-item: grey;
-		--color-hover: #007bff;
-		--color-default: #90a4ae;
+	.shell {
+		min-height: 100vh;
 	}
 
-	:global(body) {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-		width: 100vw;
-		height: 100vh;
-		max-width: 100vw;
-		max-height: 100vh;
-		overflow-x: hidden;
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-			'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-		-webkit-font-smoothing: antialiased;
-		-moz-osz-font-smoothing: grayscale;
-		background-color: var(--color-background);
-		color: var(--color-text-primary);
-		line-height: 1.51;
-		font-size: 18px;
-	}
-
-	:global(a, a:visited, a:active) {
-		text-decoration: none;
-		color: var(--color-text-sidebar-item);
-		font-weight: 700;
-	}
-
-	:global(a:hover) {
-		text-decoration: none;
-		color: var(--color-hover);
-	}
-	:global(ol.toc-level-1) {
-		list-style: upper-roman;
-	}
-	:global(ol.toc-level-2) {
-		list-style: lower-roman;
-	}
-	:global(ol.toc-level-3) {
-		list-style: circle;
-	}
-	:global(blockquote) {
-		color: lightseagreen;
-	}
-	:global(code) {
-		background-color: #f2f1f1;
-		opacity: 0.9;
-		z-index: 0;
-		font-size: 15px;
-	}
-
-	.sidebar-and-main {
+	/* ---------- 활동 바 ---------- */
+	.activity {
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: var(--status-h);
+		width: var(--activity-w);
 		display: flex;
-		flex-direction: row;
-		justify-content: start;
-		width: 100vw;
+		flex-direction: column;
+		background: var(--bg-activity);
+		border-right: 1px solid var(--border);
+		z-index: 30;
 	}
 
-	.header-container {
-		position: fixed;
-		top: 0;
-		left: 50px;
-		width: 100vw;
-		@media screen and (max-width: 768px) {
-			display: none;
-		}
+	.activity-item {
+		all: unset;
+		box-sizing: border-box;
+		position: relative;
+		display: grid;
+		place-items: center;
+		width: var(--activity-w);
+		height: var(--activity-w);
+		font-size: 20px;
+		color: var(--text-faint);
+		cursor: pointer;
 	}
 
-	.sidebar2 {
+	.activity-item:hover {
+		color: var(--text);
+	}
+
+	.activity-item.selected {
+		color: var(--text);
+	}
+
+	.activity-item.selected::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: 2px;
+		background: var(--accent);
+	}
+
+	.activity-spacer {
+		flex: 1;
+	}
+
+	/* ---------- 사이드 패널 ---------- */
+	.panel {
 		position: fixed;
 		top: 0;
-		@media screen and (max-width: 768px) {
+		left: var(--activity-w);
+		bottom: var(--status-h);
+		width: var(--panel-w);
+		background: var(--bg-side);
+		border-right: 1px solid var(--border);
+		z-index: 20;
+		transform: translateX(calc(-100% - var(--activity-w)));
+		visibility: hidden;
+		transition:
+			transform 0.2s ease,
+			visibility 0.2s;
+	}
+
+	.panel-open .panel {
+		transform: none;
+		visibility: visible;
+	}
+
+	.backdrop {
+		display: none;
+	}
+
+	/* ---------- 에디터 영역 ---------- */
+	.editor {
+		margin-left: var(--activity-w);
+		padding-bottom: var(--status-h);
+		min-width: 0;
+		transition: margin-left 0.2s ease;
+	}
+
+	.panel-open .editor {
+		margin-left: calc(var(--activity-w) + var(--panel-w));
+	}
+
+	.tabs-bar {
+		position: sticky;
+		top: 0;
+		z-index: 10;
+	}
+
+	.mobile-bar {
+		display: none;
+	}
+
+	.content {
+		min-width: 0;
+	}
+
+	/* ---------- 상태 바 ---------- */
+	.statusbar {
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: var(--status-h);
+		display: flex;
+		align-items: center;
+		gap: 2px;
+		padding: 0 8px;
+		font-size: 12px;
+		background: var(--statusbar);
+		color: var(--statusbar-text);
+		z-index: 40;
+	}
+
+	.status-item {
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		padding: 0 6px;
+		white-space: nowrap;
+	}
+
+	.status-spacer {
+		flex: 1;
+	}
+
+	/* ---------- 모바일 ---------- */
+	@media (max-width: 767px) {
+		.activity,
+		.tabs-bar,
+		.statusbar {
 			display: none;
 		}
-	}
-	.main {
-		width: 100vw;
-		height: 100%;
-		padding-top: rem;
-		padding-left: 7rem;
-		@media only screen and (min-width: 1024px) {
-			margin-left: auto;
-			margin-right: auto;
+
+		.panel {
+			top: 0;
+			left: 0;
+			bottom: 0;
+			width: min(84vw, 320px);
+			z-index: 60;
+			transform: translateX(-100%);
+			visibility: hidden;
 		}
-		@media only screen and (max-width: 768px) {
-			padding-left: 0;
+
+		.panel-open .panel {
+			transform: translateX(-100%);
+			visibility: hidden;
+		}
+
+		.drawer-open .panel {
+			transform: none;
+			visibility: visible;
+		}
+
+		.backdrop {
+			all: unset;
+			position: fixed;
+			inset: 0;
+			z-index: 50;
+			background: rgba(0, 0, 0, 0.35);
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.2s ease;
+		}
+
+		.drawer-open .backdrop {
+			opacity: 1;
+			pointer-events: auto;
+		}
+
+		.editor,
+		.panel-open .editor {
+			margin-left: 0;
+			padding-bottom: 0;
+		}
+
+		.mobile-bar {
+			position: sticky;
+			top: 0;
+			z-index: 10;
+			display: flex;
+			align-items: center;
+			gap: 4px;
+			height: 52px;
+			padding: 0 8px;
+			background: color-mix(in srgb, var(--bg) 92%, transparent);
+			backdrop-filter: blur(8px);
+			border-bottom: 1px solid var(--border);
+		}
+
+		.mobile-title {
+			flex: 1;
+			font-weight: 700;
+			font-size: 16px;
+			padding-left: 4px;
+		}
+
+		.mobile-btn {
+			all: unset;
+			box-sizing: border-box;
+			display: grid;
+			place-items: center;
+			width: 40px;
+			height: 40px;
+			font-size: 18px;
+			color: var(--text-muted);
+			cursor: pointer;
 		}
 	}
 </style>

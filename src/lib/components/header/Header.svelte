@@ -3,92 +3,141 @@
 	import { goto } from '$app/navigation';
 	import { openedHeaderFiles } from '$lib/stores/header';
 
-	function removeItem(idx: number) {
-		let currentPath = $page.url.pathname;
+	function closeTab(href: string) {
+		const tabs = $openedHeaderFiles;
+		const index = tabs.findIndex((tab) => tab.href === href);
+		const remaining = tabs.filter((tab) => tab.href !== href);
+		openedHeaderFiles.set(remaining);
 
-		openedHeaderFiles.update((prev) => {
-			const fileToRemove = prev[idx];
-			const updated = prev.filter((_: any, i: number) => i !== idx);
-			if (fileToRemove?.href === currentPath) {
-				if (updated.length > 0) {
-					const lastFile = updated[updated.length - 1];
-					goto(lastFile.href);
-				} else {
-					goto('/');
-				}
-			}
-			return updated;
-		});
+		if (href !== $page.url.pathname) return;
+		// 닫은 탭이 지금 화면이면 VS Code 처럼 옆 탭으로 옮겨 간다
+		const next = remaining[Math.min(index, remaining.length - 1)];
+		goto(next ? next.href : '/');
 	}
 </script>
 
-<div>
-	<div class="container">
-		{#if $openedHeaderFiles.length > 0}
-			{#each $openedHeaderFiles as file, idx}
-				<div class="item {file.href === $page.url.pathname ? 'active' : ''}">
-					<div class="file-name"><a href={file.href}><p>{file.title}</p></a></div>
-					<button on:click={() => removeItem(idx)}>X</button>
-				</div>
-			{/each}
-		{/if}
-	</div>
-</div>
+<nav class="tabs" aria-label="열린 글">
+	<a href="/" class="tab home" class:active={$page.url.pathname === '/'} title="홈">
+		<i class="fa-solid fa-house icon"></i>
+		<span class="name">홈</span>
+	</a>
+	{#each $openedHeaderFiles as file (file.href)}
+		<div class="tab" class:active={file.href === $page.url.pathname}>
+			<a href={file.href} class="link" title={file.title}>
+				<i class="fa-brands fa-markdown icon md"></i>
+				<span class="name">{file.title}</span>
+			</a>
+			<button
+				type="button"
+				class="close"
+				on:click={() => closeTab(file.href)}
+				aria-label={`${file.title} 탭 닫기`}
+			>
+				<i class="fa-solid fa-xmark"></i>
+			</button>
+		</div>
+	{/each}
+</nav>
 
 <style>
-	.container {
-		width: 100vw;
-		height: 30px;
-		background-color: #e9e9e8;
-
+	.tabs {
 		display: flex;
-		flex-direction: row;
+		height: var(--tabs-h);
+		background: var(--bg-tabs);
+		border-bottom: 1px solid var(--border);
+		overflow-x: auto;
+		overflow-y: hidden;
+		scrollbar-width: none;
 	}
 
-	.item {
+	.tabs::-webkit-scrollbar {
+		display: none;
+	}
+
+	.tab {
+		position: relative;
+		flex: none;
 		display: flex;
-		max-width: 200px;
-		padding-left: 10px;
-		border: 1px solid #dad9d9;
-		/* overflow-x: hidden;
-		overflow-y: hidden; */
+		align-items: center;
+		max-width: 240px;
+		height: 100%;
+		font-size: 13px;
+		color: var(--text-muted);
+		border-right: 1px solid var(--border);
+		background: var(--bg-tabs);
 	}
 
-	.item.active {
-		background-color: white;
-		border-bottom: 2px solid #007acc; /* VS Code-style active indicator */
-		color: black;
-		font-weight: bold;
+	.tab.home {
+		gap: 6px;
+		padding: 0 14px;
 	}
-	.file-name {
-		max-width: 180px;
-		border: 0;
-	}
-	.item:hover {
-		background-color: white;
-	}
-	p {
-		margin: 0;
-		font-size: 15px;
 
-		text-overflow: ellipsis;
-		/* both the following line needs to be ellipsis */
-		white-space: nowrap;
+	.tab:hover {
+		color: var(--text);
+	}
+
+	.tab.active {
+		color: var(--text);
+		background: var(--bg-tab-active);
+		margin-bottom: -1px;
+		height: calc(100% + 1px);
+	}
+
+	.tab.active::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 1px;
+		background: var(--accent);
+	}
+
+	.link {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		min-width: 0;
+		height: 100%;
+		padding: 0 4px 0 12px;
+	}
+
+	.icon {
+		flex: none;
+		font-size: 12px;
+	}
+
+	.icon.md {
+		color: var(--accent);
+	}
+
+	.name {
 		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
-	button {
-		opacity: 0;
+
+	.close {
+		all: unset;
+		flex: none;
+		display: grid;
+		place-items: center;
+		width: 20px;
+		height: 20px;
+		margin-right: 6px;
+		border-radius: 4px;
+		font-size: 12px;
 		cursor: pointer;
-		border: 0;
-		background-color: transparent;
-		transition: opacity 0.2s ease;
+		visibility: hidden;
 	}
-	.item:hover button,
-	button:hover {
-		display: inline;
-		opacity: 1;
+
+	.tab:hover .close,
+	.tab.active .close,
+	.close:focus-visible {
+		visibility: visible;
 	}
-	button:hover {
-		background-color: grey;
+
+	.close:hover {
+		background: var(--bg-hover);
 	}
 </style>

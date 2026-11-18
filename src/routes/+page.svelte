@@ -1,102 +1,93 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import PageHead from '$lib/components/PageHead.svelte';
-	import Article from '$lib/components/article/Article.svelte';
-	import ArticleTitle from '$lib/components/article/ArticleTitle.svelte';
-	import ArticleMeta from '$lib/components/article/ArticleMeta.svelte';
-	import ArticleDescription from '$lib/components/article/ArticleDescription.svelte';
+	import PostList from '$lib/components/PostList.svelte';
+
 	export let data: PageData;
 </script>
 
-<PageHead title="Home" description="An awesome blog about development with Svelte" />
+<PageHead title="" description="Jack 의 개발 블로그" />
 
-<div class="container">
-	<div class="blog-title">
-		<span class="jack">Jack.dev.blog</span>
-		<!-- svelte-ignore a11y-img-redundant-alt -->
-		<div class="image">
-			<span>by</span>
-			<a href="https://github.com/yesj1234"
-				><img src="/logo/github-profile.png" alt="profile-image" /></a
-			>
+<div class="page">
+	<header class="intro">
+		<a href="https://github.com/yesj1234" target="_blank" rel="noreferrer" class="avatar-link">
+			<img src="/logo/github-profile.png" alt="yesj1234 프로필 사진" class="avatar" />
+		</a>
+		<div>
+			<h1 class="name">Jack.dev.blog</h1>
+			<p class="handle">
+				<a href="https://github.com/yesj1234" target="_blank" rel="noreferrer">@yesj1234</a>
+				<span aria-hidden="true">·</span>
+				글 {data.posts.length}개
+			</p>
 		</div>
-	</div>
-	{#each data.posts as { slug, title, description, date, tags }}
-		<Article>
-			<ArticleTitle {slug} {title} />
-			<ArticleMeta {date} {tags} />
-			<ArticleDescription {description} {slug} />
-		</Article>
-		<hr />
-	{/each}
+	</header>
+
+	<h2 class="section-label">최근 글</h2>
+	<PostList posts={data.posts} />
 </div>
 
-<slot />
-
 <style>
-	.container {
-		width: 50vw;
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		margin-top: 2rem;
-		@media only screen and (min-width: 1024px) {
-			margin-left: auto;
-			margin-right: auto;
-		}
-		@media only screen and (max-width: 768px) {
-			width: 100vw;
-		}
+	.page {
+		max-width: 760px;
+		margin: 0 auto;
+		padding: 56px 32px 96px;
 	}
 
-	.jack {
-		font-size: 30px;
-		font-weight: bold;
-		@media only screen and (max-width: 768px) {
-			font-size: 15px;
-		}
-	}
-	.blog-title {
+	.intro {
 		display: flex;
-		margin-top: calc(var(--spacing-unit) * 8);
-		padding-left: calc(var(--spacing-unit) * 20);
-		padding-right: calc(var(--spacing-unit) * 20);
 		align-items: center;
-		place-content: space-between;
-		@media only screen and (max-width: 768px) {
-			font-size: 1rem;
-		}
+		gap: 16px;
+		margin-bottom: 48px;
 	}
 
-	.image {
+	.avatar {
+		display: block;
+		width: 56px;
+		height: 56px;
+		border-radius: 50%;
+		object-fit: cover;
+		border: 1px solid var(--border);
+	}
+
+	.name {
+		margin: 0;
+		font-size: 1.6rem;
+		font-weight: 750;
+		letter-spacing: -0.02em;
+		line-height: 1.2;
+	}
+
+	.handle {
+		margin: 4px 0 0;
 		display: flex;
-		justify-content: center;
-		align-items: center;
+		gap: 6px;
+		font-size: 14px;
+		color: var(--text-muted);
 	}
 
-	.image span {
-		font-style: italic;
+	.handle a:hover {
+		color: var(--accent);
 	}
-	img {
-		border-radius: 9999px;
-		width: 50px;
-		height: 50px;
-		margin-left: 10px;
-		@media only screen and (max-width: 768px) {
-			width: 30px;
-			height: 30px;
+
+	.section-label {
+		margin: 0;
+		padding-bottom: 8px;
+		font-size: 12px;
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--text-faint);
+		border-bottom: 1px solid var(--border);
+	}
+
+	@media (max-width: 767px) {
+		.page {
+			padding: 28px 20px 64px;
 		}
-	}
-	hr {
-		border: 0;
-		height: 1px;
-		background-image: linear-gradient(
-			to right,
-			rgba(0, 0, 0, 0),
-			rgba(0, 0, 0, 0.75),
-			rgba(0, 0, 0, 0)
-		);
-		width: 90%;
+
+		.intro {
+			margin-bottom: 32px;
+		}
 	}
 </style>

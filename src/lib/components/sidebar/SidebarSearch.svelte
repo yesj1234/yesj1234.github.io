@@ -1,111 +1,121 @@
 <script lang="ts">
 	import Fuse from 'fuse.js';
 	import { onDestroy } from 'svelte';
-	import { openedHeaderFiles } from '$lib/stores/header';
-	import type { HeaderFile } from '$lib/stores/header';
 
-	export let searchQuery: string;
-	export let onQueryChange: (value: string) => void;
-	export let posts: App.BlogPost[];
+	export let posts: App.BlogPost[] = [];
 
+	let query = '';
 	let debouncedQuery = '';
 	let debounceTimeout: ReturnType<typeof setTimeout>;
 
-	$: if (searchQuery !== debouncedQuery) {
+	$: {
 		clearTimeout(debounceTimeout);
-		debounceTimeout = setTimeout(() => {
-			debouncedQuery = searchQuery;
-		}, 300);
+		const next = query;
+		debounceTimeout = setTimeout(() => (debouncedQuery = next), 200);
 	}
 
 	onDestroy(() => clearTimeout(debounceTimeout));
 
-	const fuse = new Fuse(posts, {
-		keys: ['title', 'content'],
-		includeScore: true,
-		threshold: 0.4 // adjust for stricter/looser matching
+	$: fuse = new Fuse(posts, {
+		keys: ['title', 'description', 'tags'],
+		threshold: 0.4
 	});
 
-	function handleInput(e: Event) {
-		const target = e.target as HTMLInputElement;
-
-		onQueryChange(target.value);
-	}
-	function addHeaderFile(post: App.BlogPost) {
-		let href = post.slug
-			? `/posts/${post.slug}`
-			: '#' +
-				post.title
-					.toLowerCase()
-					.replace(/[^a-zA-Z ]/g, '')
-					.replace(/\s/g, '-');
-
-		openedHeaderFiles.update((prev) => {
-			const isDuplicate = prev.some((file: HeaderFile) => file.title === post.title);
-			if (isDuplicate) {
-				return prev;
-			} else {
-				return [...prev, { href, title: post.title }];
-			}
-		});
-	}
-
-	$: filteredPosts =
-		debouncedQuery && debouncedQuery.length > 1
-			? fuse.search(debouncedQuery).map((result) => result.item)
-			: [];
+	$: results = debouncedQuery.trim().length > 1 ? fuse.search(debouncedQuery.trim()).map((r) => r.item) : [];
 </script>
 
-<div class="container">
-	<div class="search-bar">
-		<input
-			type="text"
-			placeholder="Search posts"
-			bind:value={searchQuery}
-			on:input={handleInput}
-			class="search-input"
-		/>
-	</div>
-	<div class="search-results">
-		{#each filteredPosts as post}
-			<a href={`/posts/${post.slug}`} on:click={() => addHeaderFile(post)} class="search-result"
-				>{post.title}</a
-			>
+<div class="search">
+	<input
+		type="search"
+		placeholder="글 제목·설명·태그 검색"
+		bind:value={query}
+		class="input"
+		aria-label="글 검색"
+	/>
+
+	{#if debouncedQuery.trim().length > 1}
+		<p class="summary">{results.length}개의 결과</p>
+	{/if}
+
+	<ul class="results">
+		{#each results as post (post.slug)}
+			<li>
+				<a href={`/posts/${post.slug}`} class="result">
+					<span class="title"><i class="fa-brands fa-markdown md-icon"></i>{post.title}</span>
+					{#if post.description}<span class="desc">{post.description}</span>{/if}
+				</a>
+			</li>
 		{/each}
-	</div>
+	</ul>
 </div>
 
 <style>
-	.container {
-		padding-top: 30px;
+	.search {
+		padding: 0 12px 12px 20px;
 	}
-	.search-bar {
-		margin-left: auto;
-		margin-right: auto;
-		padding-left: 5px;
-		padding-right: 5px;
+
+	.input {
+		box-sizing: border-box;
+		width: 100%;
+		height: 26px;
+		padding: 0 8px;
+		font: inherit;
+		font-size: 13px;
+		color: var(--text);
+		background: var(--bg);
+		border: 1px solid var(--border);
+		border-radius: 2px;
 	}
-	.search-input {
-		width: 90%;
-		padding: 8px;
-		font-size: 16px;
-		border: 1px solid #ccc;
-		border-radius: 4px;
+
+	.input:focus {
+		outline: 1px solid var(--accent);
+		outline-offset: -1px;
 	}
-	.search-results {
-		padding: 10px;
+
+	.summary {
+		margin: 10px 0 4px;
+		font-size: 12px;
+		color: var(--text-faint);
+	}
+
+	.results {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.result {
 		display: flex;
 		flex-direction: column;
-		gap: 8px;
+		gap: 2px;
+		padding: 6px 8px;
+		margin: 0 -8px;
+		border-radius: 3px;
 	}
-	.search-result {
-		color: #444;
-		text-decoration: none;
-		font-size: 16px;
-		padding: 4px;
-		border-radius: 4px;
+
+	.result:hover {
+		background: var(--bg-hover);
 	}
-	.search-result:hover {
-		background-color: #dcdcdc;
+
+	.title {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		color: var(--text);
+	}
+
+	.desc {
+		padding-left: 18px;
+		font-size: 12px;
+		color: var(--text-faint);
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.md-icon {
+		font-size: 12px;
+		color: var(--accent);
 	}
 </style>
