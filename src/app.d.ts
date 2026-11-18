@@ -21,6 +21,7 @@ declare global {
 			date: string;
 			published: string;
 			tags: string;
+			cover?: string;
 		}
 
 		interface MdsvexTags {

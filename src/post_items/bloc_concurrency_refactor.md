@@ -4,6 +4,7 @@ author: jack
 date: 2026. 11. 18.
 published: false
 description: AI 와 함께 리뷰 없이 빠르게 쌓은 Flutter 코드를 처음으로 직접 읽고, 다시 AI 와 함께 BLoC 이벤트 겹침 처리를 정리한 기록이에요.
+cover: /posts/bloc_concurrency_refactor/cover.webp
 tags: [Flutter, BLoC, AI]
 ---
 

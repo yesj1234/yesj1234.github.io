@@ -4,6 +4,7 @@ author: jack
 date: 2026. 11. 18.
 published: false
 description: 리뷰 봇이 막힌 PR 을 대신 리뷰하는 스킬과, AI 코딩 에이전트가 매 세션 읽는 규칙 문서를 예산 안에 두는 구조를 만들어 온 기록이에요.
+cover: /posts/ai_agent_harness/cover.webp
 tags: [AI, Claude Code, 코드 리뷰]
 ---
 

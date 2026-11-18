@@ -14,7 +14,7 @@
 	$: if (browser) openTab({ href: $page.url.pathname, title: meta.title });
 </script>
 
-<PageHead title={meta.title} description={meta.description} />
+<PageHead title={meta.title} description={meta.description} image={meta.cover} />
 
 <div class="page">
 	<div class="breadcrumb" aria-hidden="true">
@@ -24,6 +24,10 @@
 		<i class="fa-solid fa-chevron-right sep"></i>
 		<span class="file"><i class="fa-brands fa-markdown"></i>{$page.params.slug}.md</span>
 	</div>
+
+	{#if meta.cover}
+		<img class="cover" src={meta.cover} alt="" width="1600" height="900" />
+	{/if}
 
 	<header class="head">
 		<h1 class="title">{meta.title}</h1>
@@ -75,6 +79,28 @@
 
 	.file i {
 		color: var(--accent);
+	}
+
+	.cover {
+		display: block;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 16 / 9;
+		margin-bottom: 36px;
+		border-radius: 8px;
+		border: 1px solid var(--border);
+		background: var(--bg-side);
+	}
+
+	/* 밝은 바탕 일러스트가 다크 테마에서 튀지 않게 살짝 누른다 */
+	:global(:root[data-theme='dark']) .cover {
+		filter: brightness(0.88);
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:global(:root:not([data-theme='light'])) .cover {
+			filter: brightness(0.88);
+		}
 	}
 
 	.head {
