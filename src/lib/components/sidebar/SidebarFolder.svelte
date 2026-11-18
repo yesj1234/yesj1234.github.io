@@ -3,11 +3,11 @@
 
 	export let name: string;
 	export let posts: App.BlogPost[] = [];
+	/** 지금 보는 글의 대표 폴더면 펼쳐 둔다. 글이 여러 태그에 걸려도 폴더 하나만 열리게 부모가 고른다 */
+	export let autoOpen = false;
 
-	$: containsActive = posts.some((post) => $page.url.pathname === `/posts/${post.slug}`);
 	let isOpen = false;
-	// 지금 보고 있는 글이 들어 있는 폴더는 펼쳐 둔다
-	$: if (containsActive) isOpen = true;
+	$: if (autoOpen) isOpen = true;
 </script>
 
 <button type="button" class="row folder" on:click={() => (isOpen = !isOpen)}>

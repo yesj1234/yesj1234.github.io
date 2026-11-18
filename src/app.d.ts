@@ -22,6 +22,20 @@ declare global {
 			published: string;
 			tags: string;
 			cover?: string;
+			series?: string;
+			seriesOrder?: number;
+		}
+
+		interface SeriesEntry {
+			slug: string;
+			title: string;
+			order: number;
+		}
+
+		interface SeriesInfo {
+			id: string;
+			title: string;
+			posts: SeriesEntry[];
 		}
 
 		interface MdsvexTags {

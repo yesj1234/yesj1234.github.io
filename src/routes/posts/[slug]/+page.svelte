@@ -3,6 +3,7 @@
 	import { page } from '$app/stores';
 	import { browser } from '$app/environment';
 	import PageHead from '$lib/components/PageHead.svelte';
+	import SeriesNav from '$lib/components/SeriesNav.svelte';
 	import { openTab } from '$lib/stores/header';
 	import { formatPostDate } from '$lib/utils/date_utils';
 
@@ -44,9 +45,17 @@
 		</div>
 	</header>
 
+	{#if data.series}
+		<SeriesNav series={data.series} currentSlug={$page.params.slug} variant="toc" />
+	{/if}
+
 	<article class="prose">
 		<svelte:component this={component} />
 	</article>
+
+	{#if data.series}
+		<SeriesNav series={data.series} currentSlug={$page.params.slug} variant="pager" />
+	{/if}
 </div>
 
 <style>

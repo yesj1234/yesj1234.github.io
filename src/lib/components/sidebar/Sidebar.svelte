@@ -1,17 +1,33 @@
 <script lang="ts">
 	import SidebarFolder from '$lib/components/sidebar/SidebarFolder.svelte';
 	import SidebarSearch from '$lib/components/sidebar/SidebarSearch.svelte';
+	import { page } from '$app/stores';
 	import { activePanel } from '$lib/stores/sidebar';
+	import { SERIES, seriesTitle } from '$lib/series';
 
 	export let posts: App.BlogPost[] = [];
 	export let tags: string[] = [];
 
 	let isRootOpen = true;
+	let isSeriesOpen = true;
 
 	$: panel = $activePanel ?? 'explorer';
 
 	function postsOf(tag: string) {
 		return posts.filter((post) => post.tags?.includes(tag));
+	}
+
+	$: activePost = posts.find((post) => $page.url.pathname === `/posts/${post.slug}`);
+	// 시리즈 글이면 시리즈 폴더를, 아니면 첫 태그 폴더 하나만 펼친다
+	$: openSeries = activePost?.series;
+	$: openTag = openSeries ? undefined : (activePost?.tags as unknown as string[] | undefined)?.[0];
+
+	$: seriesIds = Object.keys(SERIES).filter((id) => posts.some((post) => post.series === id));
+
+	function postsInSeries(id: string) {
+		return posts
+			.filter((post) => post.series === id)
+			.sort((a, b) => Number(a.seriesOrder ?? 0) - Number(b.seriesOrder ?? 0));
 	}
 </script>
 
@@ -19,6 +35,19 @@
 	<div class="panel-title">{panel === 'search' ? '검색' : '탐색기'}</div>
 
 	{#if panel === 'explorer'}
+		{#if seriesIds.length}
+			<button type="button" class="section" on:click={() => (isSeriesOpen = !isSeriesOpen)}>
+				<i class="fa-solid fa-chevron-right chevron" class:open={isSeriesOpen}></i>
+				<span>SERIES</span>
+			</button>
+			{#if isSeriesOpen}
+				<div class="tree">
+					{#each seriesIds as id (id)}
+						<SidebarFolder name={seriesTitle(id)} posts={postsInSeries(id)} autoOpen={id === openSeries} />
+					{/each}
+				</div>
+			{/if}
+		{/if}
 		<button type="button" class="section" on:click={() => (isRootOpen = !isRootOpen)}>
 			<i class="fa-solid fa-chevron-right chevron" class:open={isRootOpen}></i>
 			<span>YESJ1234.GITHUB.IO</span>
@@ -26,7 +55,7 @@
 		{#if isRootOpen}
 			<div class="tree">
 				{#each tags as tag (tag)}
-					<SidebarFolder name={tag} posts={postsOf(tag)} />
+					<SidebarFolder name={tag} posts={postsOf(tag)} autoOpen={tag === openTag} />
 				{/each}
 			</div>
 		{/if}
