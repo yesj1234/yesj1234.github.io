@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jack.dev.blog</title>
+    <link>https://yesj1234.github.io/</link>
+    <description>Flutter 앱과 서버(Django·FastAPI)를 함께 만드는 개발자 jack 의 기록. 트러블슈팅, 설계 결정, 앱 아키텍처, AI 에이전트와 일하는 법.</description>
+    <language>ko</language>
+    <atom:link href="https://yesj1234.github.io/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI 에이전트에게 규칙을 읽히는 법</title>
+      <link>https://yesj1234.github.io/posts/ai_agent_harness</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/ai_agent_harness</guid>
+      <description>리뷰 봇이 막힌 PR 을 대신 리뷰하는 스킬과, AI 코딩 에이전트가 매 세션 읽는 규칙 문서를 예산 안에 두는 구조를 만들어 온 기록이에요.</description>
+      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
+      <category>AI</category><category>Claude Code</category><category>코드 리뷰</category>
+    </item>
+    <item>
+      <title>같은 문제를 270가지 방법으로 푼 코드베이스</title>
+      <link>https://yesj1234.github.io/posts/bloc_concurrency_refactor</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/bloc_concurrency_refactor</guid>
+      <description>AI 와 함께 리뷰 없이 빠르게 쌓은 Flutter 코드를 처음으로 직접 읽고, 다시 AI 와 함께 BLoC 이벤트 겹침 처리를 정리한 기록이에요.</description>
+      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
+      <category>Flutter</category><category>BLoC</category><category>AI</category>
+    </item>
+    <item>
+      <title>CocoaPods 에서 SPM 으로 옮기며 깨진 것들</title>
+      <link>https://yesj1234.github.io/posts/cocoapods_to_spm_migration</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/cocoapods_to_spm_migration</guid>
+      <description>Flutter 앱의 iOS 의존성을 CocoaPods 에서 Swift Package Manager 로 옮기면서, CocoaPods 가 조용히 대신 해 주던 일들이 하나씩 드러난 기록이에요.</description>
+      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
+      <category>Flutter</category><category>iOS</category><category>SPM</category><category>CocoaPods</category><category>Xcode</category>
+    </item>
+    <item>
+      <title>초대 링크의 디퍼드 딥링크를 SDK 에 맡기지 않고 서버에서 직접 매칭한 이유</title>
+      <link>https://yesj1234.github.io/posts/deferred_deeplink_in_house</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/deferred_deeplink_in_house</guid>
+      <description>친구 초대 링크로 앱을 설치한 사람을 첫 실행 때 초대자와 연결하려고, Android 는 Play Install Referrer 로, iOS 는 기기 신호 매칭으로 디퍼드 딥링크를 직접 만든 판단 과정과 그 대가를 정리했어요.</description>
+      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
+      <category>Flutter</category><category>Django</category><category>DeepLink</category><category>Android</category><category>iOS</category>
+    </item>
+    <item>
+      <title>화면 하나에서 에픽 하나로: Flutter 1년 3개월 회고</title>
+      <link>https://yesj1234.github.io/posts/flutter_first_year_retrospective</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_first_year_retrospective</guid>
+      <description>티켓 번호대로 화면을 하나씩 만들던 사람이 앱·서버·네이티브를 함께 설계하는 에픽을 맡기까지를, 분기마다 사건 하나씩 골라 돌아본 회고예요.</description>
+      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
+      <category>회고</category><category>Flutter</category><category>Django</category><category>AI</category><category>iOS</category>
+    </item>
+    <item>
+      <title>iOS 크래시가 0건이었던 진짜 이유</title>
+      <link>https://yesj1234.github.io/posts/ios_crashlytics_zero_crashes</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/ios_crashlytics_zero_crashes</guid>
+      <description>CocoaPods 에서 SPM 으로 옮긴 뒤 Crashlytics 에 iOS 크래시가 한 건도 잡히지 않았어요. 조용히 실패하던 빌드 단계 하나를 찾아간 기록이에요.</description>
+      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
+      <category>Flutter</category><category>iOS</category><category>Crashlytics</category>
+    </item>
+    <item>
+      <title>Flutter 앱의 탭바만 iOS 네이티브로: Liquid Glass 를 PlatformView 로 붙이기</title>
+      <link>https://yesj1234.github.io/posts/ios_liquid_glass_tab_bar</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/ios_liquid_glass_tab_bar</guid>
+      <description>Flutter 로 흉내 내던 유리 탭바를 iOS 26 시스템 UITabBar 로 바꿨어요. 화면은 Flutter 에 두고 탭바 한 장만 PlatformView 로 띄우면서 겪은 제스처 경쟁, 선택 어긋남, 시스템 배지를 버린 이유를 정리했어요.</description>
+      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
+      <category>iOS</category><category>Flutter</category><category>PlatformView</category><category>UIKit</category><category>Liquid Glass</category><category>UITabBar</category>
+    </item>
+    <item>
+      <title>앱이 잠들어 있어도 Live Activity 를 바꾸는 법: 서버 push-to-start</title>
+      <link>https://yesj1234.github.io/posts/live_activity_push_to_start</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/live_activity_push_to_start</guid>
+      <description>앱 안에서만 갱신하던 루틴 Live Activity 가 앱이 잠든 동안 멈췄어요. 서버가 push-to-start 로 배너를 띄우는 구조로 바꿨다가, 결국 하루 한 개의 배너를 update 로 돌리는 구조에 도착한 기록이에요.</description>
+      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
+      <category>iOS</category><category>ActivityKit</category><category>Live Activity</category><category>APNs</category><category>Flutter</category><category>Django</category>
+    </item>
+    <item>
+      <title>전체 화면 로딩 23번을 2번으로: 설문 저장을 백그라운드 직렬 큐로</title>
+      <link>https://yesj1234.github.io/posts/onboarding_background_save_queue</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/onboarding_background_save_queue</guid>
+      <description>온보딩 설문에서 답할 때마다 서버 응답을 기다리던 구조를, 답변을 백그라운드 직렬 큐로 보내고 꼭 필요한 두 곳에서만 기다리도록 바꾼 구현기예요.</description>
+      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
+      <category>Flutter</category><category>BLoC</category><category>Onboarding</category><category>Django</category>
+    </item>
+    <item>
+      <title>연타 테스트를 사람 대신: WDA 와 Semantics ID 로 실기기 QA</title>
+      <link>https://yesj1234.github.io/posts/wda_semantics_device_qa</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/wda_semantics_device_qa</guid>
+      <description>Flutter 앱을 실기기 iPhone 에서 AI 에이전트가 직접 조작하게 만들고, 접근성 트리에 ID 를 붙여 비용을 줄이고, 40ms 간격 연타까지 재현한 기록이에요.</description>
+      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
+      <category>Flutter</category><category>iOS</category><category>QA</category><category>WebDriverAgent</category><category>Accessibility</category><category>AI</category>
+    </item>
+    <item>
+      <title>Package - Photo manager by fluttercandies</title>
+      <link>https://yesj1234.github.io/posts/photo_manager</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/photo_manager</guid>
+      <description>Exploring Flutter photo manager package.</description>
+      <pubDate>Tue, 15 Jul 2025 15:00:00 GMT</pubDate>
+      <category>Flutter</category>
+    </item>
+    <item>
+      <title>ScrollView in Flutter</title>
+      <link>https://yesj1234.github.io/posts/slivers</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/slivers</guid>
+      <description>Get to know about CustomScrollView related widgets.</description>
+      <pubDate>Wed, 25 Jun 2025 15:00:00 GMT</pubDate>
+      <category>Flutter</category>
+    </item>
+    <item>
+      <title>Everything you need to know about git.</title>
+      <link>https://yesj1234.github.io/posts/git</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/git</guid>
+      <description>How to use git as a professional developer.</description>
+      <pubDate>Wed, 21 May 2025 15:00:00 GMT</pubDate>
+      <category>git</category>
+    </item>
+    <item>
+      <title>Optimization techniques - Image compression</title>
+      <link>https://yesj1234.github.io/posts/optimization</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/optimization</guid>
+      <description>앱을 최적화 하는 여러 가지 방법 중 이미지 압축을 통한 최적화에 대해 알아봅시다.</description>
+      <pubDate>Wed, 21 May 2025 15:00:00 GMT</pubDate>
+      <category>Flutter</category>
+    </item>
+    <item>
+      <title>How to send push notification</title>
+      <link>https://yesj1234.github.io/posts/push_notifications</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/push_notifications</guid>
+      <description>Flutter 앱에서 사용자에게 알림을 보내는 방법에 대해 알아봅니다.</description>
+      <pubDate>Thu, 15 May 2025 15:00:00 GMT</pubDate>
+      <category>Firebase</category>
+    </item>
+    <item>
+      <title>Dart asynchronous programming</title>
+      <link>https://yesj1234.github.io/posts/dart_async</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/dart_async</guid>
+      <description>Dart에서 비동기를 구현하는 방식에 대해 알아보고 예시를 통해 학습 해봅니다.</description>
+      <pubDate>Wed, 26 Mar 2025 15:00:00 GMT</pubDate>
+      <category>Dart</category>
+    </item>
+    <item>
+      <title>Understanding Flutter Hero animations process</title>
+      <link>https://yesj1234.github.io/posts/understanding_hero_animation</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/understanding_hero_animation</guid>
+      <description>Flutter Hero animation에 대해 알아봅니다.</description>
+      <pubDate>Fri, 21 Feb 2025 15:00:00 GMT</pubDate>
+      <category>Flutter</category>
+    </item>
+    <item>
+      <title>Effective Dart</title>
+      <link>https://yesj1234.github.io/posts/dart_docs</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/dart_docs</guid>
+      <description>How to document my code.</description>
+      <pubDate>Sun, 16 Feb 2025 15:00:00 GMT</pubDate>
+      <category>Dart</category>
+    </item>
+    <item>
+      <title>Union types in dart</title>
+      <link>https://yesj1234.github.io/posts/union_types</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/union_types</guid>
+      <description>Union type에 대해 알아봅시다.</description>
+      <pubDate>Wed, 25 Dec 2024 15:00:00 GMT</pubDate>
+      <category>Dart</category>
+    </item>
+    <item>
+      <title>Flutter App Architecture(2) - Riverpod Architecture</title>
+      <link>https://yesj1234.github.io/posts/flutter_app_architecture2</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_app_architecture2</guid>
+      <description>Riverpod 아키텍처에 대해 알아봅니다.</description>
+      <pubDate>Mon, 09 Dec 2024 15:00:00 GMT</pubDate>
+      <category>Flutter</category>
+    </item>
+    <item>
+      <title>Flutter App Architecture(1) - MVVM</title>
+      <link>https://yesj1234.github.io/posts/flutter_app_architecture</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_app_architecture</guid>
+      <description>MVVM(Model View ViewModel)아키텍처에 대해 알아봅니다.</description>
+      <pubDate>Fri, 22 Nov 2024 15:00:00 GMT</pubDate>
+      <category>Flutter</category>
+    </item>
+    <item>
+      <title>Flutter Package - Riverpod, State management tool</title>
+      <link>https://yesj1234.github.io/posts/riverpod</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/riverpod</guid>
+      <description>Learn the core concept of provider and basic features of Riverpod.</description>
+      <pubDate>Thu, 07 Nov 2024 15:00:00 GMT</pubDate>
+      <category>Flutter</category>
+    </item>
+    <item>
+      <title>Responsive layout in Flutter(1)</title>
+      <link>https://yesj1234.github.io/posts/responsive_layout</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/responsive_layout</guid>
+      <description>How to build responsive layout in flutter application. Learn about SafeArea, MediaQuery, LayoutBuilder and some best practices.</description>
+      <pubDate>Tue, 29 Oct 2024 15:00:00 GMT</pubDate>
+      <category>Flutter</category>
+    </item>
+    <item>
+      <title>Flutter UI Challenge(3)</title>
+      <link>https://yesj1234.github.io/posts/flutter_ui_challenge3</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_ui_challenge3</guid>
+      <description>Learn some advanced usage of StatefulWidget, Widget builder, AnimatedWidget, and Transform.</description>
+      <pubDate>Tue, 15 Oct 2024 15:00:00 GMT</pubDate>
+      <category>Flutter</category>
+    </item>
+    <item>
+      <title>Flutter UI Challenge(2)</title>
+      <link>https://yesj1234.github.io/posts/flutter_ui_challenge2</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_ui_challenge2</guid>
+      <description>Learn how to use StatefulWidgets and animate the changes of Widget. Widgets related to animations are Animation, AnimationController, Tween, AnimatedWidget and etc..</description>
+      <pubDate>Sun, 06 Oct 2024 15:00:00 GMT</pubDate>
+      <category>Flutter</category>
+    </item>
+    <item>
+      <title>Flutter UI Challenge(1)</title>
+      <link>https://yesj1234.github.io/posts/flutter_ui_challenge</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_ui_challenge</guid>
+      <description>Learn the basic layouts with Flutter challenges posted by Andrea. Some basic layout of flutter includes Row, Column, Stack, Expanded, Padding, etc...</description>
+      <pubDate>Fri, 04 Oct 2024 15:00:00 GMT</pubDate>
+      <category>Flutter</category>
+    </item>
+    <item>
+      <title>new Flutter project의 main.dart 코드 파헤쳐보기(2)</title>
+      <link>https://yesj1234.github.io/posts/flutter_boilerplate_code2</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_boilerplate_code2</guid>
+      <description>IDE를 이용해 만든 flutter project의 초기 main.dart 코드들을 보면서 StatelessWidget, StatefulWidget, key에 대해 알아봅니다.</description>
+      <pubDate>Sat, 28 Sep 2024 15:00:00 GMT</pubDate>
+      <category>Flutter</category>
+    </item>
+    <item>
+      <title>new Flutter project의 main.dart 코드 파헤쳐보기(1)</title>
+      <link>https://yesj1234.github.io/posts/flutter_boilerplate_code1</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_boilerplate_code1</guid>
+      <description>IDE를 이용해 만든 flutter project의 초기 main.dart 코드들을 보면서 StatelessWidget, StatefulWidget, key에 대해 알아봅니다.</description>
+      <pubDate>Thu, 26 Sep 2024 15:00:00 GMT</pubDate>
+      <category>Flutter</category>
+    </item>
+    <item>
+      <title>Branches in Dart</title>
+      <link>https://yesj1234.github.io/posts/branches</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/branches</guid>
+      <description>Dart에서 Branch(분기)로 코드의 흐름을 제어하는 방법에 대해 알아봅니다.</description>
+      <pubDate>Mon, 23 Sep 2024 15:00:00 GMT</pubDate>
+      <category>Dart</category>
+    </item>
+    <item>
+      <title>Record type in Dart</title>
+      <link>https://yesj1234.github.io/posts/records</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/records</guid>
+      <description>Record type에 대해 알아봅니다.</description>
+      <pubDate>Sun, 22 Sep 2024 15:00:00 GMT</pubDate>
+      <category>Dart</category>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,1 @@
+function a(n){const[t,r,o]=String(n??"").split(/[.\-/]/).map(e=>e.trim()).filter(Boolean);return!t||!r||!o?null:[t,r.padStart(2,"0"),o.padStart(2,"0")]}function i(n){const t=a(n);return t?`${t[0]}. ${t[1]}. ${t[2]}.`:n}function s(n){const t=a(n);return t?t.join("-"):""}function u(n){const t=s(n);return t?`${t}T00:00:00+09:00`:void 0}export{i as f,u as t};
