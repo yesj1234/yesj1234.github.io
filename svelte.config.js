@@ -11,7 +11,9 @@ const config = {
 	kit: {
 		adapter: adapter({ strict: false }),
 		prerender: {
-			handleMissingId: 'warn'
+			handleMissingId: 'warn',
+			// 페이지에서 링크되지 않는 파일도 빌드에 포함한다
+			entries: ['*', '/sitemap.xml', '/rss.xml', '/llms.txt']
 		}
 	}
 };

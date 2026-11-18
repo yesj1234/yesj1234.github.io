@@ -9,7 +9,7 @@
 	$: tag = decodeURIComponent($page.params.slug);
 </script>
 
-<PageHead title={`#${tag}`} description={`${tag} 태그가 붙은 글`} />
+<PageHead title={`#${tag}`} description={`${tag} 태그가 붙은 글`} path={`/tags/${encodeURIComponent(tag)}`} />
 
 <div class="page">
 	<header class="head">

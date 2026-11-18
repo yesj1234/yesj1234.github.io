@@ -2,11 +2,38 @@
 	import type { PageData } from './$types';
 	import PageHead from '$lib/components/PageHead.svelte';
 	import PostList from '$lib/components/PostList.svelte';
+	import { AUTHOR, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '$lib/site';
 
 	export let data: PageData;
+
+	const path = '/';
+	const structuredData = {
+		'@context': 'https://schema.org',
+		'@graph': [
+			{
+				'@type': 'WebSite',
+				'@id': `${SITE_URL}/#website`,
+				url: SITE_URL,
+				name: SITE_TITLE,
+				description: SITE_DESCRIPTION,
+				inLanguage: 'ko',
+				author: { '@id': `${SITE_URL}/about#person` }
+			},
+			{
+				'@type': 'Person',
+				'@id': `${SITE_URL}/about#person`,
+				name: AUTHOR.name,
+				alternateName: AUTHOR.alternateName,
+				jobTitle: AUTHOR.jobTitle,
+				url: AUTHOR.url,
+				image: AUTHOR.image,
+				sameAs: AUTHOR.sameAs
+			}
+		]
+	};
 </script>
 
-<PageHead title="" description="Jack 의 개발 블로그" />
+<PageHead title="" {path} {structuredData} />
 
 <div class="page">
 	<header class="intro">
@@ -17,6 +44,8 @@
 			<h1 class="name">Jack.dev.blog</h1>
 			<p class="handle">
 				<a href="https://github.com/yesj1234" target="_blank" rel="noreferrer">@yesj1234</a>
+				<span aria-hidden="true">·</span>
+				<a href="/about">소개</a>
 				<span aria-hidden="true">·</span>
 				글 {data.posts.length}개
 			</p>

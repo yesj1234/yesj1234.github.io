@@ -5,7 +5,8 @@
 	import PageHead from '$lib/components/PageHead.svelte';
 	import SeriesNav from '$lib/components/SeriesNav.svelte';
 	import { openTab } from '$lib/stores/header';
-	import { formatPostDate } from '$lib/utils/date_utils';
+	import { formatPostDate, toIsoDateTime } from '$lib/utils/date_utils';
+	import { absoluteUrl, AUTHOR, SITE_URL } from '$lib/site';
 
 	export let data: PageData;
 
@@ -13,9 +14,37 @@
 	$: meta = data.frontmatter as unknown as App.BlogPost;
 	$: tags = (meta.tags ?? []) as unknown as string[];
 	$: if (browser) openTab({ href: $page.url.pathname, title: meta.title });
+
+	$: path = `/posts/${$page.params.slug}`;
+	$: publishedTime = toIsoDateTime(meta.date);
+	$: structuredData = {
+		'@context': 'https://schema.org',
+		'@type': 'BlogPosting',
+		headline: meta.title,
+		description: meta.description,
+		url: absoluteUrl(path),
+		mainEntityOfPage: absoluteUrl(path),
+		datePublished: publishedTime,
+		inLanguage: 'ko',
+		keywords: tags.join(', '),
+		...(meta.cover ? { image: absoluteUrl(meta.cover) } : {}),
+		...(data.series ? { isPartOf: { '@type': 'CreativeWorkSeries', name: data.series.title } } : {}),
+		author: { '@type': 'Person', name: AUTHOR.name, alternateName: AUTHOR.alternateName, url: AUTHOR.url },
+		publisher: { '@type': 'Person', name: AUTHOR.name, url: SITE_URL },
+		isAccessibleForFree: true
+	};
 </script>
 
-<PageHead title={meta.title} description={meta.description} image={meta.cover} />
+<PageHead
+	title={meta.title}
+	description={meta.description}
+	{path}
+	image={meta.cover}
+	type="article"
+	{publishedTime}
+	{tags}
+	{structuredData}
+/>
 
 <div class="page">
 	<div class="breadcrumb" aria-hidden="true">

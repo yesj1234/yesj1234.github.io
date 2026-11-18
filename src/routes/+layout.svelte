@@ -54,6 +54,15 @@
 		<div class="activity-spacer"></div>
 		<a
 			class="activity-item"
+			class:selected={$page.url.pathname === '/about'}
+			href="/about"
+			title="소개"
+			aria-label="소개"
+		>
+			<i class="fa-regular fa-user"></i>
+		</a>
+		<a
+			class="activity-item"
 			href="https://github.com/yesj1234"
 			target="_blank"
 			rel="noreferrer"
