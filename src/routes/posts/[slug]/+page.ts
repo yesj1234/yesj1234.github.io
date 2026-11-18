@@ -15,7 +15,7 @@ export const load: PageLoad = async ({ params }) => {
 	}
 	const post = await match?.resolver?.();
 	// 초안(published: false)은 로컬 dev 서버에서만 미리보기로 연다
-	if (!post || (!post.metadata.published && !dev)) {
+	if (!post?.metadata || (!post.metadata.published && !dev)) {
 		throw error(404);
 	}
 	return { component: post.default, frontmatter: post.metadata };
