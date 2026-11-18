@@ -1,6 +1,7 @@
 import type { PageLoad } from './$types';
 import { slugFromPath } from '$lib/slugFromPath';
 import { error } from '@sveltejs/kit';
+import { dev } from '$app/environment';
 
 export const load: PageLoad = async ({ params }) => {
 	const modules = import.meta.glob(`/src/post_items/*.md`);
@@ -13,7 +14,8 @@ export const load: PageLoad = async ({ params }) => {
 		}
 	}
 	const post = await match?.resolver?.();
-	if (!post || !post.metadata.published) {
+	// 초안(published: false)은 로컬 dev 서버에서만 미리보기로 연다
+	if (!post || (!post.metadata.published && !dev)) {
 		throw error(404);
 	}
 	return { component: post.default, frontmatter: post.metadata };
