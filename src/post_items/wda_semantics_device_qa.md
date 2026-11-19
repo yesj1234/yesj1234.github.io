@@ -49,7 +49,7 @@ xcodebuild -project ~/WebDriverAgent/WebDriverAgent.xcodeproj -scheme WebDriverA
 
 기기와 Mac 이 같은 Wi-Fi 에 있으면 `http://(기기 IP):8100` 으로 바로 붙어요. USB 로 붙이려면 go-ios 의 터널(`ios tunnel start --userspace`)과 포트 포워드(`ios forward 8100 8100`)를 띄워 두면 돼요. 이 둘의 차이가 뒤에서 한 번 중요해져요.
 
-> 처음 출발점은 mobile-mcp 를 기준으로 쓴 QA 킷이었어요. 이 저장소에서는 mobile-mcp 대신 WDA 를 직접 감싼 셸 스크립트로 바꿨어요. [확인 필요: mobile-mcp 대신 WDA 직접 호출을 고른 이유]
+> 처음 출발점은 mobile-mcp 를 기준으로 쓴 QA 킷이었어요. 이 저장소에서는 mobile-mcp 대신 WDA 를 직접 감싼 셸 스크립트로 바꿨어요. mobile-mcp 도 기기 쪽에서는 같은 WDA 를 쓰는데, 설치를 마친 시점에 이미 WDA 를 직접 불러 기기를 조작하고 있었거든요. MCP 서버를 따로 등록하고 세션을 다시 띄울 이유가 없어서, **mobile-mcp 를 고집하지 않고 지금 조작 방식에 맞춰** 측정하기로 했어요.
 
 ## 도구: 명령 여덟 개짜리 셸 스크립트
 
@@ -267,7 +267,7 @@ before 의 A·B 는 10회 중 7회가 S 였어요. S 회차는 탭마다 캡처�
 
 처음엔 `tap` 을 세 번 부르면 되는 줄 알았어요. 그리고 연타가 요청 진행 중에 들어가지 않을까 봐, 기기의 Network Link Conditioner 로 네트워크를 일부러 느리게 만들 생각까지 했어요.
 
-그런데 느린 건 WDA 가 아니라 **스크립트 구조**였어요. 지금 `tap` 은 탭 한 번마다 HTTP 요청을 한 번 보내요. 탭마다 HTTP 왕복과 XCTest 처리 시간이 쌓이니, 두 번째 탭이 들어갈 때쯤엔 첫 요청이 이미 끝나 있을 수 있어요. [확인 필요: `tap` 한 번의 왕복 시간 실측값] 그러면 연타를 해도 가드가 시험되지 않아요.
+그런데 느린 건 WDA 가 아니라 **스크립트 구조**였어요. 지금 `tap` 은 탭 한 번마다 HTTP 요청을 한 번 보내요. 탭마다 HTTP 왕복과 XCTest 처리 시간이 쌓이니, 두 번째 탭이 들어갈 때쯤엔 첫 요청이 이미 끝나 있을 수 있어요. 그러면 연타를 해도 가드가 시험되지 않아요.
 
 WDA 는 W3C WebDriver 표준의 actions API(`POST /session/{id}/actions`)를 지원해요. 손가락 하나의 움직임을 **누르기·쉬기·떼기의 순서로 한 요청에 담아** 보내면, 기기 안에서 그 순서대로 실행돼요. 그래서 `multitap` 명령을 하나 더했어요.
 
@@ -375,7 +375,7 @@ Switch  id=com.apple.settings.airplaneMode  center=(201,320) size=370x53 label="
 
 노드 쪽은 화면마다 손으로 고치지 않고 **공용 위젯에 선택형 인자**를 열었어요. 탭 공용 위젯에 `semanticIdentifier`·`semanticLabel`·`toggled`·`selected`·`container` 를 받게 했어요. **인자를 넘기지 않으면 위젯 트리와 시맨틱스가 이전과 똑같아요.** 이걸 트리 덤프 비교 테스트로 고정했어요. 그래서 기존 호출부 451곳은 건드리지 않았어요.
 
-예외도 하나 있었어요. 소셜 탭 영역 위젯에는 노드 경계(`container: true`)를 기본으로 넣었어요. 그러면 카드 안 링크가 따로 읽히니, **VoiceOver 가 읽는 단위가 바뀌어요.** 이건 화면 변화가 없어도 사용자 경험이 바뀌는 변경이라 따로 표시했어요. [확인 필요: VoiceOver 실기기 확인 결과]
+예외도 하나 있었어요. 소셜 탭 영역 위젯에는 노드 경계(`container: true`)를 기본으로 넣었어요. 그러면 카드 안 링크가 따로 읽히니, **VoiceOver 가 읽는 단위가 바뀌어요.** 이건 화면 변화가 없어도 사용자 경험이 바뀌는 변경이라 따로 표시했어요. 다만 **VoiceOver 로 실기기에서 직접 들어 보는 확인은 아직 하지 못했어요.**
 
 ID 를 붙일지 판별하는 기준은 한 문장으로 정리했어요.
 
@@ -401,8 +401,8 @@ ID 38개를 붙여도 에이전트는 거의 쓰지 않았어요. 카탈로그�
 
 ## 참고 자료
 
-- Appium, [WebDriverAgent](https://github.com/appium/WebDriverAgent) — 기기 안에서 도는 XCTest 기반 WebDriver 서버 [확인 필요: 사용한 WDA 커밋·버전]
+- Appium, [WebDriverAgent](https://github.com/appium/WebDriverAgent) — 기기 안에서 도는 XCTest 기반 WebDriver 서버. 글을 쓸 때 기기에 올린 버전은 16.15.3(커밋 `3d6a4e0`)
 - W3C, [WebDriver — Actions](https://www.w3.org/TR/webdriver2/#actions) — `pointerDown`·`pause`·`pointerUp` 으로 입력 순서를 한 요청에 담는 표준
 - Flutter API, [`Semantics.identifier`](https://api.flutter.dev/flutter/widgets/Semantics/identifier.html) — iOS 에서 `accessibilityIdentifier` 로 나가는 값
-- [go-ios](https://github.com/danielpaulus/go-ios) — USB 터널·포트 포워드 [확인 필요: 사용한 go-ios 버전]
+- [go-ios](https://github.com/danielpaulus/go-ios) — USB 터널·포트 포워드. 사용한 버전은 1.3.2
 - 기준 환경: iPhone 15(iOS 27.2.1), iPhone 16(iOS 27.0.1), Xcode 26.3 → 27.2(로컬), Flutter 3.47.4, 측정 에이전트 `claude-sonnet-5-5`

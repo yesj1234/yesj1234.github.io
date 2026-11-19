@@ -212,7 +212,7 @@ SPM 판(`permission_handler_apple` 9.4.10)의 `Package.swift` 를 보니 판정 
 
 **다음에 피하는 법.** SPM 을 켜기 전에 **Podfile 의 `post_install` 을 한 줄씩 읽고**, 각 설정이 어느 플러그인을 위한 것이고 그 플러그인이 SPM 으로 옮겨 가는지 표로 만들어 보세요. 에러가 나지 않는 변화일수록 이 표 없이는 놓쳐요.
 
-> 새 설치 상태에서 권한 팝업이 실제로 뜨는지는 앱을 지워야 해서 아직 확인하지 못했어요. [확인 필요: 새 설치 상태 권한 팝업 노출]
+> 새 설치 상태에서 권한 팝업이 실제로 뜨는지는 앱을 지워야 해서 아직 확인하지 못했어요.
 
 ## 머지 직후: 같은 모양의 사고 두 개
 
@@ -244,7 +244,7 @@ CocoaPods 를 완전히 걷어 내기 전까지 남아 있는 함정도 적어 �
 
 **CI 는 아직 매 빌드 `pod deintegrate` 를 하고 `Podfile.lock` 을 지워요.** CocoaPods 1.16.2 로 빌드마다 남은 pod 을 다시 해석하니, 그 pod 들은 허용 범위 안의 최신판을 받아요. 남은 5개는 trunk SDK 에 의존하지 않아서 지금은 문제가 없지만, SPM 쪽에서 잠금 파일로 막은 일이 CocoaPods 쪽에서는 열려 있는 셈이에요.
 
-**CI 는 빌드마다 DerivedData 를 지워요.** SPM 패키지가 DerivedData 아래 `SourcePackages/` 에 받아지니, **매 빌드 패키지 25개를 새로 받아요.** 빌드 시간이 얼마나 늘었는지는 아직 재지 않았어요. [확인 필요: 전환 전후 CI iOS 빌드 시간] 필요하면 gym 의 `cloned_source_packages_path` 로 패키지 위치를 DerivedData 밖으로 빼서 캐시할 계획이에요.
+**CI 는 빌드마다 DerivedData 를 지워요.** SPM 패키지가 DerivedData 아래 `SourcePackages/` 에 받아지니, **매 빌드 패키지 25개를 새로 받아요.** 전환 전후의 GitHub Actions 기록을 뽑아 보니, main 의 **iOS 빌드 job 시간 중앙값이 전환 전 3주(10월 18일~11월 9일) 약 16분에서 전환 후(11월 10일~19일) 약 25분으로** 늘었어요. 늘어난 시간은 거의 다 fastlane 빌드 단계 안에 있어서, 패키지를 받는 시간과 컴파일 시간을 따로 떼어 보지는 못했어요. 전환 뒤에도 날마다 조금씩 더 늘고 있어서 러너 부하 같은 다른 요인도 섞여 있을 거예요. 필요하면 gym 의 `cloned_source_packages_path` 로 패키지 위치를 DerivedData 밖으로 빼서 캐시할 계획이에요.
 
 **pbxproj diff 가 커 보여도 놀라지 마세요.** SPM 을 켜면 Xcode 가 프로젝트 파일을 다시 쓰면서 `PBXFileSystemSynchronized*` 항목의 포맷이 바뀌어요. 의미 변화는 없어요. `[CP] Embed Pods Frameworks` 빌드 단계가 사라지는 것도 정상이에요. 동적 프레임워크로 들어오던 FBSDK pod 이 SPM 으로 옮겨 갔기 때문이에요. 스킴마다 "Run Prepare Flutter Framework Script" pre-action 이 추가되는 것도 Flutter 가 자동으로 하는 일이에요. 저희는 쓰는 스킴(dev·stg·prod)에 추가된 것만 확인했어요.
 

@@ -152,7 +152,7 @@ Referral.objects.filter(
 
 이 표에서 볼 건, 엄격하게 시작한 조건이 **"같은 기기인데 값이 다르게 찍히는" 경우**에 하나씩 무너졌다는 점이에요. 하나씩 이유를 보면 이래요.
 
-**OS 버전**은 랜딩 페이지 쪽 값을 믿을 수 없었어요. 랜딩은 브라우저의 User-Agent 문자열에서 OS 버전을 꺼내는데, 서버 코드에는 "Safari 가 UA 의 OS 버전을 고정해서 보낸다"는 이유가 남아 있어요 [확인 필요: Safari UA 의 OS 버전 고정 동작에 대한 공식 출처·적용 버전]. 그래서 OS 버전은 지금도 매칭에 쓰지 않아요.
+**OS 버전**은 랜딩 페이지 쪽 값을 믿을 수 없었어요. 랜딩은 브라우저의 User-Agent 문자열에서 OS 버전을 꺼내는데, 서버 코드에는 "Safari 가 UA 의 OS 버전을 고정해서 보낸다"는 이유가 남아 있어요. 실제로 Apple 의 Safari 26.0 릴리스 노트에는 **iOS 26·iPadOS 26 의 Safari 가 UA 에 iOS 26 이전의 마지막 버전을 고정해서 적는다**고 나와 있어요. 랜딩에서 읽은 OS 버전이 기기의 실제 버전과 다를 수 있다는 뜻이에요. 그래서 OS 버전은 지금도 매칭에 쓰지 않아요.
 
 **IP** 는 랜딩을 연 순간과 앱을 처음 연 순간이 끝자리까지 같다는 보장이 없어요. 사이에 스토어에서 내려받는 시간이 끼고, 그사이 모바일 네트워크의 주소가 바뀌거나 Wi-Fi 로 넘어갈 수 있어요. 그래서 앞 두 자리만 보기로 했어요. 대신 **변별력이 크게 떨어져요.** 같은 통신사 사용자들이 같은 앞자리를 나눠 쓰기 때문이에요.
 
@@ -234,7 +234,7 @@ await _profileUseCase.fetchAndStoreReferralCode().timeout(const Duration(seconds
 
 그래서 서버는 코드를 표준 키에 싣고, 앱은 **기존 키를 먼저 보고 없으면 표준 키를 읽도록** 바꿨어요. 서버가 먼저 바뀌면 그사이 설치한 Android 사용자가 코드를 잃기 때문에, **앱이 스토어에 다 퍼진 뒤에 서버를 배포**하는 순서를 지켰어요. 매칭을 직접 소유해도, 링크가 지나는 길은 다른 도구와 나눠 쓰고 있었던 거예요.
 
-**개인정보.** 이 방식은 랜딩을 연 사람의 IP, 언어, 시간대, 화면 정보를 서버에 저장해요. 회원이 되기 전의 사람이에요. 무엇을 얼마나 오래 보관하는지 정해 두어야 하고 [확인 필요: 랜딩 신호 보관 기간·삭제 정책], Apple 은 기기를 식별하려고 기기 정보를 조합하는 것(fingerprinting)을 개인정보 정책에서 다루고 있어요 [확인 필요: Apple 정책 원문과, 자사 랜딩→자사 앱 매칭이 해당하는지 검토 결과]. SDK 를 써도 이 질문은 사라지지 않지만, **직접 만들면 답할 사람이 저희뿐이에요.**
+**개인정보.** 이 방식은 랜딩을 연 사람의 IP, 언어, 시간대, 화면 정보를 서버에 저장해요. 회원이 되기 전의 사람이에요. 무엇을 얼마나 오래 보관하는지 정해 두어야 하고 [확인 필요: 랜딩 신호 보관 기간·삭제 정책], Apple 은 개발자 문서 User Privacy and Data Use 에서 **기기를 고유하게 식별할 목적으로 기기에서 데이터를 끌어내는 것(fingerprinting)을 금지**하고, 그 예로 브라우저 속성, 기기 설정, 네트워크 연결을 들어요 [확인 필요: 자사 랜딩→자사 앱 매칭이 이 조항에 해당하는지 검토 결과]. SDK 를 써도 이 질문은 사라지지 않지만, **직접 만들면 답할 사람이 저희뿐이에요.**
 
 ## 이 방식을 쓰지 않을 때
 
@@ -262,7 +262,8 @@ await _profileUseCase.fetchAndStoreReferralCode().timeout(const Duration(seconds
 
 ## 참고 자료
 
-- Android Developers, [Play Install Referrer Library](https://developer.android.com/google/play/installreferrer/library) [확인 필요: 링크 유효성·확인 시점]
+- Android Developers, [Play Install Referrer Library](https://developer.android.com/google/play/installreferrer/library) (2026-11-19 확인)
 - pub.dev, [`play_install_referrer`](https://pub.dev/packages/play_install_referrer) — 이 글의 기준 버전 0.5.0
-- AppsFlyer, OneLink 딥링크 파라미터(`deep_link_value`, `deep_link_sub1`) 문서 [확인 필요: 공식 문서 링크·확인 시점]
-- Apple, User Privacy and Data Use(fingerprinting 관련 항목) [확인 필요: 공식 문서 링크·확인 시점]
+- AppsFlyer, [Unified Deep Linking (UDL)](https://dev.appsflyer.com/hc/docs/unifieddeeplink) — `deep_link_value`, `deep_link_sub1`~`deep_link_sub10` 파라미터 (2026-11-19 확인)
+- Apple Developer, [User Privacy and Data Use](https://developer.apple.com/app-store/user-privacy-and-data-use/) — "Can I fingerprint or use signals from the device to try to identify the device or a user?" 항목 (2026-11-19 확인)
+- Apple Developer, [Safari 26.0 Release Notes](https://developer.apple.com/documentation/safari-release-notes/safari-26-release-notes) — UA 의 OS 버전 고정 항목 (2026-11-19 확인)

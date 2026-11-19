@@ -393,7 +393,9 @@ abstract interface class HealthSyncDataSource {
 
 반환 타입 `HealthDataPoint` 가 Flutter 플러그인의 타입이에요. 그래서 `usecase` 에서 `package:health` 를 import 하는 파일이 10개예요. 인터페이스가 있어도 **시그니처에 바깥 타입이 있으면 경계는 열려 있어요.**
 
-`presenter` 도 같은 모양이에요. `pubspec.yaml` 에 `in_app_purchase` 와 `video_player` 가 있는데, `in_app_purchase` 는 페이월·코인 구매 BLoC 을 포함한 파일 5개가 import 해요. `video_player` 는 선언만 있고 import 하는 파일이 없었어요. `[확인 필요: presenter 가 결제 플러그인을 직접 의존하게 된 이유]`
+`presenter` 도 같은 모양이에요. `pubspec.yaml` 에 `in_app_purchase` 와 `video_player` 가 있는데, `in_app_purchase` 는 페이월·코인 구매 BLoC 을 포함한 파일 5개가 import 해요. `video_player` 는 선언만 있고 import 하는 파일이 없었어요.
+
+결제 쪽은 이유가 인터페이스 주석에 남아 있어요. 결제 플러그인은 Flutter 플러그인이라 구현은 `app` 에 두고, `presenter` 는 `app` 을 import 할 수 없으니 인터페이스를 `presenter` 에 뒀다고 적혀 있어요. 인터페이스가 플러그인의 상품 타입(`ProductDetails`)을 그대로 내보내는 이유도 적혀 있어요. **구매 호출이 조회해 온 그 인스턴스 자체를 요구**하고, 무료 체험이 붙을지를 가르는 값이 인스턴스 안에 실려 있어서, 평평한 값 객체로 바꾸면 되돌릴 방법이 없다는 거예요. 같은 주석은 "`usecase` 는 Flutter 의존이 없다"는 것도 이유로 들어요. 그런데 이 주석을 쓸 때 `usecase` 의 `pubspec.yaml` 에는 이미 위의 `health` 가 있었어요.
 
 
 ## 마치며: 경계는 타입이 바뀌는 자리였다

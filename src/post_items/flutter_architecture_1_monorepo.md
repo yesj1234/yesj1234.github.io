@@ -135,7 +135,7 @@ import 'package:network/network.dart';
 
 그러려면 `presenter` 의 `pubspec.yaml` 에 `network` 를 적어야 했어요. 며칠 뒤에는 반대로 `network` 와 `local_storage` 가 `presenter` 를 참조하는 줄도 들어갔어요. 이때 그린 의존성 그림(`melos list --mermaid` 로 만든 `docs/dependency.png`)에는 `network → presenter`, `local_storage → presenter` 화살표가 그대로 남아 있어요.
 
-일주일 뒤 리뷰를 반영하면서 이 줄들을 지웠어요. 고친 방법은 **예외를 `entity` 로 옮기는 것**이었어요. `presenter` 는 이제 `network` 의 예외가 아니라 `entity` 의 `LogInFailedException` 을 잡아요. `[확인 필요: 당시 리뷰에서 어떤 근거로 되돌리자고 했는지]`
+일주일 뒤 리뷰를 반영하면서 이 줄들을 지웠어요. 고친 방법은 **예외를 `entity` 로 옮기는 것**이었어요. `presenter` 는 이제 `network` 의 예외가 아니라 `entity` 의 `LogInFailedException` 을 잡아요. 그런데 리뷰 코멘트 중에 의존 방향을 짚은 건 없었어요. 가장 가까운 건 `network` 의 예외 파일에 달린 두 코멘트였어요. 예외 이름은 `LogInWithGoogleFailure` 보다 `LoginFailure` 처럼 일반적으로 짓고, 오류를 문구로 구분하지 말고 오류마다 클래스를 만들자는 것이었어요. 이걸 반영하면서 `network` 의 예외 파일을 지우고 `entity` 에 이미 있던 `AuthException` 아래에 클래스를 만들었고, **같은 커밋에서 세 `pubspec.yaml` 의 거꾸로 선 줄도 함께 지웠어요.**
 
 여기서 배운 건 하나예요. **의존 방향을 실제로 가른 건 "예외 클래스를 어디에 두나" 같은 사소한 결정**이었어요. 거창한 설계 원칙보다, 매일 쓰는 타입 하나가 어느 패키지에 사느냐가 화살표를 만들어요.
 
