@@ -1,7 +1,7 @@
 ---
 title: '전체 화면 로딩 23번을 2번으로: 설문 저장을 백그라운드 직렬 큐로'
 author: jack
-date: 2026. 11. 18.
+date: 2026. 09. 15.
 published: true
 description: 온보딩 설문에서 답할 때마다 서버 응답을 기다리던 구조를, 답변을 백그라운드 직렬 큐로 보내고 꼭 필요한 두 곳에서만 기다리도록 바꾼 구현기예요.
 cover: /posts/onboarding_background_save_queue/cover.webp
