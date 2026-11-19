@@ -141,7 +141,7 @@ Referral.objects.filter(
 )
 ```
 
-이 조건은 첫 PR 을 머지한 날 밤에 하나씩 풀렸어요. 두 시간 남짓한 사이에 커밋 네 개가 이어졌어요 [확인 필요: 조건을 푼 계기가 실기기 테스트였는지].
+이 조건은 첫 PR 을 머지한 날 밤에 하나씩 풀렸어요. **매칭이 잘 되지 않아서** 조건을 하나씩 풀었고, 두 시간 남짓한 사이에 커밋 네 개가 이어졌어요.
 
 | 커밋 | 바뀐 것 |
 |---|---|
@@ -182,7 +182,7 @@ Referral.objects.filter(
 
 SDK 의 강점은 분명해요. 플랫폼별 설치 경로 처리를 SDK 가 맡아 주고, 링크 관리 화면과 캠페인 단위 집계까지 따라와요. 직접 만들면 이 중 아무것도 공짜로 오지 않아요.
 
-그래도 매칭을 서버에 둔 건, 1번 기준 때문이에요. 보상은 **"이 회원이 이 초대 행에 연결돼 있고, 아직 보상을 안 받았는가"**를 우리 DB 에서 판정해야 해요. 지급은 조건부 업데이트 한 줄로 선점해요.
+그래도 SDK 를 쓰지 않은 **실제 이유는 비용**이었어요. 4월에 SDK 의 디퍼드 딥링크 기능도 당연히 검토했지만, 비용 때문에 직접 만들기로 했어요. 구조로 봐도 서버 매칭은 1번 기준에 맞아요. 보상은 **"이 회원이 이 초대 행에 연결돼 있고, 아직 보상을 안 받았는가"**를 우리 DB 에서 판정해야 해요. 지급은 조건부 업데이트 한 줄로 선점해요.
 
 ```python
 async def mark_inviter_rewarded_if_unrewarded(self, referral_id: int) -> bool:
@@ -195,7 +195,7 @@ async def mark_inviter_rewarded_if_unrewarded(self, referral_id: int) -> bool:
 
 초대 관계가 이 테이블의 한 행이고, 그 행이 랜딩 신호에서 시작해요. 매칭을 SDK 가 하면 앱이 SDK 에서 받은 값을 서버로 다시 보내야 하고, 서버는 **앱이 보낸 값을 믿고** 행을 만들어야 해요. 매칭을 서버가 하면 신호 저장부터 연결, 지급까지 **한 테이블 안에서** 끝나요.
 
-다만 이건 제가 지금 코드에서 읽어 낸 기준이에요. 당시 SDK 의 디퍼드 딥링크 기능을 비용이나 계약 조건까지 놓고 비교한 기록은 남아 있지 않아요 [확인 필요: 4월 결정 당시 SDK 디퍼드 딥링크(OneLink 등)를 검토했는지, 비용·플랜 제약이 있었는지]. **같은 조건으로 두 방식을 나란히 돌려 본 비교도 아니에요.**
+다만 이 구조적 이점은 제가 지금 코드에서 거꾸로 읽어 낸 거예요. 당시 결정을 가른 건 비용이었어요. **같은 조건으로 두 방식을 나란히 돌려 본 비교도 아니에요.**
 
 ## 같은 구조를 QR 보상에 다시 쓰다
 
@@ -213,7 +213,7 @@ async def mark_inviter_rewarded_if_unrewarded(self, referral_id: int) -> bool:
 
 이 방식이 잘 돌아간다고만 쓰면 반쪽짜리 글이에요. 직접 만든 대가로 떠안은 것을 적어 둘게요.
 
-**오매칭과 미매칭 사이의 줄다리기.** 조건을 풀면 오매칭이, 조이면 미매칭이 늘어요. 6월에 "조건을 만족하는 초대자가 둘 이상이면 아예 연결하지 않는" 규칙을 넣은 적이 있어요. 3번 기준(애매하면 주지 않는다)을 그대로 코드로 옮긴 거예요. 이 규칙은 다음 날 되돌려졌고, 지금 서버는 **가장 최근 신호를 고르는** 방식이에요 [확인 필요: 되돌린 이유]. 앱은 그때 만든 "애매함" 응답 처리를 아직 갖고 있어서, 서버가 다시 그 응답을 주면 코드를 버리게 돼 있어요.
+**오매칭과 미매칭 사이의 줄다리기.** 조건을 풀면 오매칭이, 조이면 미매칭이 늘어요. 6월에 "조건을 만족하는 초대자가 둘 이상이면 아예 연결하지 않는" 규칙을 넣은 적이 있어요. 3번 기준(애매하면 주지 않는다)을 그대로 코드로 옮긴 거예요. 이 규칙은 다음 날 되돌려졌고, 지금 서버는 **가장 최근 신호를 고르는** 방식이에요. 왜 되돌렸는지는 기록에 남아 있지 않아요. 앱은 그때 만든 "애매함" 응답 처리를 아직 갖고 있어서, 서버가 다시 그 응답을 주면 코드를 버리게 돼 있어요.
 
 **iOS 는 결국 확률이에요.** 신호를 아무리 다듬어도 iOS 매칭은 추정이에요. 그래서 나중에 외부 추천 프로그램을 붙일 때는 **가입 중에 추천 코드를 직접 입력하는 화면**을 따로 만들었어요. 매칭이 실패해도 사용자가 메울 수 있는 수동 경로예요. 같은 작업에서, SDK 가 링크 클릭으로 확정해 주는 값이 있으면 **신호 매칭 결과보다 그 값을 우선**하기로 했어요.
 
@@ -234,7 +234,7 @@ await _profileUseCase.fetchAndStoreReferralCode().timeout(const Duration(seconds
 
 그래서 서버는 코드를 표준 키에 싣고, 앱은 **기존 키를 먼저 보고 없으면 표준 키를 읽도록** 바꿨어요. 서버가 먼저 바뀌면 그사이 설치한 Android 사용자가 코드를 잃기 때문에, **앱이 스토어에 다 퍼진 뒤에 서버를 배포**하는 순서를 지켰어요. 매칭을 직접 소유해도, 링크가 지나는 길은 다른 도구와 나눠 쓰고 있었던 거예요.
 
-**개인정보.** 이 방식은 랜딩을 연 사람의 IP, 언어, 시간대, 화면 정보를 서버에 저장해요. 회원이 되기 전의 사람이에요. 무엇을 얼마나 오래 보관하는지 정해 두어야 하고 [확인 필요: 랜딩 신호 보관 기간·삭제 정책], Apple 은 개발자 문서 User Privacy and Data Use 에서 **기기를 고유하게 식별할 목적으로 기기에서 데이터를 끌어내는 것(fingerprinting)을 금지**하고, 그 예로 브라우저 속성, 기기 설정, 네트워크 연결을 들어요 [확인 필요: 자사 랜딩→자사 앱 매칭이 이 조항에 해당하는지 검토 결과]. SDK 를 써도 이 질문은 사라지지 않지만, **직접 만들면 답할 사람이 저희뿐이에요.**
+**개인정보.** 이 방식은 랜딩을 연 사람의 IP, 언어, 시간대, 화면 정보를 서버에 저장해요. 회원이 되기 전의 사람이에요. 무엇을 얼마나 오래 보관하는지 정해 두어야 해요. 보관 기간 같은 정책은 따로 사내 기준을 만들기보다 **개인정보보호법 같은 법 기준을 따라가요.** SDK 를 써도 이 질문은 사라지지 않지만, **직접 만들면 답할 사람이 저희뿐이에요.**
 
 ## 이 방식을 쓰지 않을 때
 
@@ -265,5 +265,4 @@ await _profileUseCase.fetchAndStoreReferralCode().timeout(const Duration(seconds
 - Android Developers, [Play Install Referrer Library](https://developer.android.com/google/play/installreferrer/library) (2026-11-19 확인)
 - pub.dev, [`play_install_referrer`](https://pub.dev/packages/play_install_referrer) — 이 글의 기준 버전 0.5.0
 - AppsFlyer, [Unified Deep Linking (UDL)](https://dev.appsflyer.com/hc/docs/unifieddeeplink) — `deep_link_value`, `deep_link_sub1`~`deep_link_sub10` 파라미터 (2026-11-19 확인)
-- Apple Developer, [User Privacy and Data Use](https://developer.apple.com/app-store/user-privacy-and-data-use/) — "Can I fingerprint or use signals from the device to try to identify the device or a user?" 항목 (2026-11-19 확인)
 - Apple Developer, [Safari 26.0 Release Notes](https://developer.apple.com/documentation/safari-release-notes/safari-26-release-notes) — UA 의 OS 버전 고정 항목 (2026-11-19 확인)
