@@ -61,6 +61,12 @@ Flutter 는 **혼합 방식**을 지원해요. SPM 을 켜면 `Package.swift` �
 | `mobile_device_identifier` | 원본 최신은 지원 | **보류**. 직접 고친 복사본을 쓰고 있어서 |
 | `flutter_tts`, `flutter_email_sender`, `device_region` | 지원 버전 없음 | **CocoaPods 에 남김** |
 
+
+<figure>
+	<img src="/posts/cocoapods_to_spm_migration/fig-1-plugin-survey.webp" alt="iOS 네이티브 코드가 있는 플러그인 51개 중 43개는 이미 SPM 을 지원했고, 나머지 8개는 버전 업 2개, 다른 구현 패키지로 교체 1개, 보류 2개, CocoaPods 에 남김 3개로 처리했다" width="1600" height="900" loading="lazy" />
+	<figcaption>51개 중 43개는 이미 SPM 을 지원했고, 남은 8개는 네 갈래로 처리했어요.</figcaption>
+</figure>
+
 여기서 볼 건, 이 판정이 **"`Package.swift` 가 있다"까지만 확인한 것**이라는 점이에요. 실제로 빌드되는지는 별개였어요. 첫 번째 사건이 바로 거기서 났어요.
 
 > `health` 는 패치 버전 하나만 올리면 되는 줄 알았어요. 그런데 새 버전이 요구하는 `device_info_plus` 13 이 다시 `win32` 6 을 끌어오고, 그 바람에 `network_info_plus`·`share_plus`·`package_info_plus`·`flutter_local_notifications` 가 줄줄이 메이저 업그레이드가 필요했어요. SPM 전환과 섞기엔 범위가 커서 따로 떼어 냈어요.
@@ -106,6 +112,12 @@ end
 ```
 
 **CocoaPods 는 설치 후에 모든 pod 의 빌드 설정을 덮어쓸 수 있었어요.** 플러그인이 13.0 을 선언해도 저희가 15.6 으로 올려 버리면 그만이었죠. 첫 번째 가정, "앱이 15.6 이면 의존성도 15.6 에 맞춰진다"는 사실 **이 몇 줄이 만들어 준 것**이었어요. SPM 에는 `post_install` 같은 훅이 없어요. 패키지의 `Package.swift` 는 패키지 작성자의 것이고, 앱 쪽에서 고칠 수 없어요.
+
+
+<figure>
+	<img src="/posts/cocoapods_to_spm_migration/fig-2-min-version.webp" alt="CocoaPods 에서는 post_install 이 iOS 13.0 을 선언한 플러그인을 15.6 으로 올려 빌드가 통과했지만, SPM 에서는 그런 훅이 없어 iOS 13.0 플러그인이 from 5.13.0 범위의 최신 LineSDK 5.17.0(iOS 15 요구)을 받아 Target Integrity 에러가 났다" width="1600" height="1000" loading="lazy" />
+	<figcaption>CocoaPods 에서는 post_install 이 최소 버전을 올려 줬지만, SPM 에는 그 훅이 없어 플러그인 선언이 그대로 부딪혔어요.</figcaption>
+</figure>
 
 **해결.** 충돌하지 않는 마지막 버전으로 고정했어요. SPM 이 실제로 쓸 버전을 적어 두는 잠금 파일 `Package.resolved` 에 `google-cast-sdk` **4.8.4**, `line-sdk-ios-swift` **5.16.0** 을 적었어요. 5.16.0 의 `Package.swift` 는 iOS 13 을 선언해서 플러그인과 맞아요.
 
@@ -168,6 +180,12 @@ pod 'FBSDKLoginKit', :podspec => fbsdk_spec.call('FBSDKLoginKit', 'b/3/c')
 | `IPHONEOS_DEPLOYMENT_TARGET` 15.6 상향 | 낮게 선언한 pod 을 15.6 으로 | **적용 안 됨** (사건 1) |
 | `SWIFT_ENABLE_EXPLICIT_MODULES=NO` | Xcode 26 에서 Firebase 서브스펙 모듈 해석 실패 회피 | 남은 pod 에만 적용 |
 | `.xcprivacy` 를 Resources 로 이동 | 프라이버시 매니페스트 위치 교정 | 남은 pod 에만 적용 |
+
+
+<figure>
+	<img src="/posts/cocoapods_to_spm_migration/fig-3-post-install-reach.webp" alt="Podfile 의 post_install 설정은 CocoaPods 가 만든 pod 타깃에만 닿고, SPM 으로 옮겨 간 플러그인 패키지에는 적용되지 않는다" width="1600" height="900" loading="lazy" />
+	<figcaption>post_install 은 pod 타깃에만 닿아서, SPM 으로 옮겨 간 플러그인은 에러 없이 설정을 잃었어요.</figcaption>
+</figure>
 
 가장 위험한 건 첫 줄이었어요. `permission_handler` 는 **매크로가 켜진 권한의 코드만 컴파일해요.** 매크로가 꺼지면 해당 권한 요청 코드가 아예 빠지고, 앱은 권한을 요청해도 아무 일도 일어나지 않아요. 그래서 앱이 쓰는 권한만 골라 켜는 구조예요.
 
@@ -257,6 +275,12 @@ CocoaPods 를 완전히 걷어 내기 전까지 남아 있는 함정도 적어 �
 ## 마치며: CocoaPods 가 해 주던 일의 목록
 
 처음엔 이 작업을 "설정 하나 끄고, 안 되는 플러그인 몇 개 버전 올리기" 정도로 봤어요. 실제로 바뀐 코드도 많지 않았어요. 시간이 든 곳은 코드가 아니라, **CocoaPods 가 저희 대신 해 주던 일을 찾아내는 것**이었어요. 의존성의 최소 iOS 를 앱에 맞춰 올려 주고, 권한 매크로를 넣어 주고, Firebase 를 `Pods/` 에 넣어서 업로드 스크립트가 돌게 해 주던 일들이요.
+
+
+<figure>
+	<img src="/posts/cocoapods_to_spm_migration/fig-4-implicit-jobs.webp" alt="CocoaPods 가 조용히 해 주던 세 가지 일, 최소 iOS 상향과 권한 매크로와 Pods 경로의 업로드 스크립트가 SPM 전환 뒤 각각 Target Integrity 에러, 권한 판정 방식 변경, Crashlytics 0건으로 드러났다" width="1600" height="900" loading="lazy" />
+	<figcaption>CocoaPods 가 대신 해 주던 일은 SPM 으로 옮긴 뒤에야 하나씩 드러났어요.</figcaption>
+</figure>
 
 **도구를 바꿀 때 옮겨야 하는 건 설정 파일이 아니라, 그 도구가 해 주던 일의 목록입니다.**
 

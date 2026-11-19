@@ -49,6 +49,12 @@ tags: [Flutter, Architecture, BLoC]
 - **상태**: 지금 화면이 그려야 할 **사실**. 같은 사실을 두 번 받아도 화면은 같아요.
 - **사이드 이펙트**: 한 번 일어난 **사건**. 같은 사건이 두 번 일어나면 토스트도 두 번 떠야 해요.
 
+
+<figure>
+	<img src="/posts/flutter_architecture_4_bloc_viewmodel/fig-1-two-outputs.webp" alt="이벤트를 받은 BLoC 의 출력이 두 갈래로 나뉜다. 사실인 상태는 BlocBuilder 가 그리고, 사건인 사이드 이펙트는 sideEffects.listen 이 들어 토스트·화면 이동·바텀시트를 띄운다" width="1600" height="900" loading="lazy" />
+	<figcaption>상태는 화면이 그릴 사실이고, 사이드 이펙트는 한 번 일어나는 사건이에요.</figcaption>
+</figure>
+
 뒤에 나올 함정 대부분이 이 구분에서 나와요. **사건을 사실 자리에 넣으면 사라지고, 사실을 사건으로만 알리면 화면이 낡아요.**
 
 비용도 있어요. 공통 예시인 이메일 수신 설정 BLoC 은 토글 두 종류를 저장하는데 파일 5개(barrel 포함), 165줄이에요. 대신 **무엇을 받고, 무엇을 그리게 하고, 무엇을 알리는지**를 파일별로 따로 읽을 수 있어요.
@@ -233,6 +239,12 @@ void emit(State state) {
 
 들어가며의 언어 설정이 이 규칙을 그대로 따른 결과였어요. 라우트 빌더가 `LanguageBloc` 을 새로 만들었는데, `LanguageBloc` 은 **이미 앱 루트에 하나 있었고** 그 루트 인스턴스가 `MaterialApp` 의 `locale` 을 정하고 있었어요. 화면의 `context.read<LanguageBloc>()` 은 **가장 가까운** provider, 즉 라우트가 만든 사본을 잡아요. 사본은 선택을 저장했지만 루트 인스턴스는 이벤트를 받은 적이 없으니, 재시작해야 바뀌었던 거예요.
 
+
+<figure>
+	<img src="/posts/flutter_architecture_4_bloc_viewmodel/fig-2-root-copy.webp" alt="앱 루트의 LanguageBloc 이 MaterialApp 의 locale 을 정하는데, 라우트 빌더가 LanguageBloc 사본을 하나 더 만들어 언어 설정 화면의 context.read 가 가장 가까운 사본을 잡고, 루트 인스턴스는 이벤트를 받지 못한다" width="1600" height="1000" loading="lazy" />
+	<figcaption>화면은 가장 가까운 provider 인 사본에 이벤트를 넣었고, locale 을 정하는 루트 BLoC 은 몰랐어요.</figcaption>
+</figure>
+
 "라우트 빌더에서 주입"은 **그 화면 전용 BLoC** 에 대한 규칙이었는데, 규칙 한 줄에는 그 구분이 없었어요. 규칙을 성실히 따른 결과가 버그였어요.
 
 테스트로도 잡기 어려워요. 화면 테스트가 자기 `BlocProvider` 로 화면을 감싸면 테스트 안에는 사본 하나뿐이라 잘 동작해요. **실제 라우트 객체를 테스트 라우터에 물리고, 루트 BLoC 의 상태를 확인해야** 이 불일치가 보여요.
@@ -296,6 +308,12 @@ mixin CloseSafeAddBloc<Event, State> on Bloc<Event, State> {
 }
 ```
 
+
+<figure>
+	<img src="/posts/flutter_architecture_4_bloc_viewmodel/fig-3-close-gap.webp" alt="close() 가 시작되면 이벤트 입구가 먼저 닫혀 add 가 실패하지만 isClosed 는 상태 스트림이 닫히는 마지막까지 false 라, 그 틈에 도착한 응답이 에러를 낸다. _isClosing 은 close() 시작부터 true 가 된다" width="1600" height="800" loading="lazy" />
+	<figcaption>isClosed 가 false 인 동안에도 add 는 이미 실패하는 틈이 있어서, close() 에 들어온 순간을 따로 기록했어요.</figcaption>
+</figure>
+
 여기서 볼 건 두 가지예요. `isClosed` 대신 **`close()` 에 들어온 순간을 따로 기록**하고, 버린 이벤트를 **치명적이지 않은 에러로 보고**해요. 닫힌 BLoC 에 이벤트를 보내는 호출부 자체가 결함일 수 있으니, 크래시는 없애되 빈도는 추적하려는 거예요.
 
 이 mixin 은 **12개 BLoC 에만** 붙어 있어요. 기준은 "라우트가 소유해서 닫히면서, 실제로 이 크래시가 관측된 BLoC"이에요. 루트 BLoC 은 앱이 살아 있는 동안 닫히지 않으니 붙일 이유가 없어요.
@@ -309,6 +327,12 @@ mixin CloseSafeAddBloc<Event, State> on Bloc<Event, State> {
 3. 핸들러가 **바뀐 사실을 다시 받아** emit 해야 해요. 사건만 알리면 사실은 낡아요.
 4. 새 상태가 **이전 상태와 달라야** 해요. 같으면 `emit` 이 버려요.
 5. 위젯의 `buildWhen` 이 **그 필드를 비교해야** 해요.
+
+
+<figure>
+	<img src="/posts/flutter_architecture_4_bloc_viewmodel/fig-4-five-cells.webp" alt="이벤트와 화면 사이의 다섯 칸. 화면이 듣는 그 BLoC, 아직 이벤트를 받을 수 있는지, 바뀐 사실을 다시 받아 emit, 이전 상태와 다른지, buildWhen 이 그 필드를 비교하는지이며, 1·2번은 BLoC 의 수명, 3·4번은 상태와 사이드 이펙트의 구분 문제다" width="1600" height="900" loading="lazy" />
+	<figcaption>이벤트에서 화면까지 다섯 칸 중 어느 하나라도 막히면, 에러 없이 화면이 그대로예요.</figcaption>
+</figure>
 
 「BLoC = ViewModel」이라는 한 줄이 실제로 정한 건 **출력을 상태와 사이드 이펙트로 나눠 생각하게 한 것**이었어요. 사실은 상태로, 사건은 사이드 이펙트로 보내면 3·4번 칸의 함정 대부분이 사라져요. 1·2번 칸은 BLoC 이 어디서 태어나 언제 죽는지의 문제였고요.
 

@@ -100,6 +100,12 @@ NSLayoutConstraint.activate([
 | Dart → Swift | `update` | 전체 상태 (생성 시에는 `creationParams` 로 같은 형식) |
 | Swift → Dart | `onTap` | 눌린 칸 번호(`int`) |
 
+
+<figure>
+	<img src="/posts/ios_liquid_glass_tab_bar/fig-1-channel-roles.webp" alt="Dart 는 항목·선택·배지를 정하고 이동을 판단하며 update 로 전체 상태를 보내고, Swift 는 받은 상태대로 UITabBar 를 그리고 onTap 으로 눌린 칸 번호만 돌려준다" width="1600" height="900" loading="lazy" />
+	<figcaption>판단은 Dart 가 하고, 네이티브는 받은 상태대로 그리고 눌린 칸 번호만 알려 줘요.</figcaption>
+</figure>
+
 상태의 모양은 Dart 위젯의 주석에 계약으로 적어 뒀어요. 한쪽만 고쳐도 다른 쪽이 주석만 보고 맞출 수 있게요.
 
 ```dart
@@ -188,6 +194,12 @@ func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
 
 논리적으로는 맞아 보였어요. 그런데 고쳐지지 않았어요. 로그를 찍어 보니 **iOS 26 의 `UITabBar` 는 콜백 안에서 선택을 되돌려도, 선택 애니메이션이 끝날 즈음(약 0.6초 뒤) 탭한 항목으로 선택을 다시 확정**했어요. 렌즈가 탭한 자리로 미끄러지는 애니메이션이 진행 중이라, 중간에 바꾼 값을 애니메이션 끝에 덮어쓰는 것으로 보여요. 이 재확정은 제가 찾아본 Apple 문서에 적혀 있지 않았고, 디버그 로그로 확인한 동작이에요(iOS 26.x 기준).
 
+
+<figure>
+	<img src="/posts/ios_liquid_glass_tab_bar/fig-2-selection-desync.webp" alt="B 탭 뒤 500ms 안에 C 탭을 누르면 UITabBar 는 스스로 C 를 선택하지만 Dart 는 그 탭을 무시해 화면은 B 에 남고, 콜백에서 선택을 되돌려도 약 0.6초 뒤 UITabBar 가 C 로 다시 확정한다" width="1600" height="900" loading="lazy" />
+	<figcaption>UITabBar 는 누르는 순간 스스로 선택을 옮기고, 되돌려도 애니메이션 끝에 다시 확정해서 Dart 가 거절할 자리가 없었어요.</figcaption>
+</figure>
+
 ### 다시 세운 규칙: 다른 탭 전환은 무조건 받는다
 
 UIKit 의 선택을 거스를 수 없다면, Dart 가 맞추는 수밖에 없어요. 그래서 규칙을 바꿨어요.
@@ -236,6 +248,12 @@ PlatformView 에 성능 비용이 있다는 건 문서에도 있었어요. 그�
 | Raster 중앙값 / p99 | 3.34 / 5.26ms | 2.32 / 3.34ms |
 | 네이티브 합성 중앙값 / p99 | — | 0.36 / 0.71ms |
 | 8.3ms 넘은 프레임 | 7 | 3 |
+
+
+<figure>
+	<img src="/posts/ios_liquid_glass_tab_bar/fig-3-perf.webp" alt="iPhone 15 와 iPhone 16 Pro 에서 네이티브 탭바를 켜면 UI 스레드 중앙값은 1.64ms 에서 1.96ms, 1.07ms 에서 2.40ms 로 늘고 Raster 중앙값은 3.39ms 에서 2.91ms, 3.34ms 에서 2.32ms 로 줄었다" width="1600" height="900" loading="lazy" />
+	<figcaption>두 기기 모두 UI 스레드는 조금 늘고 Raster 는 줄었어요(빌드별 1회 측정).</figcaption>
+</figure>
 
 여기서 볼 건 두 가지예요. **UI 스레드는 조금 늘고, Raster 는 줄었어요.** Raster 가 준 건 흉내 유리의 `BackdropFilter`(blur 25)가 빠진 몫으로 추정해요(따로 분리해 재지는 않았어요). 그리고 **네이티브 합성(`PlatformViewsController::PerformSubmit`) 비용은 p99 로도 1ms 남짓**이었어요.
 

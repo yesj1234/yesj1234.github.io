@@ -51,6 +51,12 @@ git log --all -S'injection.config' -- '*.dart'
 | 2026-11-04 | 코드 생성기를 새 Dart 문법에 맞추려고 `injectable` 을 2.x → 3.x 로 올림 | — |
 | 2026-11-18 | 지금 | 2개 파일 1,931줄, **265곳** |
 
+
+<figure>
+	<img src="/posts/flutter_architecture_5_di_routing_testing/fig-1-doc-vs-code.webp" alt="의존 목록에는 2025-11-20 에 injectable 이 추가되고 2026-11-04 에 2.x 에서 3.x 로 올라갔고, 문서는 DI: get_it + injectable 에서 get_it + injectable(코드 생성)으로 바뀌었지만, 손으로 쓴 등록은 8곳에서 265곳으로 늘었고 @injectable 은 0건이다" width="1600" height="1000" loading="lazy" />
+	<figcaption>문서와 의존 목록이 injectable 을 말하는 동안, 코드는 처음부터 손으로 등록했어요.</figcaption>
+</figure>
+
 여기서 볼 건 세 가지예요. 첫째, **의존 목록에는 있었지만 코드는 첫날부터 손으로 썼어요.** 둘째, 문서 한 줄은 제가 DI 코드를 건드리지 않은 QA 수정 커밋에서 적었어요. `[확인 필요: 2026-01 에 Tech Stack 을 적을 때 의존 목록을 보고 썼는지]` 셋째, 그 줄은 나중에 **"(코드 생성)"이라는 설명까지 붙어** 옮겨졌어요. 틀린 문장이 정리 작업을 거치며 더 단정적으로 변했어요.
 
 쓰지 않는 패키지를 **새 문법에 맞추려고 업그레이드**까지 했어요. `entity` 패키지 문서의 "모델은 json_serializable" 도 같은 경우예요. 모델의 `fromJson` 은 전부 손으로 써요. **의존 목록을 보고 쓴 문서는 의존 목록만큼만 정확했어요.**
@@ -173,6 +179,12 @@ static Future<void> push(BuildContext context) {
 
 여기서 볼 건 **여섯 개 중 다섯 개가 에러 없이 조용히 실패한다**는 점이에요. 원인은 매번 "이 코드는 어느 navigator 를 보고 있나"였어요. 두 개만 자세히 볼게요.
 
+
+<figure>
+	<img src="/posts/flutter_architecture_5_di_routing_testing/fig-2-navigator-layers.webp" alt="루트 navigator 안에 셸 navigator, 그 안에 탭 navigator 가 있다. 홈에서 context.pop() 은 루트의 바텀시트를 닫지 못하고 rootNavigator: true 로 닫아야 하며, 셸 아래의 커스텀 백 처리 화면은 루트 직속으로 옮긴다" width="1600" height="1000" loading="lazy" />
+	<figcaption>navigator 가 세 겹이라, 함정마다 원인은 이 코드가 어느 navigator 를 보고 있느냐였어요. 그냥 <code>context.pop()</code> 하면 가장 가까운 탭 navigator 에서 멈춰요.</figcaption>
+</figure>
+
 ### 백키를 눌렀더니 앱이 꺼졌다
 
 Android 의 predictive back(뒤로 가기 미리 보기)을 켜면, 프레임워크는 "지금 누가 백을 처리하나"를 미리 알아야 해요. 그런데 셸 안쪽 라우트의 신호가 **루트까지 모이지 않아서**, Android 가 아무도 처리하지 않는다고 판단하고 액티비티를 내렸어요. 화면의 `PopScope` 는 멀쩡히 붙어 있어서 원인 찾기가 어려웠어요.
@@ -289,6 +301,12 @@ void registerSocialDataSources() {
 ```
 
 그리고 **원래의 DI 파일과 barrel 은 첫 묶음 이후 아무도 고치지 않는다**고 정했어요. 슬롯 주석 사이에 고정된 줄이 있으니, 두 작업이 각자 자기 슬롯 아래에 줄을 더해도 git 의 3-way merge 가 알아서 합쳐요. 이 파일에는 지금 슬롯 주석이 22개 있어요. 그래도 개발용 데모 페이지의 import 줄처럼 같은 자리에 몰리는 곳은 남아서, 머지 전 rebase 후 재검증 단계를 뒀어요.
+
+
+<figure>
+	<img src="/posts/flutter_architecture_5_di_routing_testing/fig-4-slot-merge.webp" alt="에이전트 셋이 각자 worktree 에서 configurations.dart 의 같은 자리를 고치면 머지 충돌이 나고, social_dependencies.dart 의 슬롯 주석 아래에 각자 줄을 더하면 3-way merge 로 합쳐진다" width="1600" height="900" loading="lazy" />
+	<figcaption>모두가 고치는 파일을 나누고 슬롯 주석을 미리 박아 두니, 병렬 작업이 충돌 없이 합쳐졌어요.</figcaption>
+</figure>
 
 여기서 배운 건 이거예요. **사람이 순서대로 일할 때 장점이던 "한 파일에 모아 두기"가, 에이전트가 동시에 일하면 충돌 지점이 됐어요.** 구조의 장단점은 일하는 방식에 따라 뒤집혀요.
 

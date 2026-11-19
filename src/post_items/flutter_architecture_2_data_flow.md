@@ -50,6 +50,12 @@ tags: [Flutter, Architecture, Clean Architecture]
 | 9 | `presenter` | BLoC 이 결과를 받아 `emit` | `Result` 에 담긴 모델 | 새 state |
 | 10 | `app` | `BlocBuilder` → 토글 다시 그림 | state | 화면 |
 
+
+<figure>
+	<img src="/posts/flutter_architecture_2_data_flow/fig-1-ten-cells.webp" alt="토글의 onChanged 에서 Page, BLoC, UseCase, 인터페이스, DataSource 구현, BaseNetwork 를 거쳐 서버로 내려갔다가, fromJson, emit, BlocBuilder 로 돌아오는 열 칸. 칸 사이 타입이 bool, 이벤트, Map, JSON, 모델, state 로 바뀐다" width="1600" height="1200" loading="lazy" />
+	<figcaption>토글 하나가 열 칸을 지나는 동안 넘기는 타입이 계속 바뀌고, 그 자리가 계층 경계예요.</figcaption>
+</figure>
+
 여기서 볼 건 **"넘기는 것" 열의 타입이 계속 바뀐다**는 점이에요. `bool` → 이벤트 → `Map` → JSON → 모델 → state 로요. 계층 경계는 결국 **타입이 바뀌는 자리**예요. 그리고 문서의 네 줄에는 5칸(인터페이스)과 8칸(모델 변환)이 따로 드러나지 않아요. 이 두 칸이 이 구조의 핵심인데도요.
 
 ## 1~3칸: 화면은 bool 을 이벤트로 바꾸고 손을 뗀다
@@ -334,6 +340,12 @@ case EmailPreferenceUpdateFailedEffect(:final error):
 | 3 | `BaseNetwork._request` | `Failure(ResponseError)` | 거침 |
 | 4 | BLoC | 도메인 예외(`TeamFullException` 등) | **건너뜀** |
 | 5 | `Page` | 번역된 사용자 문구 | **건너뜀**, `toString()` 이 그대로 |
+
+
+<figure>
+	<img src="/posts/flutter_architecture_2_data_flow/fig-3-error-journey.webp" alt="서버 에러는 DioException, DioException 안의 ResponseError, Failure(ResponseError), 도메인 예외, 번역된 사용자 문구의 5단계를 거치는데, 팀 기능은 다섯 단계를 모두 지나고 이메일 설정은 3단계 뒤 4·5단계를 건너뛰어 toString() 이 스낵바에 그대로 뜬다" width="1600" height="900" loading="lazy" />
+	<figcaption>도메인 예외로 바꾸는 4단계는 관례라서, 이메일 설정은 그 단계를 건너뛰었어요.</figcaption>
+</figure>
 
 여기서 볼 건 **4단계가 강제가 아니라 관례**라는 점이에요. `Failure.error` 의 타입은 `Object` 라서, BLoC 이 바꾸지 않아도 컴파일러는 아무 말을 하지 않아요. 4단계를 건너뛰면 화면이 분기할 기준도 없어서 5단계도 같이 빠져요. 저장소 전체로 보면 `presenter/lib` 에서 `ResponseError` 를 직접 다루는 파일이 29개, 도메인 예외 타입으로 분기하는 파일이 25개예요(grep 기준). 두 방식이 섞여 있어요.
 

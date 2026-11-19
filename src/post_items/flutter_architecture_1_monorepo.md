@@ -76,6 +76,12 @@ usecase ──────► entity
 entity ───────► (없음)
 ```
 
+
+<figure>
+	<img src="/posts/flutter_architecture_1_monorepo/fig-1-package-map.webp" alt="맨 위 app, 가운데 presenter·usecase·network·local_storage, 맨 아래 entity 가 놓인 의존 지도. presenter·network·local_storage 가 모두 가운데 usecase 를 의존하고, 모두가 entity 를 의존하며, app 은 나머지 다섯을 모두 의존한다" width="1600" height="900" loading="lazy" />
+	<figcaption>pubspec.yaml 의 의존을 그대로 그리면, network 가 usecase 를 향하고 있어요.</figcaption>
+</figure>
+
 처음 보면 이상한 점이 있어요. 데이터는 `presenter → usecase → network` 순서로 흘러가는데, **`usecase` 는 `network` 를 모르고 오히려 `network` 가 `usecase` 를 알아요.**
 
 이유는 인터페이스의 위치에 있어요. `usecase` 패키지 안에 "이메일 설정을 가져오는 무언가"라는 인터페이스가 있어요.
@@ -95,6 +101,12 @@ abstract interface class EmailPreferenceDataSource {
 
 - **호출 방향**: 런타임에 누가 누구를 부르나. `app → presenter → usecase → network`
 - **의존 방향**: `pubspec.yaml` 에 누가 누구를 적었나. `network → usecase`
+
+
+<figure>
+	<img src="/posts/flutter_architecture_1_monorepo/fig-2-call-vs-dependency.webp" alt="호출 방향은 app 에서 presenter, usecase, network 로 내려가지만, 의존 방향은 network 에서 usecase 의 인터페이스로 향한다. 구현을 끼워 넣는 건 app 의 DI 설정이다" width="1600" height="900" loading="lazy" />
+	<figcaption>호출은 network 쪽으로 흐르지만, 의존은 인터페이스가 있는 usecase 를 향해요.</figcaption>
+</figure>
 
 이 구분이 시리즈 내내 필요해요. "app → presenter → usecase → network/local_storage" 같은 한 줄 요약은 호출 방향이에요. 의존 방향으로 읽으면 틀린 그림이 돼요.
 
@@ -216,6 +228,12 @@ $ dart analyze   # depend_on_referenced_packages 를 켠 뒤
 
 정리하면 저희 경계를 지키던 건 컴파일러가 아니었어요. **편집기와 AI 에이전트가 보여 주는 린트 경고, 그리고 리뷰**였어요. 다행히 지금 6개 패키지 사이의 `import` 를 전부 세어 보니, `pubspec.yaml` 에 없는 형제 패키지를 참조하는 곳은 없었어요. 하지만 그건 지켜진 결과지, 강제된 결과는 아니에요.
 
+
+<figure>
+	<img src="/posts/flutter_architecture_1_monorepo/fig-3-boundary-guards.webp" alt="선언하지 않은 import 는 Dart pub workspace 의 컴파일러를 통과하고, depend_on_referenced_packages 린트는 app·presenter·entity 에서만 error 이며 usecase·network·local_storage 에서는 info 경고로 지나가고, CI 에는 dart analyze 단계가 없어 결국 린트 경고와 리뷰가 경계를 지킨다" width="1600" height="900" loading="lazy" />
+	<figcaption>경계를 어긴 import 를 실제로 멈추는 건 컴파일러가 아니라 린트 경고와 리뷰였어요.</figcaption>
+</figure>
+
 ### barrel 은 `src/` 에 둔 패키지만 지켜진다
 
 "각 패키지는 barrel 로만 노출한다"는 규칙도 같은 식으로 확인했어요. 다른 패키지에서 오는 `import` 를 barrel 로 들어온 것과 내부 파일로 바로 들어온 것으로 나눠 셌어요.
@@ -258,6 +276,12 @@ $ dart analyze   # depend_on_referenced_packages 를 켠 뒤
 | 4 | 38 |
 | 5 | 59 |
 | 6 | 5 |
+
+
+<figure>
+	<img src="/posts/flutter_architecture_1_monorepo/fig-4-feat-commits.webp" alt="최근 6개월 feat 커밋 297개를 고친 패키지 수로 나누면 0개 16, 1개 73, 2개 55, 3개 51, 4개 38, 5개 59, 6개 5이고, 3개 이상이 153개로 52%다" width="1600" height="800" loading="lazy" />
+	<figcaption>기능 커밋의 절반 이상이 패키지 3개 이상을 지나갔어요.</figcaption>
+</figure>
 
 **기능 커밋의 절반 이상(153개, 52%)이 패키지 3개 이상을 고쳤어요.** 5개를 고친 커밋이 59개로, 3개나 4개보다 많아요. 화면 하나를 새로 만들면 `entity → usecase → network → presenter → app` 을 한 번씩 지나가는 게 기본이라서예요.
 

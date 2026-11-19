@@ -196,6 +196,12 @@ BLoC 파일 146개를 **만든 시기**로 나눠 보면 흐름이 더 분명해
 
 ("둘 다 아님"은 `Result` 를 받지 않거나, `getOrNull()`·`isSuccess` 처럼 다른 방법으로 받는 BLoC 이에요.)
 
+
+<figure>
+	<img src="/posts/flutter_architecture_3_result/fig-1-bloc-era.webp" alt="BLoC 파일 146개를 만든 시기로 나누면 2025-10~2026-09 에는 체인만 43, 둘 다 9, switch 만 3, 둘 다 아님 15였고, 2026-10~2026-11 에는 체인만 0, 둘 다 2, switch 만 55, 둘 다 아님 19였다" width="1600" height="800" loading="lazy" />
+	<figcaption>10월부터 만든 BLoC 에서는 체인만 쓰는 파일이 하나도 없어요.</figcaption>
+</figure>
+
 10월을 기점으로 **새 BLoC 은 체인을 하나도 쓰지 않았어요.** 이렇게 바꾸자고 정한 규칙 문서는 찾지 못했어요. `[확인 필요: 10월부터 새 BLoC 이 switch 로만 쓰인 계기]` 다만 다음 절의 실험을 해 보면, 결과적으로 그쪽이 덜 새는 방향이었다는 건 말할 수 있어요.
 
 ## 함정: 실패가 다니는 통로는 두 개다
@@ -247,6 +253,12 @@ execute() 없이:                        []
 2. **`onCatch` 가 없으면 예외는 흔적 없이 사라져요.** 로그도, 크래시 보고도 없어요. `catch` 가 이미 잡았으니까요.
 3. **콜백 안에서 던진 예외도 예외 통로**예요. `onSuccess` 에서 모델을 상태로 옮기다 null 검사 하나가 터져도 `onFailure` 는 모르고 지나가요. 들어가며의 주석이 말한 게 이 경우예요.
 
+
+<figure>
+	<img src="/posts/flutter_architecture_3_result/fig-2-two-channels.webp" alt="Future<Result<T>> 안에 서버 실패가 다니는 값 통로와 콜백 안에서 던진 예외가 다니는 예외 통로가 있고, execute() 는 값 통로를 onSuccess·onFailure 에, 예외 통로를 onCatch 에 연결하며, onCatch 가 없으면 예외는 흔적 없이 사라진다" width="1600" height="1000" loading="lazy" />
+	<figcaption>execute() 는 값 통로를 onFailure 에, 예외 통로를 onCatch 에 따로 연결해요.</figcaption>
+</figure>
+
 ### 반대쪽으로 새는 경우도 있다
 
 `onFailure` 만 다는 것만 위험한 게 아니에요. 알림 설정 BLoC 에는 반대 모양의 체인이 있어요.
@@ -277,6 +289,12 @@ await _memberUsecase
 | 있음 | 없음 | **279** | 예외 통로(조용히 사라짐) |
 | 없음 | 있음 | 2 | 값 통로 |
 | 없음 | 없음 | 7 | 둘 다 |
+
+
+<figure>
+	<img src="/posts/flutter_architecture_3_result/fig-3-chain-callbacks.webp" alt="체인 314개 중 onFailure 와 onCatch 를 둘 다 단 체인은 26개로 8%이고, onFailure 만 단 279개는 예외 통로로, onCatch 만 단 2개는 값 통로로, 둘 다 없는 7개는 양쪽으로 실패가 샌다" width="1600" height="800" loading="lazy" />
+	<figcaption>두 통로를 모두 받는 체인은 314개 중 26개뿐이에요.</figcaption>
+</figure>
 
 여기서 볼 건 **둘 다 단 체인이 26개(8%)뿐**이라는 점이에요. 279개가 다 버그라는 뜻은 아니에요. 대부분은 예외가 날 일이 드문 짧은 콜백이에요. 하지만 그 "드물다"는 판단을 컴파일러가 아니라 작성자가 매번 하고 있다는 뜻이에요. **두 번째 약속은 `switch` 에서만 지켜지고, 체인에서는 지켜지지 않아요.**
 
@@ -367,6 +385,12 @@ enum TokenRefreshResult {
 | 실패 **종류에 따라 다른 행동**을 한다 | 전용 enum·sealed 타입, 또는 실패 타입이 있는 `Either` | 토큰 재발급(로그아웃 여부), 팀 정원 초과 |
 | 실패면 **되돌리고 알리기만** 한다 | `Result` + `switch` | 이메일 수신 토글 |
 | 복구할 방법이 없는 **프로그래밍 오류**다 | 예외(`Error`) 그대로 | null 검사 실패, 잘못된 캐스트 |
+
+
+<figure>
+	<img src="/posts/flutter_architecture_3_result/fig-4-failure-fork.webp" alt="호출부가 실패로 하는 일에 따라 세 갈래로 나뉜다. 종류에 따라 다른 행동을 하면 전용 enum·sealed 타입이나 Either, 되돌리고 알리기만 하면 Result 와 switch, 프로그래밍 오류면 예외를 그대로 쓴다" width="1600" height="900" loading="lazy" />
+	<figcaption>도구를 고르는 기준은 호출부가 실패를 받아서 무엇을 하느냐예요.</figcaption>
+</figure>
 
 `ResultChain` 을 계속 쓴다면 지킬 건 두 가지예요. **실패 처리는 `onFailure` 와 `onCatch` 양쪽에 두고, 플래그·로딩처럼 반드시 풀어야 하는 건 `onFinal` 에 둬요.** 들어가며의 수정은 그 앞 절반, 로딩 해제를 두 콜백에 각각 넣는 쪽을 택했어요.
 

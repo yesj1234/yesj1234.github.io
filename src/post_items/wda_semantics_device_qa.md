@@ -87,6 +87,12 @@ def walk(node):
 
 처음엔 Flutter 앱의 접근성 트리를 WDA 가 읽으려면 앱 쪽에서 시맨틱스를 강제로 켜야 할 줄 알았어요. 그런데 실기기에서 해 보니 **플래그 없이도 WDA 가 트리를 조회하면 Flutter 시맨틱스가 켜졌어요.** 앱 코드는 건드릴 필요가 없었어요.
 
+
+<figure>
+	<img src="/posts/wda_semantics_device_qa/fig-1-wda-setup.webp" alt="AI 에이전트가 ios_qa.sh 를 부르면 curl 로 Wi-Fi 나 USB 터널을 거쳐 기기 안 8100 포트의 WDA 에 요청이 가고, WDA 가 앱을 조작하며 접근성 트리를 id 와 center 좌표 목록으로 돌려준다" width="1600" height="900" loading="lazy" />
+	<figcaption>에이전트는 셸 스크립트 하나로 기기 안의 WDA 에 HTTP 요청을 보내 앱을 조작해요.</figcaption>
+</figure>
+
 앱은 **profile 빌드**로 설치했어요. debug 빌드는 디버거 없이 다시 띄울 수 없어서, 회차마다 `restart` 로 앱을 새로 띄워야 하는 측정에 맞지 않았어요.
 
 ## 에이전트는 트리 대신 스크린샷을 읽고 있었다
@@ -172,6 +178,12 @@ Button       id=challenge_alarm_save_button     center=(196,782) label="저장�
 
 **스위치와 뒤로가기가 트리에 나타났어요.** 화면에 보이는 것은 하나도 바뀌지 않았어요. 문구, 레이아웃, 동작은 그대로고, 접근성 트리만 바뀌었어요.
 
+
+<figure>
+	<img src="/posts/wda_semantics_device_qa/fig-2-tree-before-after.webp" alt="Semantics ID 를 붙이기 전 챌린지 알람 화면의 트리에는 글자와 저장 버튼만 있었고, 붙인 뒤에는 뒤로가기 버튼과 알람 받기 스위치가 identifier 와 함께 나타났다" width="1600" height="1000" loading="lazy" />
+	<figcaption>화면은 그대로인데, 트리에 스위치와 뒤로가기가 나타났어요.</figcaption>
+</figure>
+
 ID 는 화면별 클래스에만 정의했어요. 이름은 `{화면}_{요소}_{역할}` 소문자 스네이크 케이스로 정했고, ID 마다 **에이전트가 읽을 한국어 설명**을 붙였어요.
 
 ```dart
@@ -225,6 +237,12 @@ after_docs 에 넣은 한 줄은 이거예요.
 
 둘째, **효과는 트리에서 요소가 안 보이던 화면(A·B)에만 있었어요.** 스크린샷 보기가 10회·12회에서 1회로 줄었어요. C 는 선택지가 원래부터 라벨이 붙은 버튼으로 트리에 잘 보이던 화면이라, ID 를 붙여도 달라지지 않았어요. +4%·+7% 는 회차 사이 편차 범위로 봤어요.
 
+
+<figure>
+	<img src="/posts/wda_semantics_device_qa/fig-3-screenshot-views.webp" alt="회차 중앙값 기준 스크린샷 보기 횟수가 시나리오 A 는 10, 3, 1, B 는 12, 2, 1 로 줄었고, C 는 1, 1, 0 으로 처음부터 적었다" width="1600" height="900" loading="lazy" />
+	<figcaption>요소가 트리에 안 보이던 A·B 에서만 스크린샷 보기가 크게 줄었어요.</figcaption>
+</figure>
+
 셋째가 제 가정을 깼어요. 저는 **ID 를 붙이면 에이전트가 알아서 쓸 줄** 알았어요. 그런데 after_tree 에서 에이전트가 ID 로 검색한 횟수는 회차당 0~5번이었고, C 에서는 0번이었어요. **카탈로그 안내 한 줄을 넣자 15회 모두 카탈로그를 먼저 읽고, 회차당 3~14번 ID 로 요소를 찾았어요.**
 
 비용 차이가 어디서 나는지는 회차별 전략을 보면 보여요. 에이전트는 회차마다 「스크린샷만 보며 진행」(S)과 「트리 위주」(T) 중 하나로 갈렸어요.
@@ -271,6 +289,12 @@ print(json.dumps({"actions":[{"type":"pointer","id":"finger","parameters":{"poin
 ```
 
 여기서 볼 건 `pause` 두 개예요. 한 번 누르고 20ms 뒤에 떼고, 40ms 쉬고 다시 눌러요. 탭 사이 간격이 HTTP 왕복이 아니라 **기기 안의 타이밍**으로 정해져요. Network Link Conditioner 는 필요 없었어요.
+
+
+<figure>
+	<img src="/posts/wda_semantics_device_qa/fig-4-multitap.webp" alt="tap 을 세 번 부르면 탭마다 HTTP 요청이 하나씩 나가 탭 사이에 왕복 시간이 끼지만, multitap 은 누르기 20ms·떼기·40ms 쉬기를 한 요청에 담아 기기 안에서 그 순서대로 실행한다" width="1600" height="900" loading="lazy" />
+	<figcaption>탭 간격이 HTTP 왕복이 아니라 기기 안의 타이밍으로 정해지게, 연타를 요청 하나에 담았어요.</figcaption>
+</figure>
 
 에이전트에게 준 지침은 짧았어요. 연타 확인은 반드시 `multitap` 으로 하고, 직전·직후 시각을 적고, 실제 결제 시트가 뜨면 즉시 취소하라고요. 시나리오별로 **PASS 기준을 화면에서 판정할 수 있는 형태**로 썼어요. 예를 들면 「코인이 1개 가격만큼만 줄고, 아이템이 1개만 늘었다. 이어서 일반 `tap` 하면 다시 구매된다」예요.
 
