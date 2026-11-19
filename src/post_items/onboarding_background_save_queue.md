@@ -86,6 +86,12 @@ SurveyBloc ──enqueue──▶ OnboardingStepQueue (앱 전체에 하나)
    └─ 응답을 기다리지 않고 바로 다음 페이지로
 ```
 
+
+<figure>
+	<img src="/posts/onboarding_background_save_queue/fig-1-queue.webp" alt="설문 페이지의 탭을 SurveyBloc 이 OnboardingStepQueue 에 넣고 응답을 기다리지 않고 다음 페이지로 넘어가며, 앱 전체에 하나인 큐가 한 번에 1건씩 POST 하고 미전송 답변을 로컬 저장소에 남기며 결과를 Acked 또는 Failed 로 BLoC 에 알린다" width="1600" height="1000" loading="lazy" />
+	<figcaption>BLoC 은 답을 큐에 넣고 바로 넘어가고, 서버 전송은 앱 전체에 하나뿐인 큐가 맡아요.</figcaption>
+</figure>
+
 BLoC 은 답변을 큐에 넣고 **바로 다음 페이지로 넘어가요.** 서버 응답은 나중에 이벤트로 받아서 **예측과 맞는지 대조만** 해요.
 
 이 글에서는 이 방식을 **낙관적 진행**이라고 부를게요. 서버가 "다음은 이 문항"이라고 말해 주기 전에, 앱이 같은 목록으로 먼저 계산해서 넘어가는 거예요.
@@ -120,6 +126,12 @@ _moveToPage(pageIndex);
 안 되는 이유는 서버에 있었어요. 서버는 답변을 저장하기 전에 **앞 스텝이 모두 저장됐는지 검증**해요(`_validate_previous_steps_completed`). 앞서 나간 요청은 "이전 단계 미완료" 에러로 거부해요. 사용자가 빠르게 3문항을 답해서 요청 3건이 동시에 나가면, 네트워크 사정으로 3번째가 2번째보다 먼저 도착할 수 있어요. 그러면 3번째는 거부돼요.
 
 **서버가 순서를 검증하는 한, 보내는 쪽도 순서를 지켜야 합니다.**
+
+
+<figure>
+	<img src="/posts/onboarding_background_save_queue/fig-2-serial.webp" alt="요청 세 건을 동시에 보내면 3번이 2번보다 먼저 도착해 이전 단계 미완료로 거부되지만, 한 번에 1건씩 응답을 받고 보내면 세 건 모두 순서대로 저장된다" width="1600" height="900" loading="lazy" />
+	<figcaption>서버가 앞 스텝 저장을 검증하니, 동시에 보내면 순서가 뒤집혀 거부될 수 있어요.</figcaption>
+</figure>
 
 그래서 큐는 **한 번에 1건씩** 보내고, 앞 건의 응답을 받은 뒤에야 다음 건을 보내요. 예외도 두지 않았어요. 뒤에 나올 "기다려야 하는 문항"조차 큐를 우회해 직접 POST 하지 않아요. 우회하면 큐에서 기다리던 앞 문항보다 먼저 도착해서 같은 검증에 걸려요.
 
@@ -230,6 +242,12 @@ Future<void> _completeSurvey(Emitter<SurveyState> emit) async {
 
 이렇게 해서 23번이 2번이 됐어요. **분기 문항 1번 + 합류 지점 1번**이에요. 분기 문항이 없는 남성 계정은 **1번**이에요. (앱이 꺼진 뒤 미전송 답을 들고 다시 들어온 드문 경우에는, 그 답을 보내는 동안 진입 시점에 로딩이 한 번 더 떠요.)
 
+
+<figure>
+	<img src="/posts/onboarding_background_save_queue/fig-3-loadings.webp" alt="여성·규칙적 조건의 설문 23문항에서 바꾸기 전에는 모든 문항마다 로딩이 떠 23번이었고, 바꾼 뒤에는 분기 문항과 마지막 합류 지점 두 곳에서만 떠 2번이 되었다" width="1600" height="800" loading="lazy" />
+	<figcaption>로딩은 답이 뒤 문항을 바꾸는 분기 문항과 마지막 합류 지점, 두 곳에만 남았어요.</figcaption>
+</figure>
+
 ## 실패하면 멈추고, 앱이 꺼져도 남는다
 
 기다리지 않는다는 건, 실패를 사용자가 이미 다음 문항에 가 있을 때 알게 된다는 뜻이에요. 상황별로 이렇게 정했어요.
@@ -260,6 +278,12 @@ Future<void> _completeSurvey(Emitter<SurveyState> emit) async {
 | 응답의 `next_step` != 예측 | **강등**: 낙관적 진행을 끄고, 남은 큐를 버리고, 프로필을 다시 읽어 서버가 말한 스텝으로 이동해요. 이후 문항은 **바꾸기 전처럼 한 문항씩 기다려요** |
 | "이전 단계 미완료" 로 거부됨 | 순서 문제라서 위와 같이 강등해요 |
 | 그 밖의 전송 실패 | 토스트 + 되돌리기. 낙관적 진행은 **유지**해요(네트워크 문제일 뿐이라서요) |
+
+
+<figure>
+	<img src="/posts/onboarding_background_save_queue/fig-4-demotion.webp" alt="큐 이벤트의 next_step 이 예측과 같으면 아무것도 하지 않고, 다르거나 이전 단계 미완료로 거부되면 강등해 남은 큐를 버리고 프로필을 다시 읽어 한 문항씩 기다리며, 그 밖의 전송 실패는 토스트와 되돌리기만 하고 낙관적 진행을 유지한다" width="1600" height="1000" loading="lazy" />
+	<figcaption>예측이 빗나가면 한 문항씩 기다리는 예전 방식으로 강등해서, 데이터는 깨지지 않고 느려지기만 해요.</figcaption>
+</figure>
 
 이 작업에서 가장 중요하게 본 성질이에요.
 

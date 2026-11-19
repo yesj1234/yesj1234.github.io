@@ -105,6 +105,12 @@ BLoC 144개를 네 묶음으로 나눠 에이전트 4개에게 감사를 맡겼�
 | `restartable()` | 앞 핸들러를 취소하고 새 것만 실행 | 조회·검색·새로고침 |
 | `sequential()` | 줄 세워 하나씩 실행 | 순서가 결과를 바꾸는 저장·토글 |
 
+
+<figure>
+	<img src="/posts/bloc_concurrency_refactor/fig-1-transformers.webp" alt="같은 이벤트가 두 번 들어올 때 concurrent 는 둘을 동시에 실행하고, droppable 은 두 번째를 버리고, restartable 은 첫 번째를 취소하고 두 번째만 실행하며, sequential 은 첫 번째가 끝난 뒤 두 번째를 실행한다" width="1600" height="1000" loading="lazy" />
+	<figcaption>같은 이벤트가 겹쳐 들어오면 transformer 마다 처리 방식이 달라지고, 아무것도 넘기지 않으면 동시 실행이에요.</figcaption>
+</figure>
+
 이걸 모르면 코드가 기본값을 착각해요. 실제로 배틀패스 BLoC 에는 이런 주석이 있었어요.
 
 ```dart
@@ -145,6 +151,12 @@ BLoC 144개를 네 묶음으로 나눠 에이전트 4개에게 감사를 맡겼�
 | EQUIV | 12 | 옮김 |
 | 예외 때만 다름 | 38 | 옮김 (차이를 PR 에 기록) |
 | NOT_EQUIV | 59 | **남김** |
+
+
+<figure>
+	<img src="/posts/bloc_concurrency_refactor/fig-2-equivalence.webp" alt="SINGLE 109곳 중 EQUIV 12곳과 예외 때만 다른 38곳은 transformer 로 옮겼고, 절반이 넘는 NOT_EQUIV 59곳은 남겼다" width="1600" height="900" loading="lazy" />
+	<figcaption>SINGLE 109곳 중 옮긴 건 50곳이고, 절반이 넘는 59곳은 동작이 달라져서 남겼어요.</figcaption>
+</figure>
 
 솔직히 NOT_EQUIV 가 절반이 넘을 줄은 몰랐어요. "연타 방지 플래그"는 다 비슷해 보였는데, 들여다보면 절반 이상이 다른 이벤트와 얽혀 있었어요.
 
@@ -208,6 +220,12 @@ test('다시 보기 조회 대기 중 다른 문항을 탭하면 버려지고, �
 1. **지금 코드에서 통과**하는지
 2. **일회용 복사본에서 가드를 빼면 실패**하는지
 3. **transformer 로 옮긴 뒤 다시 통과**하는지
+
+
+<figure>
+	<img src="/posts/bloc_concurrency_refactor/fig-3-mutation-check.webp" alt="지점마다 테스트를 세 번 돌린다: 지금 코드에서 통과, 가드를 뺀 복사본에서 실패, transformer 로 옮긴 뒤 다시 통과" width="1600" height="900" loading="lazy" />
+	<figcaption>가드를 뺀 복사본에서 실패해야 그 테스트가 지금 동작을 정말 고정하고 있다는 뜻이에요.</figcaption>
+</figure>
 
 2번이 중요해요. 가드를 빼도 통과하는 테스트는 **아무것도 고정하지 못하는 테스트**예요. 실제로 기존 테스트 하나가 동시 실행인데도 통과하는 걸 이 단계에서 찾았어요. 첫 PR 에서는 transformer 를 전부 뺀 복사본에서 대상 22개 파일의 테스트가 모두 실패하는 걸 확인하고 나서야 옮겼어요.
 
@@ -278,6 +296,12 @@ CROSS 104곳도 나중에 판정해 봤어요. ADR 을 쓸 때는 "여러 이벤
 1. **이 가드를 이 이벤트 말고 다른 이벤트도 읽거나 쓰나?** 그렇다면 transformer 하나로 옮길 수 없어요. 묶을 수 있는지부터 따져야 해요.
 2. **막는 단위가 "이 이벤트"인가, "이 대상(id)"인가?** 대상별이면 transformer 로 표현할 수 없어요. 직접 구현을 유지해요.
 3. **`await` 뒤에 `emit` 이 아닌 코드(필드 대입, side effect)가 있나?** `restartable()` 로 옮긴다면 `emit.isDone` 검사가 필요해요.
+
+
+<figure>
+	<img src="/posts/bloc_concurrency_refactor/fig-4-three-questions.webp" alt="이벤트 겹침 처리 코드를 보면 다른 이벤트도 가드를 읽거나 쓰는지, 막는 단위가 대상(id)인지, await 뒤에 필드 대입이나 side effect 가 있는지를 차례로 묻고, 각각 묶을 수 있는지 따지기, 직접 구현 유지, emit.isDone 검사로 갈라진다" width="1600" height="1100" loading="lazy" />
+	<figcaption>세 질문을 모두 통과한 곳만 transformer 로 선언하고, 걸리는 곳은 그 질문이 가리키는 대로 처리해요.</figcaption>
+</figure>
 
 남은 곳은 한 번에 옮기지 않기로 했어요. 2,900줄짜리 홈 BLoC 처럼 위험이 큰 파일이 섞여 있고, 설계를 바꿔야 하는 곳이 많아서요. 대신 **그 BLoC 을 수정할 때 옮긴다**는 규칙을 정했어요.
 
