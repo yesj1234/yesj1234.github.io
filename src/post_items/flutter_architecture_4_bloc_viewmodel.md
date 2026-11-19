@@ -2,7 +2,7 @@
 title: 'emit 했는데 화면이 그대로예요: BLoC 을 ViewModel 로 쓰며 배운 것'
 author: jack
 date: 2026. 11. 18.
-published: false
+published: true
 description: 'Flutter 앱에서 BLoC 을 ViewModel 로 쓰면서 상태·이벤트·사이드 이펙트를 나눈 방식과, 화면이 반응하지 않던 함정 다섯 가지를 실제 사례로 정리한 시리즈 4편이에요.'
 series: flutter-architecture
 seriesOrder: 4

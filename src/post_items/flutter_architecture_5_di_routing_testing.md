@@ -2,7 +2,7 @@
 title: 'DI·라우팅·테스트, 그리고 이 구조가 AI 와 일할 때 준 것'
 author: jack
 date: 2026. 11. 18.
-published: false
+published: true
 description: '문서와 달리 손으로 등록하던 DI, navigator 가 셋인 go_router 의 함정, 패키지를 따라 나뉜 테스트를 보고, 6개 패키지 구조가 AI 에이전트와 일할 때 무엇을 돕고 무엇을 막았는지로 시리즈를 닫아요.'
 series: flutter-architecture
 seriesOrder: 5

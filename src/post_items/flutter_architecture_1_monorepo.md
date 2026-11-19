@@ -2,7 +2,7 @@
 title: '모노레포 지도: 왜 패키지를 6개로 나눴나'
 author: jack
 date: 2026. 11. 18.
-published: false
+published: true
 description: 'Flutter 앱을 app·presenter·usecase·network·local_storage·entity 6개 패키지로 나눈 구조를 실측 수치로 그려 보고, 나눠서 얻은 것과 치른 비용을 정리한 시리즈 첫 글이에요.'
 series: flutter-architecture
 seriesOrder: 1

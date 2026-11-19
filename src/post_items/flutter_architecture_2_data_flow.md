@@ -2,7 +2,7 @@
 title: '토글 하나가 서버까지 갔다 오는 길: 계층 경계에서 바뀌는 것들'
 author: jack
 date: 2026. 11. 18.
-published: false
+published: true
 description: '이메일 수신 토글 하나가 화면에서 서버까지 갔다 돌아오는 길을 실제 코드로 따라가며, 계층마다 무엇을 알고 무엇을 모르는지, 에러가 어디서 모양을 바꾸는지 정리한 시리즈 두 번째 글이에요.'
 series: flutter-architecture
 seriesOrder: 2
