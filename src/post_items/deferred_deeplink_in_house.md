@@ -5,7 +5,8 @@ date: 2026. 10. 06.
 published: true
 description: 친구 초대 링크로 앱을 설치한 사람을 첫 실행 때 초대자와 연결하려고, Android 는 Play Install Referrer 로, iOS 는 기기 신호 매칭으로 디퍼드 딥링크를 직접 만든 판단 과정과 그 대가를 정리했어요.
 cover: /posts/deferred_deeplink_in_house/cover.webp
-tags: [Flutter, Django, DeepLink, Android, iOS]
+category: server
+tags: [Django, iOS, Android]
 ---
 
 ## 들어가며: 링크를 눌렀는데 앱이 없을 때

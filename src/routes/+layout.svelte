@@ -13,7 +13,6 @@
 	export let data: LayoutData;
 
 	$: posts = (data.publishedPosts ?? []) as unknown as App.BlogPost[];
-	$: tags = Array.from((data.tags ?? []) as Iterable<string>);
 
 	// 모바일에서는 패널을 서랍으로 띄운다. 데스크톱 패널 상태(activePanel)와 따로 둬서 첫 화면에 서랍이 열리지 않게 한다
 	let drawerOpen = false;
@@ -98,7 +97,7 @@
 	</nav>
 
 	<aside class="panel" aria-label="사이드 패널">
-		<Sidebar {posts} {tags} />
+		<Sidebar {posts} />
 	</aside>
 
 	<button

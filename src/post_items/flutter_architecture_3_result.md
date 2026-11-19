@@ -6,6 +6,7 @@ published: true
 description: 'Flutter 앱에서 실패를 예외 대신 Result 값으로 넘기기로 한 설계와 ResultChain 의 실제 동작, 그리고 onFailure 와 onCatch 사이로 실패가 새어 나간 사례를 코드와 실측으로 정리한 시리즈 3편이에요.'
 series: flutter-architecture
 seriesOrder: 3
+category: architecture
 tags: [Flutter, Architecture, Dart]
 ---
 

@@ -7,7 +7,8 @@ description: 'Flutter 로 흉내 내던 유리 탭바를 iOS 26 시스템 UITabB
 cover: /posts/ios_liquid_glass_tab_bar/cover.webp
 series: ios-native
 seriesOrder: 2
-tags: [iOS, Flutter, PlatformView, UIKit, Liquid Glass, UITabBar]
+category: ios-native
+tags: [Flutter, iOS]
 ---
 
 ## 들어가며: 앱을 다시 쓰기 전에, 탭바 한 장만

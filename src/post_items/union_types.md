@@ -4,7 +4,8 @@ description: Union type에 대해 알아봅시다.
 author: jack
 published: true
 date: 2024. 12. 26.
-tags: ['Dart']
+category: dart
+tags: [Dart]
 ---
 
 # Union types

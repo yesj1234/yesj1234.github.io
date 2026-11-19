@@ -4,7 +4,8 @@ author: jack
 description: Get to know about CustomScrollView related widgets. 
 published: true
 date: 2025. 06. 26.
-tags: ['Flutter']
+category: flutter
+tags: [Flutter]
 ---
 # Viewport 
 https://api.flutter.dev/flutter/widgets/Viewport-class.html

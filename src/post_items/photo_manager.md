@@ -4,6 +4,7 @@ description: Exploring Flutter photo manager package.
 author: jack
 date: 2025. 07. 16.
 published: true
+category: flutter
 tags: [Flutter]
 ---
 

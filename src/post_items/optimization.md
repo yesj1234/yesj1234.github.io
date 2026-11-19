@@ -4,6 +4,7 @@ description: 앱을 최적화 하는 여러 가지 방법 중 이미지 압축�
 author: jack
 date: 2025. 05. 22.
 published: true
+category: flutter
 tags: [Flutter]
 ---
 

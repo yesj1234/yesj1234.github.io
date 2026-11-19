@@ -4,6 +4,7 @@ description: Learn how to use StatefulWidgets and animate the changes of Widget.
 author: jack
 date: 2024. 10. 07.
 published: true
+category: flutter
 tags: [Flutter]
 ---
 

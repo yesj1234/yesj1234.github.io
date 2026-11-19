@@ -4,7 +4,8 @@ description: Dart의 Function에 대해 알아보며 parameter 와 argument 의 
 author: jack
 published: true
 date: 2024. 09. 21.
-tags: ['Dart']
+category: dart
+tags: [Dart]
 ---
 
 # Parameters and arguments

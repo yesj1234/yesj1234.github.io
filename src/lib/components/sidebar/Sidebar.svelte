@@ -4,23 +4,19 @@
 	import { page } from '$app/stores';
 	import { activePanel } from '$lib/stores/sidebar';
 	import { SERIES, seriesTitle } from '$lib/series';
+	import { CATEGORIES, GROUPS, categoryOf, type CategoryGroup } from '$lib/categories';
 
 	export let posts: App.BlogPost[] = [];
-	export let tags: string[] = [];
 
-	let isRootOpen = true;
 	let isSeriesOpen = true;
+	let openGroups: Record<CategoryGroup, boolean> = { work: true, study: true };
 
 	$: panel = $activePanel ?? 'explorer';
 
-	function postsOf(tag: string) {
-		return posts.filter((post) => post.tags?.includes(tag));
-	}
-
 	$: activePost = posts.find((post) => $page.url.pathname === `/posts/${post.slug}`);
-	// 시리즈 글이면 시리즈 폴더를, 아니면 첫 태그 폴더 하나만 펼친다
+	// 시리즈 글이면 시리즈 폴더를, 아니면 그 글의 카테고리 폴더 하나만 펼친다
 	$: openSeries = activePost?.series;
-	$: openTag = openSeries ? undefined : (activePost?.tags as unknown as string[] | undefined)?.[0];
+	$: openCategory = activePost && !openSeries ? categoryOf(activePost).id : undefined;
 
 	$: seriesIds = Object.keys(SERIES).filter((id) => posts.some((post) => post.series === id));
 
@@ -28,6 +24,14 @@
 		return posts
 			.filter((post) => post.series === id)
 			.sort((a, b) => Number(a.seriesOrder ?? 0) - Number(b.seriesOrder ?? 0));
+	}
+
+	function postsInCategory(id: string) {
+		return posts.filter((post) => categoryOf(post).id === id);
+	}
+
+	function categoriesIn(group: CategoryGroup) {
+		return CATEGORIES.filter((category) => category.group === group && postsInCategory(category.id).length > 0);
 	}
 </script>
 
@@ -48,17 +52,25 @@
 				</div>
 			{/if}
 		{/if}
-		<button type="button" class="section" on:click={() => (isRootOpen = !isRootOpen)}>
-			<i class="fa-solid fa-chevron-right chevron" class:open={isRootOpen}></i>
-			<span>YESJ1234.GITHUB.IO</span>
-		</button>
-		{#if isRootOpen}
-			<div class="tree">
-				{#each tags as tag (tag)}
-					<SidebarFolder name={tag} posts={postsOf(tag)} autoOpen={tag === openTag} />
-				{/each}
-			</div>
-		{/if}
+		{#each GROUPS as group (group.id)}
+			{#if categoriesIn(group.id).length}
+				<button type="button" class="section" on:click={() => (openGroups[group.id] = !openGroups[group.id])}>
+					<i class="fa-solid fa-chevron-right chevron" class:open={openGroups[group.id]}></i>
+					<span>{group.title}</span>
+				</button>
+				{#if openGroups[group.id]}
+					<div class="tree">
+						{#each categoriesIn(group.id) as category (category.id)}
+							<SidebarFolder
+								name={category.title}
+								posts={postsInCategory(category.id)}
+								autoOpen={category.id === openCategory}
+							/>
+						{/each}
+					</div>
+				{/if}
+			{/if}
+		{/each}
 	{:else}
 		<SidebarSearch {posts} />
 	{/if}

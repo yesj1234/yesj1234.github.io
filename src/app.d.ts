@@ -24,6 +24,7 @@ declare global {
 			cover?: string;
 			series?: string;
 			seriesOrder?: number;
+			category?: string;
 		}
 
 		interface SeriesEntry {

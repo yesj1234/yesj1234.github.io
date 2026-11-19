@@ -4,7 +4,8 @@ description: Methods common to all objects.
 author: jack
 published: false
 date: 2025. 10. 26.
-tags: ['Object Programming', 'Java']
+category: etc
+tags: [Java]
 ---
 
 ## Effective Java Chapter 3 - Methods Common to All Objects

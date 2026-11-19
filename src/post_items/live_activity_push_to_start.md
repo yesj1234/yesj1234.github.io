@@ -7,7 +7,8 @@ description: 앱 안에서만 갱신하던 루틴 Live Activity 가 앱이 잠�
 cover: /posts/live_activity_push_to_start/cover.webp
 series: ios-native
 seriesOrder: 1
-tags: [iOS, ActivityKit, Live Activity, APNs, Flutter, Django]
+category: ios-native
+tags: [Flutter, iOS, Django]
 ---
 
 ## 들어가며: 점심인데 아침 체중 배너가 떠 있다

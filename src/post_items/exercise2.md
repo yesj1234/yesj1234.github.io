@@ -4,7 +4,8 @@ description: Exercises to practice Dart.
 author: jack
 published: true
 date: 2024. 09. 09.
-tags: ['Dart']
+category: dart
+tags: [Dart]
 ---
 
 # Excercice2

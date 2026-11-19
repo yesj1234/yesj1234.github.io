@@ -4,6 +4,7 @@ description: TODO
 author: jack
 date: 2024. 10. 31.
 published: false
+category: flutter
 tags: [Flutter]
 ---
 

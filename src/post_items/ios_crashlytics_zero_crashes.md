@@ -7,7 +7,8 @@ description: CocoaPods 에서 SPM 으로 옮긴 뒤 Crashlytics 에 iOS 크래�
 cover: /posts/ios_crashlytics_zero_crashes/cover.webp
 series: ios-native
 seriesOrder: 4
-tags: [Flutter, iOS, Crashlytics]
+category: ios-native
+tags: [Flutter, iOS, Firebase]
 ---
 
 ## 들어가며: 크래시가 0건이라는 좋은 소식

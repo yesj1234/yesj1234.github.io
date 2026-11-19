@@ -4,7 +4,8 @@ description: How to document my code.
 author: jack
 published: true
 date: 2025. 02. 17.
-tags: ['Dart']
+category: dart
+tags: [Dart]
 ---
 
 해당 포스트는 [effective-dart](https://dart.dev/effective-dart/documentation)의 일부를 번역한 글입니다.

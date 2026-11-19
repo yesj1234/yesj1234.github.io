@@ -4,6 +4,7 @@ description: Learn the basic layouts with Flutter challenges posted by Andrea. S
 author: jack
 date: 2024. 10. 05.
 published: true
+category: flutter
 tags: [Flutter]
 ---
 

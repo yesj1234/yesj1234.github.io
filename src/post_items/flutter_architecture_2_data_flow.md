@@ -6,7 +6,8 @@ published: true
 description: '이메일 수신 토글 하나가 화면에서 서버까지 갔다 돌아오는 길을 실제 코드로 따라가며, 계층마다 무엇을 알고 무엇을 모르는지, 에러가 어디서 모양을 바꾸는지 정리한 시리즈 두 번째 글이에요.'
 series: flutter-architecture
 seriesOrder: 2
-tags: [Flutter, Architecture, Clean Architecture]
+category: architecture
+tags: [Flutter, Architecture]
 ---
 
 ## 들어가며: 문서는 네 줄, 코드는 열 칸이었다

@@ -3,8 +3,14 @@
 	import PageHead from '$lib/components/PageHead.svelte';
 	import PostList from '$lib/components/PostList.svelte';
 	import { AUTHOR, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '$lib/site';
+	import { GROUPS, categoryOf, type CategoryGroup } from '$lib/categories';
 
 	export let data: PageData;
+
+	let filter: 'all' | CategoryGroup = 'work';
+	$: posts = data.posts as unknown as App.BlogPost[];
+	$: countOf = (group: CategoryGroup) => posts.filter((post) => categoryOf(post).group === group).length;
+	$: visible = filter === 'all' ? posts : posts.filter((post) => categoryOf(post).group === filter);
 
 	const path = '/';
 	const structuredData = {
@@ -52,8 +58,31 @@
 		</div>
 	</header>
 
-	<h2 class="section-label">최근 글</h2>
-	<PostList posts={data.posts} />
+	<div class="filters" role="tablist" aria-label="글 분류">
+		{#each GROUPS as group (group.id)}
+			<button
+				type="button"
+				role="tab"
+				class="filter"
+				class:active={filter === group.id}
+				aria-selected={filter === group.id}
+				on:click={() => (filter = group.id)}
+			>
+				{group.title} <span class="count">{countOf(group.id)}</span>
+			</button>
+		{/each}
+		<button
+			type="button"
+			role="tab"
+			class="filter"
+			class:active={filter === 'all'}
+			aria-selected={filter === 'all'}
+			on:click={() => (filter = 'all')}
+		>
+			전체 <span class="count">{posts.length}</span>
+		</button>
+	</div>
+	<PostList posts={visible} />
 </div>
 
 <style>
@@ -99,16 +128,48 @@
 		color: var(--accent);
 	}
 
-	.section-label {
-		margin: 0;
-		padding-bottom: 8px;
-		font-size: 12px;
-		font-weight: 600;
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
-		color: var(--text-faint);
+	.filters {
+		display: flex;
+		gap: 4px;
 		border-bottom: 1px solid var(--border);
 	}
+
+	.filter {
+		all: unset;
+		cursor: pointer;
+		position: relative;
+		padding: 8px 12px 10px;
+		font-size: 14px;
+		color: var(--text-muted);
+	}
+
+	.filter:hover {
+		color: var(--text);
+	}
+
+	.filter.active {
+		color: var(--text);
+		font-weight: 600;
+	}
+
+	.filter.active::after {
+		content: '';
+		position: absolute;
+		left: 8px;
+		right: 8px;
+		bottom: -1px;
+		height: 2px;
+		background: var(--accent);
+	}
+
+	.count {
+		margin-left: 2px;
+		font-family: var(--font-mono);
+		font-size: 12px;
+		font-weight: 400;
+		color: var(--text-faint);
+	}
+
 
 	@media (max-width: 767px) {
 		.page {

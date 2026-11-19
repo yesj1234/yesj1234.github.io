@@ -5,7 +5,8 @@ date: 2026. 11. 17.
 published: true
 description: 'Flutter 앱을 실기기 iPhone 에서 AI 에이전트가 직접 조작하게 만들고, 접근성 트리에 ID 를 붙여 비용을 줄이고, 40ms 간격 연타까지 재현한 기록이에요.'
 cover: /posts/wda_semantics_device_qa/cover.webp
-tags: [Flutter, iOS, QA, WebDriverAgent, Accessibility, AI]
+category: ai
+tags: [Flutter, iOS, Testing]
 ---
 
 ## 들어가며: 실기기 확인만 사람 손에 남아 있었다

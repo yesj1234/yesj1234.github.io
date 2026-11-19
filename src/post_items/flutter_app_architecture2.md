@@ -4,7 +4,8 @@ author: jack
 description: Riverpod 아키텍처에 대해 알아봅니다.
 published: true
 date: 2024. 12. 10.
-tags: ['Flutter']
+category: flutter
+tags: [Flutter, Riverpod]
 ---
 
 # Riverpod Architecture

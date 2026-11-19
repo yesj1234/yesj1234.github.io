@@ -4,6 +4,7 @@ description: Learn some advanced usage of StatefulWidget, Widget builder, Animat
 author: jack
 date: 2024. 10. 16.
 published: true
+category: flutter
 tags: [Flutter]
 ---
 

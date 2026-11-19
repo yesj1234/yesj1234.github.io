@@ -4,6 +4,7 @@
 	import { browser } from '$app/environment';
 	import PageHead from '$lib/components/PageHead.svelte';
 	import SeriesNav from '$lib/components/SeriesNav.svelte';
+	import { categoryOf } from '$lib/categories';
 	import { openTab } from '$lib/stores/header';
 	import { formatPostDate, toIsoDateTime } from '$lib/utils/date_utils';
 	import { absoluteUrl, AUTHOR, SITE_URL } from '$lib/site';
@@ -63,6 +64,8 @@
 		<h1 class="title">{meta.title}</h1>
 		{#if meta.description}<p class="desc">{meta.description}</p>{/if}
 		<div class="meta">
+			<span class="category">{categoryOf(meta).title}</span>
+			<span class="dot" aria-hidden="true">·</span>
 			<time>{formatPostDate(meta.date)}</time>
 			{#if tags.length}
 				<span class="dot" aria-hidden="true">·</span>
@@ -172,6 +175,11 @@
 		margin-top: 20px;
 		font-size: 14px;
 		color: var(--text-faint);
+	}
+
+	.category {
+		font-weight: 600;
+		color: var(--accent);
 	}
 
 	.meta time {

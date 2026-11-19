@@ -4,7 +4,8 @@ description: How to use git as a professional developer.
 author: jack
 date: 2025. 05. 22.
 published: true
-tags: [git]
+category: etc
+tags: [Git]
 ---
 ## Git
 

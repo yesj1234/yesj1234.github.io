@@ -6,7 +6,8 @@ published: true
 description: 'Flutter 앱을 app·presenter·usecase·network·local_storage·entity 6개 패키지로 나눈 구조를 실측 수치로 그려 보고, 나눠서 얻은 것과 치른 비용을 정리한 시리즈 첫 글이에요.'
 series: flutter-architecture
 seriesOrder: 1
-tags: [Flutter, Architecture, Melos]
+category: architecture
+tags: [Flutter, Architecture]
 ---
 
 ## 들어가며: 설정 화면 하나에 파일 28개가 바뀌었다

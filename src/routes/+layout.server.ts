@@ -1,4 +1,5 @@
 import { slugFromPath } from '$lib/slugFromPath';
+import { toIsoDate } from '$lib/utils/date_utils';
 import type { PageServerLoad } from './$types';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -16,7 +17,7 @@ export const load: PageServerLoad = async ({ params }) => {
 	);
 	const posts = await Promise.all(postPromises);
 	const publishedPosts = posts.filter((post) => post.published);
-	publishedPosts.sort((a, b) => (new Date(a.date) > new Date(b.date) ? -1 : 1));
+	publishedPosts.sort((a, b) => toIsoDate(b.date).localeCompare(toIsoDate(a.date)));
 	const tags = new Set();
 	publishedPosts.forEach((post) => {
 		if (post.tags) {

@@ -4,6 +4,7 @@ description: Record type에 대해 알아봅니다.
 author: jack
 date: 2024.09. 23.
 published: true
+category: dart
 tags: [Dart]
 ---
 

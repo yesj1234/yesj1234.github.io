@@ -4,7 +4,8 @@ author: jack
 date: 2024-04-26
 published: false
 description: Frontmatter in Mdsvex explained.
-tags: [Mdsvex]
+category: etc
+tags: [Web]
 ---
 
 # Table of Contents

@@ -4,6 +4,7 @@ description: How to build responsive layout in flutter application. Learn about 
 author: jack
 date: 2024. 10. 30.
 published: true
+category: flutter
 tags: [Flutter]
 ---
 

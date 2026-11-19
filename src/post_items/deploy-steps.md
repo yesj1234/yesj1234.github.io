@@ -4,7 +4,8 @@ description: Step by step guide on how to setup SvelteKit + MDsveX and deploy it
 author: jack
 published: true
 date: 2024. 04. 22.
-tags: ['SvelteKit', 'Mdsvex', 'Github']
+category: etc
+tags: [Web, Git]
 ---
 
 ---

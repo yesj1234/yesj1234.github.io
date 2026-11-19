@@ -4,7 +4,8 @@ description: Learn the core concept of provider and basic features of Riverpod.
 author: jack
 published: true
 date: 2024. 11. 08.
-tags: ['Flutter']
+category: flutter
+tags: [Flutter, Riverpod]
 ---
 
 # State management

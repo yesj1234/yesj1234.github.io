@@ -4,7 +4,8 @@ author: jack
 description: MVVM(Model View ViewModel)아키텍처에 대해 알아봅니다.
 published: true
 date: 2024. 11. 23.
-tags: ['Flutter']
+category: flutter
+tags: [Flutter, Architecture]
 ---
 
 Architecture란 용어는 문맥에 따라 다양한 의미를 지니는 단어이기 때문에 한 문장으로 정의하기 애매한 단어입니다.  

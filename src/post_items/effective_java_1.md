@@ -4,7 +4,8 @@ description:  Creating and Destroying Objects.
 author: jack
 published: false
 date: 2025. 10. 18.
-tags: ['Object Programming', 'Java']
+category: etc
+tags: [Java]
 ---
 
 # Introduction 

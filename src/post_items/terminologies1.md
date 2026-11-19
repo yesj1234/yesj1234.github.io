@@ -4,7 +4,8 @@ description: Dart의 switch 공식문서를 살펴보며 statement와 expression
 author: jack
 published: true
 date: 2024. 09. 12.
-tags: ['Dart']
+category: dart
+tags: [Dart]
 ---
 
 # Expression and Statement

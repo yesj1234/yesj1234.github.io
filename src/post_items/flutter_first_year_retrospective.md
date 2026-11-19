@@ -5,7 +5,8 @@ date: 2026. 11. 18.
 published: true
 description: '티켓 번호대로 화면을 하나씩 만들던 사람이 앱·서버·네이티브를 함께 설계하는 에픽을 맡기까지를, 분기마다 사건 하나씩 골라 돌아본 회고예요.'
 cover: /posts/flutter_first_year_retrospective/cover.webp
-tags: [회고, Flutter, Django, AI, iOS]
+category: retrospective
+tags: [Flutter, Django, AI]
 ---
 
 ## 들어가며: PR 제목이 티켓 번호로 시작하던 때

@@ -7,7 +7,8 @@ description: 'Flutter 앱의 iOS 의존성을 CocoaPods 에서 Swift Package Man
 cover: /posts/cocoapods_to_spm_migration/cover.webp
 series: ios-native
 seriesOrder: 3
-tags: [Flutter, iOS, SPM, CocoaPods, Xcode]
+category: ios-native
+tags: [Flutter, iOS]
 ---
 
 ## 들어가며: 지금도 빌드는 되는데 왜 옮기나

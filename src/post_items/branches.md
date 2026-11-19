@@ -4,7 +4,8 @@ author: jack
 description: Dart에서 Branch(분기)로 코드의 흐름을 제어하는 방법에 대해 알아봅니다.
 published: true
 date: 2024. 09. 24.
-tags: ['Dart']
+category: dart
+tags: [Dart]
 ---
 
 # Branch란?
