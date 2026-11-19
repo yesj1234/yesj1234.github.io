@@ -1,5 +1,5 @@
 ---
-title: '연타 테스트를 사람 대신: WDA 와 Semantics ID 로 실기기 QA'
+title: 'AI 가 읽는 화면은 픽셀이 아니라 접근성 트리였다 — WDA 와 Semantics ID 로 만든 실기기 QA'
 author: jack
 date: 2026. 11. 17.
 published: true

@@ -1,5 +1,5 @@
 ---
-title: 같은 문제를 270가지 방법으로 푼 코드베이스
+title: '기준 없이 AI 와 1년, 연타 방지 코드가 270가지가 됐다'
 author: jack
 date: 2026. 11. 17.
 published: true

@@ -1,5 +1,5 @@
 ---
-title: '화면 하나에서 에픽 하나로: Flutter 1년 3개월 회고'
+title: '일의 단위가 바뀌면 질문도 바뀐다 — 화면 하나에서 에픽 하나로, Flutter 1년 3개월'
 author: jack
 date: 2026. 11. 18.
 published: true

@@ -1,5 +1,5 @@
 ---
-title: 'Flutter 앱의 탭바만 iOS 네이티브로: Liquid Glass 를 PlatformView 로 붙이기'
+title: '유리를 흉내 내는 대신 진짜 유리를 가져왔다 — Flutter 앱에 UITabBar 한 장만 붙이기'
 author: jack
 date: 2026. 11. 10.
 published: true

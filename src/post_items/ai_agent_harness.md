@@ -1,5 +1,5 @@
 ---
-title: AI 에이전트에게 규칙을 읽히는 법
+title: 'AI 에게 규칙은 쓰는 것보다 읽히는 게 어렵다 — 12KB 규칙 예산과 리뷰 스킬'
 author: jack
 date: 2026. 11. 17.
 published: true

@@ -1,5 +1,5 @@
 ---
-title: 'DI·라우팅·테스트, 그리고 이 구조가 AI 와 일할 때 준 것'
+title: '구조는 사람보다 AI 가 더 문자 그대로 읽는다 — DI·라우팅·테스트 편'
 author: jack
 date: 2026. 11. 18.
 published: true
@@ -267,7 +267,7 @@ await tester.pumpWidget(
 
 ## 이 구조가 AI 에이전트에게 준 것
 
-이제 시리즈의 마지막 질문이에요. 저는 올해 코드 대부분을 AI 코딩 에이전트(Claude Code)와 함께 썼어요. 이 구조는 AI 를 염두에 두고 만든 게 아니지만, 몇 가지는 꽤 도움이 됐어요. 에이전트가 규칙 문서를 언제 읽고 어떻게 예산 안에 두는지는 [AI 에이전트에게 규칙을 읽히는 법](/posts/ai_agent_harness)에서 다뤘으니, 여기서는 **패키지 구조** 쪽에서만 볼게요.
+이제 시리즈의 마지막 질문이에요. 저는 올해 코드 대부분을 AI 코딩 에이전트(Claude Code)와 함께 썼어요. 이 구조는 AI 를 염두에 두고 만든 게 아니지만, 몇 가지는 꽤 도움이 됐어요. 에이전트가 규칙 문서를 언제 읽고 어떻게 예산 안에 두는지는 [AI 에게 규칙은 쓰는 것보다 읽히는 게 어렵다](/posts/ai_agent_harness)에서 다뤘으니, 여기서는 **패키지 구조** 쪽에서만 볼게요.
 
 ### 1. 찾는 범위가 패키지 이름으로 좁혀진다
 
@@ -341,13 +341,13 @@ AI 와 일하는 저장소에서 구조 문서는 설명이 아니라 지시입�
 
 ### 시리즈 안내
 
-1. [모노레포 지도: 왜 패키지를 6개로 나눴나](/posts/flutter_architecture_1_monorepo) — 경계를 실제로 지키는 건 컴파일러가 아니라 린트였다
-2. [데이터 한 사이클](/posts/flutter_architecture_2_data_flow) — 토글 하나가 화면에서 서버까지 갔다 오는 길과, 경계가 새는 곳
-3. [Result 와 ROP](/posts/flutter_architecture_3_result) — 예외 대신 실패를 값으로 넘기기
-4. [BLoC 을 ViewModel 로](/posts/flutter_architecture_4_bloc_viewmodel) — 상태·이벤트·사이드 이펙트를 나누는 기준
-5. **DI·라우팅·테스트, 그리고 이 구조가 AI 와 일할 때 준 것** (이 글)
+1. [패키지를 6개로 나눠도 경계는 린트가 지킨다](/posts/flutter_architecture_1_monorepo)
+2. [계층의 경계는 타입이 바뀌는 자리였다 — 토글 하나를 서버까지 따라가 보기](/posts/flutter_architecture_2_data_flow)
+3. [실패를 값으로 바꾸자, 던져진 실패가 숨기 시작했다](/posts/flutter_architecture_3_result)
+4. [emit 했는데 화면이 그대로인 이유 — 이벤트와 화면 사이의 다섯 칸](/posts/flutter_architecture_4_bloc_viewmodel)
+5. **구조는 사람보다 AI 가 더 문자 그대로 읽는다 — DI·라우팅·테스트 편** (이 글)
 
-BLoC 이벤트가 겹칠 때의 처리는 [BLoC 이벤트 겹침 리팩토링](/posts/bloc_concurrency_refactor)에서 따로 다뤘어요.
+BLoC 이벤트가 겹칠 때의 처리는 [기준 없이 AI 와 1년, 연타 방지 코드가 270가지가 됐다](/posts/bloc_concurrency_refactor)에서 따로 다뤘어요.
 
 ## 참고 자료
 

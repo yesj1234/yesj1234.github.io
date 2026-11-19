@@ -1,5 +1,5 @@
 ---
-title: iOS 크래시가 0건이었던 진짜 이유
+title: '크래시 0건은 측정값이 아니었다 — 실패를 삼킨 dSYM 업로드 한 줄'
 author: jack
 date: 2026. 11. 13.
 published: true

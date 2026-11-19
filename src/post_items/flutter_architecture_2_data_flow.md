@@ -1,5 +1,5 @@
 ---
-title: '토글 하나가 서버까지 갔다 오는 길: 계층 경계에서 바뀌는 것들'
+title: '계층의 경계는 타입이 바뀌는 자리였다 — 토글 하나를 서버까지 따라가 보기'
 author: jack
 date: 2026. 11. 18.
 published: true
@@ -416,11 +416,11 @@ UseCase 가 위임만 한다고 해서 지울 필요는 없다고 봐요. 기준
 
 ### 시리즈 안내
 
-1. [모노레포 지도: 왜 패키지를 6개로 나눴나](/posts/flutter_architecture_1_monorepo)
-2. **토글 하나가 서버까지 갔다 오는 길: 계층 경계에서 바뀌는 것들** (이 글)
-3. **Result 와 ROP**: 예외 대신 실패를 값으로 넘기기
-4. **BLoC 을 ViewModel 로**: 상태·이벤트·사이드 이펙트를 나누는 기준
-5. **DI·라우팅·테스트, 그리고 AI 와 일할 때**: 구조를 사람과 AI 에이전트가 함께 지키는 법
+1. [패키지를 6개로 나눠도 경계는 린트가 지킨다](/posts/flutter_architecture_1_monorepo)
+2. **계층의 경계는 타입이 바뀌는 자리였다 — 토글 하나를 서버까지 따라가 보기** (이 글)
+3. [실패를 값으로 바꾸자, 던져진 실패가 숨기 시작했다](/posts/flutter_architecture_3_result)
+4. [emit 했는데 화면이 그대로인 이유 — 이벤트와 화면 사이의 다섯 칸](/posts/flutter_architecture_4_bloc_viewmodel)
+5. [구조는 사람보다 AI 가 더 문자 그대로 읽는다 — DI·라우팅·테스트 편](/posts/flutter_architecture_5_di_routing_testing)
 
 ## 참고 자료
 

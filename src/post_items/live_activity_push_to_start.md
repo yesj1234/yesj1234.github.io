@@ -1,5 +1,5 @@
 ---
-title: '앱이 잠들어 있어도 Live Activity 를 바꾸는 법: 서버 push-to-start'
+title: '띄우는 일과 바꾸는 일은 달랐다 — 앱이 잠든 동안 Live Activity 를 서버가 갱신하기'
 author: jack
 date: 2026. 09. 22.
 published: true

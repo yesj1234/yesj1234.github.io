@@ -1,5 +1,5 @@
 ---
-title: '실패를 값으로 바꿨더니 길이 두 개가 됐다: Result 와 ROP'
+title: '실패를 값으로 바꾸자, 던져진 실패가 숨기 시작했다'
 author: jack
 date: 2026. 11. 18.
 published: true
@@ -409,11 +409,11 @@ enum TokenRefreshResult {
 
 ### 시리즈 안내
 
-1. **모노레포 지도: 왜 패키지를 6개로 나눴나** ([1편](/posts/flutter_architecture_1_monorepo))
-2. **데이터 한 사이클**: 토글 하나가 화면에서 서버까지 갔다 오는 길, 그리고 계층 경계 ([2편](/posts/flutter_architecture_2_data_flow))
-3. **Result 와 ROP**: 예외 대신 실패를 값으로 넘기기 (이 글)
-4. **BLoC 을 ViewModel 로**: 상태·이벤트·사이드 이펙트를 나누는 기준 ([4편](/posts/flutter_architecture_4_bloc_viewmodel))
-5. **DI·라우팅·테스트, 그리고 AI 와 일할 때**: 구조를 사람과 AI 에이전트가 함께 지키는 법 ([5편](/posts/flutter_architecture_5_di_routing_testing))
+1. [패키지를 6개로 나눠도 경계는 린트가 지킨다](/posts/flutter_architecture_1_monorepo)
+2. [계층의 경계는 타입이 바뀌는 자리였다 — 토글 하나를 서버까지 따라가 보기](/posts/flutter_architecture_2_data_flow)
+3. **실패를 값으로 바꾸자, 던져진 실패가 숨기 시작했다** (이 글)
+4. [emit 했는데 화면이 그대로인 이유 — 이벤트와 화면 사이의 다섯 칸](/posts/flutter_architecture_4_bloc_viewmodel)
+5. [구조는 사람보다 AI 가 더 문자 그대로 읽는다 — DI·라우팅·테스트 편](/posts/flutter_architecture_5_di_routing_testing)
 
 ## 참고 자료
 
@@ -423,4 +423,4 @@ enum TokenRefreshResult {
 - [Future.timeout](https://api.dart.dev/stable/dart-async/Future/timeout.html) — `onTimeout` 이 없으면 `TimeoutException` 으로 완료
 - [Railway Oriented Programming](https://fsharpforfunandprofit.com/rop/) — Scott Wlaschin, 성공·실패 두 레일로 단계를 잇는 패턴
 - [fpdart](https://pub.dev/packages/fpdart) — 실패 타입을 가진 `Either`·`TaskEither` 를 제공하는 Dart 패키지
-- [같은 문제를 270가지 방법으로 푼 코드베이스](/posts/bloc_concurrency_refactor) — `onFailure` 에서만 플래그를 풀던 코드와 BLoC 이벤트 겹침 정리
+- [기준 없이 AI 와 1년, 연타 방지 코드가 270가지가 됐다](/posts/bloc_concurrency_refactor) — `onFailure` 에서만 플래그를 풀던 코드와 BLoC 이벤트 겹침 정리

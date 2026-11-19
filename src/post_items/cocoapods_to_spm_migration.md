@@ -1,5 +1,5 @@
 ---
-title: 'CocoaPods 에서 SPM 으로 옮기며 깨진 것들'
+title: 'CocoaPods 를 떠나고서야 보였다, 그가 대신 해 주던 일들'
 author: jack
 date: 2026. 11. 13.
 published: true
@@ -217,7 +217,7 @@ SPM 판(`permission_handler_apple` 9.4.10)의 `Package.swift` 를 보니 판정 
 
 ## 머지 직후: 같은 모양의 사고 두 개
 
-전환을 main 에 머지한 다음 날, 두 가지가 드러났어요. 둘 다 다른 글에서 자세히 썼어요([iOS 크래시가 0건이었던 진짜 이유](/posts/ios_crashlytics_zero_crashes)).
+전환을 main 에 머지한 다음 날, 두 가지가 드러났어요. 둘 다 다른 글에서 자세히 썼어요([크래시 0건은 측정값이 아니었다](/posts/ios_crashlytics_zero_crashes)).
 
 - **Crashlytics 가 iOS 에서 0건이 됐어요.** dSYM 업로드 빌드 단계가 `${PODS_ROOT}` 아래의 `upload-symbols` 를 부르고 있었는데, SPM 으로 옮기면서 그 경로가 사라졌어요. 스크립트가 실패를 삼켜서 빌드는 계속 성공했어요.
 - **`Package.resolved` 가 머지 커밋에서 빠졌어요.** 잠금 파일이 없으니 SPM 이 사건 1 의 최신판(4.8.6·5.17.0)을 다시 받아 archive 가 깨졌어요. 그래서 CI 의 gym 에 `disable_package_automatic_updates: true`(`xcodebuild -disableAutomaticPackageResolution`)를 켜서, 잠금 파일이 없으면 원인이 적힌 에러로 바로 멈추게 했어요.

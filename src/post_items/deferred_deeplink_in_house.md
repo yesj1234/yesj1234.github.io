@@ -1,5 +1,5 @@
 ---
-title: 초대 링크의 디퍼드 딥링크를 SDK 에 맡기지 않고 서버에서 직접 매칭한 이유
+title: 'SDK 비용 대신 1픽셀과 싸웠다 — 초대 코드를 서버에서 직접 이어 붙인 디퍼드 딥링크'
 author: jack
 date: 2026. 10. 06.
 published: true
