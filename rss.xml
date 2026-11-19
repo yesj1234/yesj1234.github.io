@@ -39,6 +39,46 @@
       <category>Flutter</category><category>Django</category><category>DeepLink</category><category>Android</category><category>iOS</category>
     </item>
     <item>
+      <title>모노레포 지도: 왜 패키지를 6개로 나눴나</title>
+      <link>https://yesj1234.github.io/posts/flutter_architecture_1_monorepo</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_architecture_1_monorepo</guid>
+      <description>Flutter 앱을 app·presenter·usecase·network·local_storage·entity 6개 패키지로 나눈 구조를 실측 수치로 그려 보고, 나눠서 얻은 것과 치른 비용을 정리한 시리즈 첫 글이에요.</description>
+      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
+      <category>Flutter</category><category>Architecture</category><category>Melos</category>
+    </item>
+    <item>
+      <title>토글 하나가 서버까지 갔다 오는 길: 계층 경계에서 바뀌는 것들</title>
+      <link>https://yesj1234.github.io/posts/flutter_architecture_2_data_flow</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_architecture_2_data_flow</guid>
+      <description>이메일 수신 토글 하나가 화면에서 서버까지 갔다 돌아오는 길을 실제 코드로 따라가며, 계층마다 무엇을 알고 무엇을 모르는지, 에러가 어디서 모양을 바꾸는지 정리한 시리즈 두 번째 글이에요.</description>
+      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
+      <category>Flutter</category><category>Architecture</category><category>Clean Architecture</category>
+    </item>
+    <item>
+      <title>실패를 값으로 바꿨더니 길이 두 개가 됐다: Result 와 ROP</title>
+      <link>https://yesj1234.github.io/posts/flutter_architecture_3_result</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_architecture_3_result</guid>
+      <description>Flutter 앱에서 실패를 예외 대신 Result 값으로 넘기기로 한 설계와 ResultChain 의 실제 동작, 그리고 onFailure 와 onCatch 사이로 실패가 새어 나간 사례를 코드와 실측으로 정리한 시리즈 3편이에요.</description>
+      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
+      <category>Flutter</category><category>Architecture</category><category>Dart</category>
+    </item>
+    <item>
+      <title>emit 했는데 화면이 그대로예요: BLoC 을 ViewModel 로 쓰며 배운 것</title>
+      <link>https://yesj1234.github.io/posts/flutter_architecture_4_bloc_viewmodel</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_architecture_4_bloc_viewmodel</guid>
+      <description>Flutter 앱에서 BLoC 을 ViewModel 로 쓰면서 상태·이벤트·사이드 이펙트를 나눈 방식과, 화면이 반응하지 않던 함정 다섯 가지를 실제 사례로 정리한 시리즈 4편이에요.</description>
+      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
+      <category>Flutter</category><category>Architecture</category><category>BLoC</category>
+    </item>
+    <item>
+      <title>DI·라우팅·테스트, 그리고 이 구조가 AI 와 일할 때 준 것</title>
+      <link>https://yesj1234.github.io/posts/flutter_architecture_5_di_routing_testing</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_architecture_5_di_routing_testing</guid>
+      <description>문서와 달리 손으로 등록하던 DI, navigator 가 셋인 go_router 의 함정, 패키지를 따라 나뉜 테스트를 보고, 6개 패키지 구조가 AI 에이전트와 일할 때 무엇을 돕고 무엇을 막았는지로 시리즈를 닫아요.</description>
+      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
+      <category>Flutter</category><category>Architecture</category><category>Testing</category><category>AI</category>
+    </item>
+    <item>
       <title>화면 하나에서 에픽 하나로: Flutter 1년 3개월 회고</title>
       <link>https://yesj1234.github.io/posts/flutter_first_year_retrospective</link>
       <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_first_year_retrospective</guid>
@@ -205,46 +245,6 @@
       <description>Learn how to use StatefulWidgets and animate the changes of Widget. Widgets related to animations are Animation, AnimationController, Tween, AnimatedWidget and etc..</description>
       <pubDate>Sun, 06 Oct 2024 15:00:00 GMT</pubDate>
       <category>Flutter</category>
-    </item>
-    <item>
-      <title>Flutter UI Challenge(1)</title>
-      <link>https://yesj1234.github.io/posts/flutter_ui_challenge</link>
-      <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_ui_challenge</guid>
-      <description>Learn the basic layouts with Flutter challenges posted by Andrea. Some basic layout of flutter includes Row, Column, Stack, Expanded, Padding, etc...</description>
-      <pubDate>Fri, 04 Oct 2024 15:00:00 GMT</pubDate>
-      <category>Flutter</category>
-    </item>
-    <item>
-      <title>new Flutter project의 main.dart 코드 파헤쳐보기(2)</title>
-      <link>https://yesj1234.github.io/posts/flutter_boilerplate_code2</link>
-      <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_boilerplate_code2</guid>
-      <description>IDE를 이용해 만든 flutter project의 초기 main.dart 코드들을 보면서 StatelessWidget, StatefulWidget, key에 대해 알아봅니다.</description>
-      <pubDate>Sat, 28 Sep 2024 15:00:00 GMT</pubDate>
-      <category>Flutter</category>
-    </item>
-    <item>
-      <title>new Flutter project의 main.dart 코드 파헤쳐보기(1)</title>
-      <link>https://yesj1234.github.io/posts/flutter_boilerplate_code1</link>
-      <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_boilerplate_code1</guid>
-      <description>IDE를 이용해 만든 flutter project의 초기 main.dart 코드들을 보면서 StatelessWidget, StatefulWidget, key에 대해 알아봅니다.</description>
-      <pubDate>Thu, 26 Sep 2024 15:00:00 GMT</pubDate>
-      <category>Flutter</category>
-    </item>
-    <item>
-      <title>Branches in Dart</title>
-      <link>https://yesj1234.github.io/posts/branches</link>
-      <guid isPermaLink="true">https://yesj1234.github.io/posts/branches</guid>
-      <description>Dart에서 Branch(분기)로 코드의 흐름을 제어하는 방법에 대해 알아봅니다.</description>
-      <pubDate>Mon, 23 Sep 2024 15:00:00 GMT</pubDate>
-      <category>Dart</category>
-    </item>
-    <item>
-      <title>Record type in Dart</title>
-      <link>https://yesj1234.github.io/posts/records</link>
-      <guid isPermaLink="true">https://yesj1234.github.io/posts/records</guid>
-      <description>Record type에 대해 알아봅니다.</description>
-      <pubDate>Sun, 22 Sep 2024 15:00:00 GMT</pubDate>
-      <category>Dart</category>
     </item>
   </channel>
 </rss>

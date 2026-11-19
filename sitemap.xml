@@ -6,6 +6,11 @@
   <url><loc>https://yesj1234.github.io/posts/bloc_concurrency_refactor</loc><lastmod>2026-11-18</lastmod></url>
   <url><loc>https://yesj1234.github.io/posts/cocoapods_to_spm_migration</loc><lastmod>2026-11-18</lastmod></url>
   <url><loc>https://yesj1234.github.io/posts/deferred_deeplink_in_house</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://yesj1234.github.io/posts/flutter_architecture_1_monorepo</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://yesj1234.github.io/posts/flutter_architecture_2_data_flow</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://yesj1234.github.io/posts/flutter_architecture_3_result</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://yesj1234.github.io/posts/flutter_architecture_4_bloc_viewmodel</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://yesj1234.github.io/posts/flutter_architecture_5_di_routing_testing</loc><lastmod>2026-11-18</lastmod></url>
   <url><loc>https://yesj1234.github.io/posts/flutter_first_year_retrospective</loc><lastmod>2026-11-18</lastmod></url>
   <url><loc>https://yesj1234.github.io/posts/ios_crashlytics_zero_crashes</loc><lastmod>2026-11-18</lastmod></url>
   <url><loc>https://yesj1234.github.io/posts/ios_liquid_glass_tab_bar</loc><lastmod>2026-11-18</lastmod></url>
@@ -49,6 +54,11 @@
   <url><loc>https://yesj1234.github.io/tags/Django</loc></url>
   <url><loc>https://yesj1234.github.io/tags/DeepLink</loc></url>
   <url><loc>https://yesj1234.github.io/tags/Android</loc></url>
+  <url><loc>https://yesj1234.github.io/tags/Architecture</loc></url>
+  <url><loc>https://yesj1234.github.io/tags/Melos</loc></url>
+  <url><loc>https://yesj1234.github.io/tags/Clean%20Architecture</loc></url>
+  <url><loc>https://yesj1234.github.io/tags/Dart</loc></url>
+  <url><loc>https://yesj1234.github.io/tags/Testing</loc></url>
   <url><loc>https://yesj1234.github.io/tags/%ED%9A%8C%EA%B3%A0</loc></url>
   <url><loc>https://yesj1234.github.io/tags/Crashlytics</loc></url>
   <url><loc>https://yesj1234.github.io/tags/PlatformView</loc></url>
@@ -64,7 +74,6 @@
   <url><loc>https://yesj1234.github.io/tags/Accessibility</loc></url>
   <url><loc>https://yesj1234.github.io/tags/git</loc></url>
   <url><loc>https://yesj1234.github.io/tags/Firebase</loc></url>
-  <url><loc>https://yesj1234.github.io/tags/Dart</loc></url>
   <url><loc>https://yesj1234.github.io/tags/SvelteKit</loc></url>
   <url><loc>https://yesj1234.github.io/tags/Mdsvex</loc></url>
   <url><loc>https://yesj1234.github.io/tags/Github</loc></url>
