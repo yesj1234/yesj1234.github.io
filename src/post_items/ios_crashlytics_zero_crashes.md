@@ -57,6 +57,12 @@ iOS 크래시가 Crashlytics 대시보드에 보이기까지는 네 단계를 �
 | 0.510.0 | 이벤트 있음 |
 | 0.514.0 ~ 0.559.2 (21개 빌드) | **0건** |
 
+
+<figure>
+	<img src="/posts/ios_crashlytics_zero_crashes/fig-2-versions.webp" alt="iOS 0.509.1 은 세션당 약 0.7건, 0.510.0 은 이벤트가 있었지만 SPM 전환 뒤 0.514.0 부터 0.559.2 까지 21개 빌드는 0건" width="1600" height="900" loading="lazy" />
+	<figcaption>SPM 전환 빌드부터 이벤트가 0건으로 끊겼어요.</figcaption>
+</figure>
+
 여기서 볼 건 두 가지예요. 0.514.0 부터는 **세션이 꾸준히 쌓이는데도 이벤트가 0건**이에요. 0.509.1 의 비율대로라면 수백 건은 들어왔어야 해요. 그리고 **같은 시각에 구버전 iOS 의 이벤트는 계속 들어오고 있었어요.** Firebase 프로젝트나 BigQuery export 의 문제가 아니라 **새 빌드 쪽에서 무언가 바뀐 거예요.**
 
 0.514.0 에 뭐가 들어갔는지 보니 바로 짚이는 게 있었어요. **iOS 의존성을 CocoaPods 에서 SPM 으로 옮긴 첫 빌드**였어요. 그렇다면 SPM 전환이 SDK 의 무엇을 바꿨을까요?
@@ -126,6 +132,12 @@ dSYM 이 없으면 서버는 어떻게 할까요? FlutterFire 의 Crashlytics �
 
 **버려지는 게 아니라 보류돼요.** 그래서 대시보드에도, 알림에도, BigQuery 에도 나오지 않았어요. 실제로 콘솔 상단에는 경고 배너가 떠 있었어요.
 
+<figure>
+	<img src="/posts/ios_crashlytics_zero_crashes/fig-1-pipeline.webp" alt="수집과 전송은 정상이고, dSYM 이 도착하지 않아 서버의 심볼리케이션 단계에서 이벤트가 보류되어 대시보드 집계가 0이 된다" width="1600" height="900" loading="lazy" />
+	<figcaption>4단계 중 1·2단계는 정상이었고, dSYM 이 오지 않아 3단계에서 멈춰 있었어요.</figcaption>
+</figure>
+
+
 > 이 앱에 처리되지 않은 비정상 종료가 156개 있습니다. dSYM 파일 16개를 업로드하여 처리하세요.
 
 누락된 dSYM 목록의 버전은 **0.514.0 부터 시작했어요.** 0건이 시작된 시점과 정확히 겹쳐요. 답은 처음부터 대시보드 위에 있었던 셈이에요. 다만 "0건 = 안정적"이라고 읽는 동안에는 그 배너를 볼 이유가 없었어요.
@@ -140,6 +152,12 @@ dSYM 이 없으면 서버는 어떻게 할까요? FlutterFire 의 Crashlytics �
 |---|---|
 | 콘솔이 기다리는 dSYM (CI 빌드, Xcode 26.6) | `FE16FC15-…` |
 | 같은 커밋 로컬 재빌드 (Xcode 26.3) | `901191EA-…` |
+
+
+<figure>
+	<img src="/posts/ios_crashlytics_zero_crashes/fig-4-uuid.webp" alt="같은 커밋을 CI(Xcode 26.6)와 로컬(Xcode 26.3)에서 빌드하면 Runner UUID 가 FE16FC15 와 901191EA 로 달라진다" width="1600" height="800" loading="lazy" />
+	<figcaption>커밋이 같아도 Xcode 버전이 다르면 UUID 가 달라져서, 로컬 재빌드로는 보류된 이벤트를 되살릴 수 없었어요.</figcaption>
+</figure>
 
 **UUID 가 달랐어요.** 커밋이 같아도 Xcode 버전과 빌드 경로가 다르면 바이너리가 달라져요. CI 에도 원본이 남아 있지 않았어요. 배포 lane 이 TestFlight 업로드 직후 `~/Library/Developer/Xcode/Archives/*` 를 지우고 있었거든요.
 
@@ -173,6 +191,12 @@ if ! "${UPLOAD_SYMBOLS}" -gsp "${GSP_PATH}" -p ios -- "${DWARF_DSYM_FOLDER_PATH}
   exit 1
 fi
 ```
+
+
+<figure>
+	<img src="/posts/ios_crashlytics_zero_crashes/fig-3-silent-failure.webp" alt="수정 전 스크립트는 업로드 실패를 삼키고 archive 를 성공시켰고, 수정 후에는 upload-symbols 를 못 찾거나 업로드가 실패하면 exit 1 로 archive 를 멈춘다" width="1600" height="1000" loading="lazy" />
+	<figcaption>수정 전에는 실패해도 archive 가 성공했고, 수정 후에는 실패하면 archive 가 멈춰요.</figcaption>
+</figure>
 
 `GoogleService-Info.plist` 가 없을 때도 예전에는 `warning` 만 찍었는데, 이제는 `exit 1` 이에요. **dSYM 없이 배포되는 빌드는 그 빌드의 iOS 크래시를 전부 숨긴다**는 걸 알게 된 이상, 경고로 넘길 일이 아니었어요.
 

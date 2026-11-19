@@ -305,6 +305,40 @@ button {
 	color: var(--text);
 }
 
+/* 본문 설명 그림 */
+.prose figure {
+	margin: 2rem 0;
+}
+
+.prose figure img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	background: #f7f7f5;
+}
+
+.prose figcaption {
+	margin-top: 0.6rem;
+	font-size: 0.85em;
+	line-height: 1.6;
+	color: var(--text-faint);
+	text-align: center;
+	word-break: keep-all;
+}
+
+/* 밝은 바탕 그림이 다크 테마에서 튀지 않게 살짝 누른다 */
+:root[data-theme='dark'] .prose figure img {
+	filter: brightness(0.9);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) .prose figure img {
+		filter: brightness(0.9);
+	}
+}
+
 /* rehype-toc 가 만드는 목차 */
 .prose nav.toc {
 	margin: 0 0 2.5rem;
