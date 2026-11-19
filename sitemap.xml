@@ -2,21 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://yesj1234.github.io/</loc><lastmod>2026-11-18</lastmod></url>
   <url><loc>https://yesj1234.github.io/about</loc></url>
-  <url><loc>https://yesj1234.github.io/posts/ai_agent_harness</loc><lastmod>2026-11-18</lastmod></url>
-  <url><loc>https://yesj1234.github.io/posts/bloc_concurrency_refactor</loc><lastmod>2026-11-18</lastmod></url>
-  <url><loc>https://yesj1234.github.io/posts/cocoapods_to_spm_migration</loc><lastmod>2026-11-18</lastmod></url>
-  <url><loc>https://yesj1234.github.io/posts/deferred_deeplink_in_house</loc><lastmod>2026-11-18</lastmod></url>
   <url><loc>https://yesj1234.github.io/posts/flutter_architecture_1_monorepo</loc><lastmod>2026-11-18</lastmod></url>
   <url><loc>https://yesj1234.github.io/posts/flutter_architecture_2_data_flow</loc><lastmod>2026-11-18</lastmod></url>
   <url><loc>https://yesj1234.github.io/posts/flutter_architecture_3_result</loc><lastmod>2026-11-18</lastmod></url>
   <url><loc>https://yesj1234.github.io/posts/flutter_architecture_4_bloc_viewmodel</loc><lastmod>2026-11-18</lastmod></url>
   <url><loc>https://yesj1234.github.io/posts/flutter_architecture_5_di_routing_testing</loc><lastmod>2026-11-18</lastmod></url>
   <url><loc>https://yesj1234.github.io/posts/flutter_first_year_retrospective</loc><lastmod>2026-11-18</lastmod></url>
-  <url><loc>https://yesj1234.github.io/posts/ios_crashlytics_zero_crashes</loc><lastmod>2026-11-18</lastmod></url>
-  <url><loc>https://yesj1234.github.io/posts/ios_liquid_glass_tab_bar</loc><lastmod>2026-11-18</lastmod></url>
-  <url><loc>https://yesj1234.github.io/posts/live_activity_push_to_start</loc><lastmod>2026-11-18</lastmod></url>
-  <url><loc>https://yesj1234.github.io/posts/onboarding_background_save_queue</loc><lastmod>2026-11-18</lastmod></url>
-  <url><loc>https://yesj1234.github.io/posts/wda_semantics_device_qa</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://yesj1234.github.io/posts/ai_agent_harness</loc><lastmod>2026-11-17</lastmod></url>
+  <url><loc>https://yesj1234.github.io/posts/bloc_concurrency_refactor</loc><lastmod>2026-11-17</lastmod></url>
+  <url><loc>https://yesj1234.github.io/posts/wda_semantics_device_qa</loc><lastmod>2026-11-17</lastmod></url>
+  <url><loc>https://yesj1234.github.io/posts/cocoapods_to_spm_migration</loc><lastmod>2026-11-13</lastmod></url>
+  <url><loc>https://yesj1234.github.io/posts/ios_crashlytics_zero_crashes</loc><lastmod>2026-11-13</lastmod></url>
+  <url><loc>https://yesj1234.github.io/posts/ios_liquid_glass_tab_bar</loc><lastmod>2026-11-10</lastmod></url>
+  <url><loc>https://yesj1234.github.io/posts/deferred_deeplink_in_house</loc><lastmod>2026-10-06</lastmod></url>
+  <url><loc>https://yesj1234.github.io/posts/live_activity_push_to_start</loc><lastmod>2026-09-22</lastmod></url>
+  <url><loc>https://yesj1234.github.io/posts/onboarding_background_save_queue</loc><lastmod>2026-09-15</lastmod></url>
   <url><loc>https://yesj1234.github.io/posts/photo_manager</loc><lastmod>2025-07-16</lastmod></url>
   <url><loc>https://yesj1234.github.io/posts/slivers</loc><lastmod>2025-06-26</lastmod></url>
   <url><loc>https://yesj1234.github.io/posts/git</loc><lastmod>2025-05-22</lastmod></url>
@@ -42,36 +42,36 @@
   <url><loc>https://yesj1234.github.io/posts/exercise2</loc><lastmod>2024-09-09</lastmod></url>
   <url><loc>https://yesj1234.github.io/posts/exercise1</loc><lastmod>2024-09-04</lastmod></url>
   <url><loc>https://yesj1234.github.io/posts/deploy-steps</loc><lastmod>2024-04-22</lastmod></url>
-  <url><loc>https://yesj1234.github.io/tags/AI</loc></url>
-  <url><loc>https://yesj1234.github.io/tags/Claude%20Code</loc></url>
-  <url><loc>https://yesj1234.github.io/tags/%EC%BD%94%EB%93%9C%20%EB%A6%AC%EB%B7%B0</loc></url>
   <url><loc>https://yesj1234.github.io/tags/Flutter</loc></url>
-  <url><loc>https://yesj1234.github.io/tags/BLoC</loc></url>
-  <url><loc>https://yesj1234.github.io/tags/iOS</loc></url>
-  <url><loc>https://yesj1234.github.io/tags/SPM</loc></url>
-  <url><loc>https://yesj1234.github.io/tags/CocoaPods</loc></url>
-  <url><loc>https://yesj1234.github.io/tags/Xcode</loc></url>
-  <url><loc>https://yesj1234.github.io/tags/Django</loc></url>
-  <url><loc>https://yesj1234.github.io/tags/DeepLink</loc></url>
-  <url><loc>https://yesj1234.github.io/tags/Android</loc></url>
   <url><loc>https://yesj1234.github.io/tags/Architecture</loc></url>
   <url><loc>https://yesj1234.github.io/tags/Melos</loc></url>
   <url><loc>https://yesj1234.github.io/tags/Clean%20Architecture</loc></url>
   <url><loc>https://yesj1234.github.io/tags/Dart</loc></url>
+  <url><loc>https://yesj1234.github.io/tags/BLoC</loc></url>
   <url><loc>https://yesj1234.github.io/tags/Testing</loc></url>
+  <url><loc>https://yesj1234.github.io/tags/AI</loc></url>
   <url><loc>https://yesj1234.github.io/tags/%ED%9A%8C%EA%B3%A0</loc></url>
+  <url><loc>https://yesj1234.github.io/tags/Django</loc></url>
+  <url><loc>https://yesj1234.github.io/tags/iOS</loc></url>
+  <url><loc>https://yesj1234.github.io/tags/Claude%20Code</loc></url>
+  <url><loc>https://yesj1234.github.io/tags/%EC%BD%94%EB%93%9C%20%EB%A6%AC%EB%B7%B0</loc></url>
+  <url><loc>https://yesj1234.github.io/tags/QA</loc></url>
+  <url><loc>https://yesj1234.github.io/tags/WebDriverAgent</loc></url>
+  <url><loc>https://yesj1234.github.io/tags/Accessibility</loc></url>
+  <url><loc>https://yesj1234.github.io/tags/SPM</loc></url>
+  <url><loc>https://yesj1234.github.io/tags/CocoaPods</loc></url>
+  <url><loc>https://yesj1234.github.io/tags/Xcode</loc></url>
   <url><loc>https://yesj1234.github.io/tags/Crashlytics</loc></url>
   <url><loc>https://yesj1234.github.io/tags/PlatformView</loc></url>
   <url><loc>https://yesj1234.github.io/tags/UIKit</loc></url>
   <url><loc>https://yesj1234.github.io/tags/Liquid%20Glass</loc></url>
   <url><loc>https://yesj1234.github.io/tags/UITabBar</loc></url>
+  <url><loc>https://yesj1234.github.io/tags/DeepLink</loc></url>
+  <url><loc>https://yesj1234.github.io/tags/Android</loc></url>
   <url><loc>https://yesj1234.github.io/tags/ActivityKit</loc></url>
   <url><loc>https://yesj1234.github.io/tags/Live%20Activity</loc></url>
   <url><loc>https://yesj1234.github.io/tags/APNs</loc></url>
   <url><loc>https://yesj1234.github.io/tags/Onboarding</loc></url>
-  <url><loc>https://yesj1234.github.io/tags/QA</loc></url>
-  <url><loc>https://yesj1234.github.io/tags/WebDriverAgent</loc></url>
-  <url><loc>https://yesj1234.github.io/tags/Accessibility</loc></url>
   <url><loc>https://yesj1234.github.io/tags/git</loc></url>
   <url><loc>https://yesj1234.github.io/tags/Firebase</loc></url>
   <url><loc>https://yesj1234.github.io/tags/SvelteKit</loc></url>

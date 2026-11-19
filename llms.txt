@@ -22,12 +22,12 @@
 
 ## 글
 
+- [화면 하나에서 에픽 하나로: Flutter 1년 3개월 회고](https://yesj1234.github.io/posts/flutter_first_year_retrospective): 티켓 번호대로 화면을 하나씩 만들던 사람이 앱·서버·네이티브를 함께 설계하는 에픽을 맡기까지를, 분기마다 사건 하나씩 골라 돌아본 회고예요.
 - [AI 에이전트에게 규칙을 읽히는 법](https://yesj1234.github.io/posts/ai_agent_harness): 리뷰 봇이 막힌 PR 을 대신 리뷰하는 스킬과, AI 코딩 에이전트가 매 세션 읽는 규칙 문서를 예산 안에 두는 구조를 만들어 온 기록이에요.
 - [같은 문제를 270가지 방법으로 푼 코드베이스](https://yesj1234.github.io/posts/bloc_concurrency_refactor): AI 와 함께 리뷰 없이 빠르게 쌓은 Flutter 코드를 처음으로 직접 읽고, 다시 AI 와 함께 BLoC 이벤트 겹침 처리를 정리한 기록이에요.
-- [초대 링크의 디퍼드 딥링크를 SDK 에 맡기지 않고 서버에서 직접 매칭한 이유](https://yesj1234.github.io/posts/deferred_deeplink_in_house): 친구 초대 링크로 앱을 설치한 사람을 첫 실행 때 초대자와 연결하려고, Android 는 Play Install Referrer 로, iOS 는 기기 신호 매칭으로 디퍼드 딥링크를 직접 만든 판단 과정과 그 대가를 정리했어요.
-- [화면 하나에서 에픽 하나로: Flutter 1년 3개월 회고](https://yesj1234.github.io/posts/flutter_first_year_retrospective): 티켓 번호대로 화면을 하나씩 만들던 사람이 앱·서버·네이티브를 함께 설계하는 에픽을 맡기까지를, 분기마다 사건 하나씩 골라 돌아본 회고예요.
-- [전체 화면 로딩 23번을 2번으로: 설문 저장을 백그라운드 직렬 큐로](https://yesj1234.github.io/posts/onboarding_background_save_queue): 온보딩 설문에서 답할 때마다 서버 응답을 기다리던 구조를, 답변을 백그라운드 직렬 큐로 보내고 꼭 필요한 두 곳에서만 기다리도록 바꾼 구현기예요.
 - [연타 테스트를 사람 대신: WDA 와 Semantics ID 로 실기기 QA](https://yesj1234.github.io/posts/wda_semantics_device_qa): Flutter 앱을 실기기 iPhone 에서 AI 에이전트가 직접 조작하게 만들고, 접근성 트리에 ID 를 붙여 비용을 줄이고, 40ms 간격 연타까지 재현한 기록이에요.
+- [초대 링크의 디퍼드 딥링크를 SDK 에 맡기지 않고 서버에서 직접 매칭한 이유](https://yesj1234.github.io/posts/deferred_deeplink_in_house): 친구 초대 링크로 앱을 설치한 사람을 첫 실행 때 초대자와 연결하려고, Android 는 Play Install Referrer 로, iOS 는 기기 신호 매칭으로 디퍼드 딥링크를 직접 만든 판단 과정과 그 대가를 정리했어요.
+- [전체 화면 로딩 23번을 2번으로: 설문 저장을 백그라운드 직렬 큐로](https://yesj1234.github.io/posts/onboarding_background_save_queue): 온보딩 설문에서 답할 때마다 서버 응답을 기다리던 구조를, 답변을 백그라운드 직렬 큐로 보내고 꼭 필요한 두 곳에서만 기다리도록 바꾼 구현기예요.
 - [Package - Photo manager by fluttercandies](https://yesj1234.github.io/posts/photo_manager): Exploring Flutter photo manager package.
 - [ScrollView in Flutter](https://yesj1234.github.io/posts/slivers): Get to know about CustomScrollView related widgets.
 - [Everything you need to know about git.](https://yesj1234.github.io/posts/git): How to use git as a professional developer.

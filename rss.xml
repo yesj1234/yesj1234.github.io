@@ -7,38 +7,6 @@
     <language>ko</language>
     <atom:link href="https://yesj1234.github.io/rss.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>AI 에이전트에게 규칙을 읽히는 법</title>
-      <link>https://yesj1234.github.io/posts/ai_agent_harness</link>
-      <guid isPermaLink="true">https://yesj1234.github.io/posts/ai_agent_harness</guid>
-      <description>리뷰 봇이 막힌 PR 을 대신 리뷰하는 스킬과, AI 코딩 에이전트가 매 세션 읽는 규칙 문서를 예산 안에 두는 구조를 만들어 온 기록이에요.</description>
-      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
-      <category>AI</category><category>Claude Code</category><category>코드 리뷰</category>
-    </item>
-    <item>
-      <title>같은 문제를 270가지 방법으로 푼 코드베이스</title>
-      <link>https://yesj1234.github.io/posts/bloc_concurrency_refactor</link>
-      <guid isPermaLink="true">https://yesj1234.github.io/posts/bloc_concurrency_refactor</guid>
-      <description>AI 와 함께 리뷰 없이 빠르게 쌓은 Flutter 코드를 처음으로 직접 읽고, 다시 AI 와 함께 BLoC 이벤트 겹침 처리를 정리한 기록이에요.</description>
-      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
-      <category>Flutter</category><category>BLoC</category><category>AI</category>
-    </item>
-    <item>
-      <title>CocoaPods 에서 SPM 으로 옮기며 깨진 것들</title>
-      <link>https://yesj1234.github.io/posts/cocoapods_to_spm_migration</link>
-      <guid isPermaLink="true">https://yesj1234.github.io/posts/cocoapods_to_spm_migration</guid>
-      <description>Flutter 앱의 iOS 의존성을 CocoaPods 에서 Swift Package Manager 로 옮기면서, CocoaPods 가 조용히 대신 해 주던 일들이 하나씩 드러난 기록이에요.</description>
-      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
-      <category>Flutter</category><category>iOS</category><category>SPM</category><category>CocoaPods</category><category>Xcode</category>
-    </item>
-    <item>
-      <title>초대 링크의 디퍼드 딥링크를 SDK 에 맡기지 않고 서버에서 직접 매칭한 이유</title>
-      <link>https://yesj1234.github.io/posts/deferred_deeplink_in_house</link>
-      <guid isPermaLink="true">https://yesj1234.github.io/posts/deferred_deeplink_in_house</guid>
-      <description>친구 초대 링크로 앱을 설치한 사람을 첫 실행 때 초대자와 연결하려고, Android 는 Play Install Referrer 로, iOS 는 기기 신호 매칭으로 디퍼드 딥링크를 직접 만든 판단 과정과 그 대가를 정리했어요.</description>
-      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
-      <category>Flutter</category><category>Django</category><category>DeepLink</category><category>Android</category><category>iOS</category>
-    </item>
-    <item>
       <title>모노레포 지도: 왜 패키지를 6개로 나눴나</title>
       <link>https://yesj1234.github.io/posts/flutter_architecture_1_monorepo</link>
       <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_architecture_1_monorepo</guid>
@@ -87,11 +55,43 @@
       <category>회고</category><category>Flutter</category><category>Django</category><category>AI</category><category>iOS</category>
     </item>
     <item>
+      <title>AI 에이전트에게 규칙을 읽히는 법</title>
+      <link>https://yesj1234.github.io/posts/ai_agent_harness</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/ai_agent_harness</guid>
+      <description>리뷰 봇이 막힌 PR 을 대신 리뷰하는 스킬과, AI 코딩 에이전트가 매 세션 읽는 규칙 문서를 예산 안에 두는 구조를 만들어 온 기록이에요.</description>
+      <pubDate>Mon, 16 Nov 2026 15:00:00 GMT</pubDate>
+      <category>AI</category><category>Claude Code</category><category>코드 리뷰</category>
+    </item>
+    <item>
+      <title>같은 문제를 270가지 방법으로 푼 코드베이스</title>
+      <link>https://yesj1234.github.io/posts/bloc_concurrency_refactor</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/bloc_concurrency_refactor</guid>
+      <description>AI 와 함께 리뷰 없이 빠르게 쌓은 Flutter 코드를 처음으로 직접 읽고, 다시 AI 와 함께 BLoC 이벤트 겹침 처리를 정리한 기록이에요.</description>
+      <pubDate>Mon, 16 Nov 2026 15:00:00 GMT</pubDate>
+      <category>Flutter</category><category>BLoC</category><category>AI</category>
+    </item>
+    <item>
+      <title>연타 테스트를 사람 대신: WDA 와 Semantics ID 로 실기기 QA</title>
+      <link>https://yesj1234.github.io/posts/wda_semantics_device_qa</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/wda_semantics_device_qa</guid>
+      <description>Flutter 앱을 실기기 iPhone 에서 AI 에이전트가 직접 조작하게 만들고, 접근성 트리에 ID 를 붙여 비용을 줄이고, 40ms 간격 연타까지 재현한 기록이에요.</description>
+      <pubDate>Mon, 16 Nov 2026 15:00:00 GMT</pubDate>
+      <category>Flutter</category><category>iOS</category><category>QA</category><category>WebDriverAgent</category><category>Accessibility</category><category>AI</category>
+    </item>
+    <item>
+      <title>CocoaPods 에서 SPM 으로 옮기며 깨진 것들</title>
+      <link>https://yesj1234.github.io/posts/cocoapods_to_spm_migration</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/cocoapods_to_spm_migration</guid>
+      <description>Flutter 앱의 iOS 의존성을 CocoaPods 에서 Swift Package Manager 로 옮기면서, CocoaPods 가 조용히 대신 해 주던 일들이 하나씩 드러난 기록이에요.</description>
+      <pubDate>Thu, 12 Nov 2026 15:00:00 GMT</pubDate>
+      <category>Flutter</category><category>iOS</category><category>SPM</category><category>CocoaPods</category><category>Xcode</category>
+    </item>
+    <item>
       <title>iOS 크래시가 0건이었던 진짜 이유</title>
       <link>https://yesj1234.github.io/posts/ios_crashlytics_zero_crashes</link>
       <guid isPermaLink="true">https://yesj1234.github.io/posts/ios_crashlytics_zero_crashes</guid>
       <description>CocoaPods 에서 SPM 으로 옮긴 뒤 Crashlytics 에 iOS 크래시가 한 건도 잡히지 않았어요. 조용히 실패하던 빌드 단계 하나를 찾아간 기록이에요.</description>
-      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
+      <pubDate>Thu, 12 Nov 2026 15:00:00 GMT</pubDate>
       <category>Flutter</category><category>iOS</category><category>Crashlytics</category>
     </item>
     <item>
@@ -99,15 +99,23 @@
       <link>https://yesj1234.github.io/posts/ios_liquid_glass_tab_bar</link>
       <guid isPermaLink="true">https://yesj1234.github.io/posts/ios_liquid_glass_tab_bar</guid>
       <description>Flutter 로 흉내 내던 유리 탭바를 iOS 26 시스템 UITabBar 로 바꿨어요. 화면은 Flutter 에 두고 탭바 한 장만 PlatformView 로 띄우면서 겪은 제스처 경쟁, 선택 어긋남, 시스템 배지를 버린 이유를 정리했어요.</description>
-      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
+      <pubDate>Mon, 09 Nov 2026 15:00:00 GMT</pubDate>
       <category>iOS</category><category>Flutter</category><category>PlatformView</category><category>UIKit</category><category>Liquid Glass</category><category>UITabBar</category>
+    </item>
+    <item>
+      <title>초대 링크의 디퍼드 딥링크를 SDK 에 맡기지 않고 서버에서 직접 매칭한 이유</title>
+      <link>https://yesj1234.github.io/posts/deferred_deeplink_in_house</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/deferred_deeplink_in_house</guid>
+      <description>친구 초대 링크로 앱을 설치한 사람을 첫 실행 때 초대자와 연결하려고, Android 는 Play Install Referrer 로, iOS 는 기기 신호 매칭으로 디퍼드 딥링크를 직접 만든 판단 과정과 그 대가를 정리했어요.</description>
+      <pubDate>Mon, 05 Oct 2026 15:00:00 GMT</pubDate>
+      <category>Flutter</category><category>Django</category><category>DeepLink</category><category>Android</category><category>iOS</category>
     </item>
     <item>
       <title>앱이 잠들어 있어도 Live Activity 를 바꾸는 법: 서버 push-to-start</title>
       <link>https://yesj1234.github.io/posts/live_activity_push_to_start</link>
       <guid isPermaLink="true">https://yesj1234.github.io/posts/live_activity_push_to_start</guid>
       <description>앱 안에서만 갱신하던 루틴 Live Activity 가 앱이 잠든 동안 멈췄어요. 서버가 push-to-start 로 배너를 띄우는 구조로 바꿨다가, 결국 하루 한 개의 배너를 update 로 돌리는 구조에 도착한 기록이에요.</description>
-      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
+      <pubDate>Mon, 21 Sep 2026 15:00:00 GMT</pubDate>
       <category>iOS</category><category>ActivityKit</category><category>Live Activity</category><category>APNs</category><category>Flutter</category><category>Django</category>
     </item>
     <item>
@@ -115,16 +123,8 @@
       <link>https://yesj1234.github.io/posts/onboarding_background_save_queue</link>
       <guid isPermaLink="true">https://yesj1234.github.io/posts/onboarding_background_save_queue</guid>
       <description>온보딩 설문에서 답할 때마다 서버 응답을 기다리던 구조를, 답변을 백그라운드 직렬 큐로 보내고 꼭 필요한 두 곳에서만 기다리도록 바꾼 구현기예요.</description>
-      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
+      <pubDate>Mon, 14 Sep 2026 15:00:00 GMT</pubDate>
       <category>Flutter</category><category>BLoC</category><category>Onboarding</category><category>Django</category>
-    </item>
-    <item>
-      <title>연타 테스트를 사람 대신: WDA 와 Semantics ID 로 실기기 QA</title>
-      <link>https://yesj1234.github.io/posts/wda_semantics_device_qa</link>
-      <guid isPermaLink="true">https://yesj1234.github.io/posts/wda_semantics_device_qa</guid>
-      <description>Flutter 앱을 실기기 iPhone 에서 AI 에이전트가 직접 조작하게 만들고, 접근성 트리에 ID 를 붙여 비용을 줄이고, 40ms 간격 연타까지 재현한 기록이에요.</description>
-      <pubDate>Tue, 17 Nov 2026 15:00:00 GMT</pubDate>
-      <category>Flutter</category><category>iOS</category><category>QA</category><category>WebDriverAgent</category><category>Accessibility</category><category>AI</category>
     </item>
     <item>
       <title>Package - Photo manager by fluttercandies</title>
