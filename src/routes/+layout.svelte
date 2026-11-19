@@ -3,6 +3,7 @@
 	import '../app.pcss';
 	import { page } from '$app/stores';
 	import { afterNavigate } from '$app/navigation';
+	import { onMount } from 'svelte';
 	import Sidebar from '$lib/components/sidebar/Sidebar.svelte';
 	import Header from '$lib/components/header/Header.svelte';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
@@ -27,6 +28,28 @@
 	});
 
 	$: isPost = $page.url.pathname.startsWith('/posts/');
+
+	// 코드 블록 머리줄의 복사 버튼. 글마다 붙이지 않고 문서 전체에서 한 번만 듣는다
+	onMount(() => {
+		const onClick = async (event: MouseEvent) => {
+			const button = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>('.code-copy');
+			const code = button?.closest('.code-block')?.querySelector('pre');
+			if (!button || !code) return;
+			try {
+				await navigator.clipboard.writeText(code.innerText);
+				button.textContent = '복사됨';
+				button.classList.add('copied');
+			} catch {
+				button.textContent = '복사 실패';
+			}
+			setTimeout(() => {
+				button.textContent = '복사';
+				button.classList.remove('copied');
+			}, 1500);
+		};
+		document.addEventListener('click', onClick);
+		return () => document.removeEventListener('click', onClick);
+	});
 </script>
 
 <div class="shell" class:panel-open={$activePanel !== null} class:drawer-open={drawerOpen}>
