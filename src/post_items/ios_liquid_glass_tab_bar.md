@@ -311,6 +311,12 @@ Apple 문서([`badgeValue`](https://developer.apple.com/documentation/uikit/uita
 
 그래서 **점에는 시스템 배지를 쓰지 않고, 6pt 점을 직접 그리기로** 했어요. 숫자 배지(채팅 안 읽음 수)는 그대로 시스템 배지예요. 숫자 배지는 원래 그 크기가 맞으니까요.
 
+
+<figure>
+	<img src="/posts/ios_liquid_glass_tab_bar/fig-4-red-dot.webp" alt="빈 문자열 badgeValue 로 그린 시스템 배지는 약 18pt 빨간 원으로 아이콘을 덮었고, 직접 그린 점은 지름 6pt 로 아이콘 오른쪽 위에서 2pt 바깥에 찍힌다" width="1600" height="800" loading="lazy" />
+	<figcaption>시스템 배지는 숫자 배지 크기로 아이콘을 덮어서, 6pt 점을 직접 그리기로 했어요.</figcaption>
+</figure>
+
 직접 그리기로 하자 질문이 세 개 생겼어요. 어디에 얹나, 아이콘 위치는 어떻게 아나, 언제 위치를 맞추나.
 
 ### 어디에 얹나: 아이콘 뷰 안이 아니라 그 위

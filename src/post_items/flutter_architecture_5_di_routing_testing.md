@@ -219,6 +219,12 @@ bloc.add(const ReloadEvent()); // 돌아오면 재조회
 | `network/test/data_source` | 요청과 응답 변환 | 91 |
 | `app/test/feat` | 화면이 상태를 그리는 방식 | 736 |
 
+
+<figure>
+	<img src="/posts/flutter_architecture_5_di_routing_testing/fig-3-test-spec-map.webp" alt="패키지 지도 위의 테스트 폴더. app 의 test/feat 736개, presenter 의 test/blocs 311개, usecase 의 test/feat 177개, network 의 test/data_source 91개, entity 의 test/models 217개가 각 계층의 스펙이다" width="1600" height="900" loading="lazy" />
+	<figcaption>테스트 폴더가 패키지를 따라 나뉘어 있어서, 고칠 곳의 스펙을 어디서 읽을지 정해져 있어요.</figcaption>
+</figure>
+
 이 폴더들을 **스펙**이라 부르는 데는 규칙이 붙어 있어요. **기존 기능을 고칠 때는 구현보다 관련 테스트를 먼저 읽는다**(§21). 코드는 "지금 어떻게 동작하나"를, 테스트는 "어떻게 동작해야 하나"를 말하니까요.
 
 이메일 수신 설정은 세 층으로 못 박혀 있어요. **모델 테스트**(58줄)는 `snake_case` 필드 매핑을, **BLoC 테스트**(157줄)는 토글 실패 시 되돌림을, **화면 테스트**(150줄)는 전체 수신을 끄면 주제가 잠기는지를 봐요. BLoC 테스트는 가짜 UseCase 를 생성자로, 화면 테스트는 가짜 BLoC 을 `BlocProvider.value` 로 넣어요.

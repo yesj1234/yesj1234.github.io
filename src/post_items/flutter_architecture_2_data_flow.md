@@ -158,6 +158,12 @@ abstract interface class EmailPreferenceDataSource {
 
 (하나는 `app` 과 `usecase` 양쪽에 구현이 있어 합이 110이고, 구현을 찾지 못한 것이 1개예요.)
 
+
+<figure>
+	<img src="/posts/flutter_architecture_2_data_flow/fig-2-interface-implementers.webp" alt="usecase 의 인터페이스를 network 가 68개, app 이 26개, local_storage 가 13개, usecase 자신이 3개 구현한다" width="1600" height="900" loading="lazy" />
+	<figcaption>usecase 의 인터페이스는 network 만이 아니라 app 과 local_storage 도 구현해요.</figcaption>
+</figure>
+
 여기서 볼 건 **`app` 도 26개를 구현한다**는 점이에요. Flutter 플러그인이 필요한 구현은 `app` 에 두고 인터페이스만 `usecase` 에 둬요.
 
 그러니까 이 20줄짜리 UseCase 의 일은 로직이 아니라 **BLoC 이 `network` 를 모르게 하는 것**이에요. 비용은 파일 하나와 위임 메서드 세 개예요. 다만 **"UseCase = 비즈니스 로직"이라고 설명하면 이 파일을 읽은 사람은 헷갈려요.** 이 프로젝트에서 UseCase 는 먼저 **경계**이고, 로직은 있을 때만 있어요.
