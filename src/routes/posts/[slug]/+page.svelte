@@ -4,6 +4,7 @@
 	import { browser } from '$app/environment';
 	import PageHead from '$lib/components/PageHead.svelte';
 	import SeriesNav from '$lib/components/SeriesNav.svelte';
+	import PostSummary from '$lib/components/PostSummary.svelte';
 	import { categoryOf } from '$lib/categories';
 	import { openTab } from '$lib/stores/header';
 	import { formatPostDate, toIsoDateTime } from '$lib/utils/date_utils';
@@ -76,6 +77,10 @@
 			{#if !meta.published}<span class="draft">초안</span>{/if}
 		</div>
 	</header>
+
+	{#if meta.summary}
+		<PostSummary summary={meta.summary} />
+	{/if}
 
 	{#if data.series}
 		<SeriesNav series={data.series} currentSlug={$page.params.slug} variant="toc" />

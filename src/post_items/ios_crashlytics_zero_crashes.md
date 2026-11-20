@@ -9,6 +9,11 @@ series: ios-native
 seriesOrder: 4
 category: ios-native
 tags: [Flutter, iOS, Firebase]
+summary:
+  problem: 'SPM 전환 뒤 iOS 21개 빌드 동안 Crashlytics 크래시가 0건으로 집계됐어요.'
+  role: 'Claude Code 와 함께 원인 추적부터 업로드 스크립트 수정·실빌드 검증까지 맡았어요.'
+  result: '실패하면 archive 를 멈추게 고쳐 0.562.0 부터 집계를 되살렸지만, 보류된 156건은 잃었어요.'
+  stack: 'Firebase Crashlytics, Xcode Build Phase, BigQuery, Swift Package Manager, fastlane'
 ---
 
 ## 들어가며: 눈앞에서 꺼진 앱, 그런데 0건

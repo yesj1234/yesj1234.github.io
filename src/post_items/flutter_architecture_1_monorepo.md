@@ -8,6 +8,11 @@ series: flutter-architecture
 seriesOrder: 1
 category: architecture
 tags: [Flutter, Architecture]
+summary:
+  problem: '패키지 6개 구조가 경계를 정말 지키는지 재 본 적이 없었어요.'
+  role: '동료가 만든 6개 패키지 구조 위에서 1년간 기능을 쌓고, 경계를 직접 실험·실측했어요.'
+  result: '경계는 컴파일러가 아닌 린트와 리뷰가 지켰고, 기능 커밋 52%가 패키지 3개 이상을 지났어요.'
+  stack: 'Flutter, Dart pub workspace, Melos, Dart lints'
 ---
 
 ## 들어가며: 설정 화면 하나에 파일 28개가 바뀌었다

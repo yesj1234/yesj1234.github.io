@@ -1,7 +1,31 @@
 <script lang="ts">
+	import type { PageData } from './$types';
 	import PageHead from '$lib/components/PageHead.svelte';
 	import { AUTHOR, SITE_URL } from '$lib/site';
 	import { SERIES } from '$lib/series';
+
+	export let data: PageData;
+
+	// 이력서 링크로 들어온 사람이 가장 먼저 볼 글. 순서대로 보여 준다
+	const FEATURED = [
+		'ios_crashlytics_zero_crashes',
+		'bloc_concurrency_refactor',
+		'live_activity_push_to_start',
+		'ai_agent_harness',
+		'deferred_deeplink_in_house'
+	];
+
+	$: posts = (data.publishedPosts ?? []) as unknown as App.BlogPost[];
+	$: featured = FEATURED.map((slug) => posts.find((post) => post.slug === slug)).filter(
+		(post): post is App.BlogPost => Boolean(post)
+	);
+	$: seriesLinks = Object.entries(SERIES).map(([id, series]) => {
+		const first = posts
+			.filter((post) => post.series === id)
+			.sort((a, b) => Number(a.seriesOrder ?? 0) - Number(b.seriesOrder ?? 0))[0];
+		const count = posts.filter((post) => post.series === id).length;
+		return { title: series.title, href: first ? `/posts/${first.slug}` : undefined, count };
+	});
 
 	const path = '/about';
 	const structuredData = {
@@ -42,6 +66,23 @@
 	</header>
 
 	<section>
+		<h2 class="label">대표 작업</h2>
+		<ul class="works">
+			{#each featured as post}
+				<li>
+					<a class="work-title" href={`/posts/${post.slug}`}>{post.title}</a>
+					{#if post.summary}
+						<p class="work-result">{post.summary.result}</p>
+						<p class="work-stack">{post.summary.stack}</p>
+					{:else}
+						<p class="work-result">{post.description}</p>
+					{/if}
+				</li>
+			{/each}
+		</ul>
+	</section>
+
+	<section>
 		<h2 class="label">하는 일</h2>
 		<ul class="focus">
 			{#each focus as item}
@@ -53,8 +94,11 @@
 	<section>
 		<h2 class="label">시리즈</h2>
 		<ul class="links">
-			{#each Object.values(SERIES) as series}
-				<li>{series.title}</li>
+			{#each seriesLinks as series}
+				<li>
+					{#if series.href}<a href={series.href}>{series.title}</a>{:else}{series.title}{/if}
+					<span class="count">{series.count}편</span>
+				</li>
 			{/each}
 		</ul>
 	</section>
@@ -124,6 +168,53 @@
 		letter-spacing: 0.06em;
 		color: var(--text-faint);
 		border-bottom: 1px solid var(--border);
+	}
+
+	.works {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.works li {
+		padding: 14px 0;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.works li:last-child {
+		border-bottom: none;
+	}
+
+	.work-title {
+		font-size: 1.05rem;
+		font-weight: 650;
+		line-height: 1.5;
+		color: var(--text);
+		word-break: keep-all;
+	}
+
+	.work-title:hover {
+		color: var(--accent);
+	}
+
+	.work-result {
+		margin: 6px 0 0;
+		line-height: 1.65;
+		color: var(--text-muted);
+		word-break: keep-all;
+	}
+
+	.work-stack {
+		margin: 4px 0 0;
+		font-family: var(--font-mono);
+		font-size: 12px;
+		color: var(--text-faint);
+	}
+
+	.count {
+		margin-left: 8px;
+		font-size: 12px;
+		color: var(--text-faint);
 	}
 
 	.focus,

@@ -9,6 +9,11 @@ series: ios-native
 seriesOrder: 2
 category: ios-native
 tags: [Flutter, iOS]
+summary:
+  problem: 'Flutter 로 흉내 낸 유리 탭바가 iOS 26 시스템 앱의 Liquid Glass 와 달라 보였어요.'
+  role: '탭바 한 장을 UITabBar PlatformView 로 바꾸는 설계·구현·성능 측정·출시 뒤 수정을 했어요.'
+  result: 'iOS 26 이상 기본 ON 으로 출시했고, 네이티브 합성 비용은 p99 1ms 남짓, hitch 0건이었어요.'
+  stack: 'Flutter, UIKit UITabBar, PlatformView, MethodChannel, Xcode Instruments'
 ---
 
 ## 들어가며: 앱을 다시 쓰기 전에, 탭바 한 장만

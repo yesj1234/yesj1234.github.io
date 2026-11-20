@@ -9,6 +9,11 @@ series: ios-native
 seriesOrder: 3
 category: ios-native
 tags: [Flutter, iOS]
+summary:
+  problem: 'CocoaPods trunk 가 읽기 전용이 되면 네이티브 SDK 36개를 새로 받을 수 없게 됐어요.'
+  role: '플러그인 51개 조사부터 버전 고정·빌드 설정 대체·실기기 확인까지 전환 작업을 진행했어요.'
+  result: 'trunk 의존을 36개에서 0개로 줄였고, CocoaPods 에는 미지원 플러그인 5개만 남겼어요.'
+  stack: 'Flutter, Swift Package Manager, CocoaPods, Xcode, fastlane'
 ---
 
 ## 들어가며: 지금도 빌드는 되는데 왜 옮기나

@@ -7,6 +7,11 @@ description: 온보딩 설문에서 답할 때마다 서버 응답을 기다리�
 cover: /posts/onboarding_background_save_queue/cover.webp
 category: architecture
 tags: [Flutter, BLoC, Django]
+summary:
+  problem: '온보딩 설문에서 답할 때마다 전체 화면 로딩이 떠 최대 23번 기다렸어요.'
+  role: '앱의 직렬 저장 큐·낙관적 진행·강등 경로를 설계·구현하고, 서버 분기 신호 필드를 정했어요.'
+  result: '요청 수는 그대로 두고 전체 화면 로딩을 23번에서 2번(남성 21번→1번)으로 줄였어요.'
+  stack: 'Flutter, BLoC, get_it, dio, Django'
 ---
 
 ## 들어가며: 답을 하나 고를 때마다 화면이 멈췄다

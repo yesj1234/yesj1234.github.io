@@ -8,6 +8,11 @@ series: flutter-architecture
 seriesOrder: 4
 category: architecture
 tags: [Flutter, Architecture, BLoC]
+summary:
+  problem: 'emit 은 불렸는데 에러 없이 화면이 바뀌지 않았어요.'
+  role: '언어 설정 화면을 만들며 겪은 함정을 포함해, 화면이 안 바뀐 사례들의 원인을 추적·정리했어요.'
+  result: 'BLoC 146개·사이드 이펙트 89개를 살펴, 원인을 이벤트와 화면 사이 다섯 칸으로 정리했어요.'
+  stack: 'Flutter, BLoC, flutter_bloc, bloc_concurrency, Equatable'
 ---
 
 ## 들어가며: 저장은 됐는데 언어가 바뀌지 않았다

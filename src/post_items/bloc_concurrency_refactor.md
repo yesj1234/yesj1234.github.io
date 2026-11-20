@@ -7,6 +7,11 @@ description: AI 와 함께 리뷰 없이 빠르게 쌓은 Flutter 코드를 처�
 cover: /posts/bloc_concurrency_refactor/cover.webp
 category: architecture
 tags: [Flutter, BLoC, AI]
+summary:
+  problem: '리뷰 없이 빠르게 쌓은 코드가 이벤트 겹침을 약 270곳에서 제각각 풀고 있었어요.'
+  role: '범위 감사·등가성 판정·동작 고정 테스트·이관·버그 수정을 Claude Code 와 함께 진행했어요.'
+  result: 'sequential 23곳, droppable 48곳, restartable 1곳을 옮기고 기준을 규칙 한 줄로 남겼어요.'
+  stack: 'Flutter, BLoC, bloc_concurrency, Claude Code, WebDriverAgent'
 ---
 
 ## 들어가며: 1월부터 코드를 거의 읽지 않았다

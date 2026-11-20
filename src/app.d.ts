@@ -25,6 +25,15 @@ declare global {
 			series?: string;
 			seriesOrder?: number;
 			category?: string;
+			summary?: PostSummary;
+		}
+
+		/** 글 맨 위 「30초 요약」 박스. 링크로 들어온 면접관이 본문 전에 읽는다 */
+		interface PostSummary {
+			problem: string;
+			role: string;
+			result: string;
+			stack: string;
 		}
 
 		interface SeriesEntry {

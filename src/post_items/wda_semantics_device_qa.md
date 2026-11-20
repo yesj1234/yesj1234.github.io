@@ -7,6 +7,11 @@ description: 'Flutter 앱을 실기기 iPhone 에서 AI 에이전트가 직접 �
 cover: /posts/wda_semantics_device_qa/cover.webp
 category: ai
 tags: [Flutter, iOS, Testing]
+summary:
+  problem: '연타 방지 49곳의 실기기 확인이 사람 손에 남아 전부 확인할 수 없었어요.'
+  role: 'Claude Code 가 실기기를 조작하는 WDA 도구와 Semantics ID, 비교 측정을 직접 설계했어요.'
+  result: 'ID 와 카탈로그 안내로 비용을 최대 39% 줄였고, 연타 7개 흐름을 실기기에서 PASS 했어요.'
+  stack: 'WebDriverAgent, Flutter Semantics, W3C WebDriver Actions, go-ios, Claude Code'
 ---
 
 ## 들어가며: 실기기 확인만 사람 손에 남아 있었다

@@ -7,6 +7,11 @@ description: 리뷰 봇이 막힌 PR 을 대신 리뷰하는 스킬과, AI 코�
 cover: /posts/ai_agent_harness/cover.webp
 category: ai
 tags: [AI]
+summary:
+  problem: '에이전트가 매 세션 읽는 규칙 문서가 12KB 예산에서 16바이트만 남았어요.'
+  role: '규칙 분리·하네스 감사·PR 리뷰 스킬을 만들었고, rules.md 를 한 줄 구조로 다시 쓴 건 팀원이에요.'
+  result: '리뷰 스킬을 세 저장소에 넣어 PR 9개에 리뷰 14건을 게시하고, 리뷰 비용을 52~62% 줄였어요.'
+  stack: 'Claude Code, Python, Git, CodeRabbit'
 ---
 
 ## 들어가며: 규칙 파일이 16바이트를 남기고 꽉 찼다

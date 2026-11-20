@@ -7,6 +7,11 @@ description: '티켓 번호대로 화면을 하나씩 만들던 사람이 앱·�
 cover: /posts/flutter_first_year_retrospective/cover.webp
 category: retrospective
 tags: [Flutter, Django, AI]
+summary:
+  problem: '1년 3개월 동안 일의 단위가 티켓별 화면 하나에서 여러 층의 에픽으로 바뀌었어요.'
+  role: '앱·서버를 오가며 에픽을 맡았고, 소셜 에픽은 화면별 QA 외에는 혼자 설계하고 만들었어요.'
+  result: '넷째 분기에 앱 161·Django 143·FastAPI 13건 PR 을 main 에 넣고 4개 층·5개 플랫폼을 맡았어요.'
+  stack: 'Flutter, Django, FastAPI, Claude Code'
 ---
 
 ## 들어가며: PR 제목이 티켓 번호로 시작하던 때

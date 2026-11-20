@@ -7,6 +7,11 @@ description: 친구 초대 링크로 앱을 설치한 사람을 첫 실행 때 �
 cover: /posts/deferred_deeplink_in_house/cover.webp
 category: server
 tags: [Django, iOS, Android]
+summary:
+  problem: '초대 링크로 앱을 설치하면 스토어를 거치며 초대 코드가 사라졌어요.'
+  role: '초대 코드를 잇는 서버 매칭과 앱 첫 실행 연동을 만들고, QR 보상에도 재사용했어요.'
+  result: 'Android 는 Play 값, iOS 는 서버 매칭으로 잇고 1픽셀 차이·무응답 플러그인(5초 타임아웃)을 풀었어요.'
+  stack: 'Django, Flutter, Play Install Referrer API, AppsFlyer OneLink'
 ---
 
 ## 들어가며: 링크를 눌렀는데 앱이 없을 때

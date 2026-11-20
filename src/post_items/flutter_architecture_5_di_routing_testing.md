@@ -8,6 +8,11 @@ series: flutter-architecture
 seriesOrder: 5
 category: architecture
 tags: [Flutter, Architecture, Testing]
+summary:
+  problem: '문서엔 injectable 이라 적혔지만 DI 는 손으로 265곳 등록돼 있었어요.'
+  role: 'Claude Code 와 함께 기능을 개발하며 DI·라우팅·테스트를 실측하고 문서와 코드의 어긋남을 추적했어요.'
+  result: '소셜 탭 21개 작업 단위 병렬 구현에서, 슬롯 주석을 둔 전용 파일로 DI·barrel 머지 충돌을 줄였어요.'
+  stack: 'Flutter, get_it, go_router, flutter_test, Claude Code'
 ---
 
 ## 들어가며: 문서에는 코드 생성, 코드에는 손으로 쓴 등록 265곳

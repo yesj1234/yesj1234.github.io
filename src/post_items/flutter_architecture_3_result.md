@@ -8,6 +8,11 @@ series: flutter-architecture
 seriesOrder: 3
 category: architecture
 tags: [Flutter, Architecture, Dart]
+summary:
+  problem: '실패를 받는 콜백이 둘이라, 하나만 달면 실패가 조용히 사라졌어요.'
+  role: '동료가 만든 Result·ResultChain 을 실측과 재현 실험으로 검증하고, 관련 버그 하나를 고쳤어요.'
+  result: '체인 314개 중 두 실패 통로를 모두 받는 건 26개(8%)뿐임을 확인했어요.'
+  stack: 'Dart 3 sealed class, Flutter, BLoC, Result(ROP)'
 ---
 
 ## 들어가며: 실패를 받는 콜백이 왜 두 개일까
