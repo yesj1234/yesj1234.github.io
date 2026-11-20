@@ -1,5 +1,8 @@
 export const SITE_URL = 'https://yesj1234.github.io';
 export const SITE_TITLE = 'Jack.dev.blog';
+
+/** GoatCounter 사이트 코드. 통계는 https://yesj1234.goatcounter.com 에서 본다 */
+export const GOATCOUNTER_CODE = 'yesj1234';
 export const SITE_DESCRIPTION =
 	'Flutter 앱과 서버(Django·FastAPI)를 함께 만드는 개발자 jack 의 기록. 트러블슈팅, 설계 결정, 앱 아키텍처, AI 에이전트와 일하는 법.';
 

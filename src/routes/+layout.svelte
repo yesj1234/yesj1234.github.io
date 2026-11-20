@@ -4,6 +4,8 @@
 	import { page } from '$app/stores';
 	import { afterNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { dev } from '$app/environment';
+	import { GOATCOUNTER_CODE } from '$lib/site';
 	import Sidebar from '$lib/components/sidebar/Sidebar.svelte';
 	import Header from '$lib/components/header/Header.svelte';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
@@ -22,8 +24,12 @@
 		drawerOpen = true;
 	}
 
-	afterNavigate(() => {
+	afterNavigate((navigation) => {
 		drawerOpen = false;
+		// 첫 진입은 스크립트가 로드되며 직접 센다. 그 뒤 화면 전환만 여기서 센다
+		if (!dev && navigation.type !== 'enter') {
+			window.goatcounter?.count({ path: location.pathname, referrer: '' });
+		}
 	});
 
 	$: isPost = $page.url.pathname.startsWith('/posts/');
@@ -50,6 +56,12 @@
 		return () => document.removeEventListener('click', onClick);
 	});
 </script>
+
+<svelte:head>
+	{#if !dev}
+		<script data-goatcounter={`https://${GOATCOUNTER_CODE}.goatcounter.com/count`} async src="https://gc.zgo.at/count.js"></script>
+	{/if}
+</svelte:head>
 
 <div class="shell" class:panel-open={$activePanel !== null} class:drawer-open={drawerOpen}>
 	<nav class="activity" aria-label="활동 바">
