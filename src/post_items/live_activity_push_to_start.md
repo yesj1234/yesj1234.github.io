@@ -11,7 +11,7 @@ category: ios-native
 tags: [Flutter, iOS, Django]
 summary:
   problem: '앱이 잠든 동안 루틴 Live Activity 배너를 바꿀 주체가 없어 지난 루틴이 남았어요.'
-  role: '앱의 토큰 수집부터 서버의 APNs 전송·매분 회전 로직까지 앱·서버 양쪽을 설계·구현했어요.'
+  role: '앱의 토큰 수집부터 서버의 APNs 전송·매분 회전까지 앱·서버 양쪽을 혼자 설계·구현했어요.'
   result: 'push-to-start 가 3번 중 3번 앱을 못 깨워, 하루 한 배너를 update 로 돌리는 구조로 바꿨어요.'
   stack: 'ActivityKit, APNs, Flutter, Django, Celery'
 ---

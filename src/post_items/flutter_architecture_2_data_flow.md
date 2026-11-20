@@ -10,7 +10,7 @@ category: architecture
 tags: [Flutter, Architecture]
 summary:
   problem: '문서의 네 줄짜리 데이터 흐름이 실제 코드와 맞는지 몰랐어요.'
-  role: '직접 만든 이메일 수신 설정 화면을 탭부터 서버까지 코드로 따라가며 정리했어요.'
+  role: '직접 만든 이메일 수신 설정 화면을 서버까지 따라가고, UseCase 우회를 막는 가드 테스트를 Claude Code 로 만들었어요.'
   result: '토글 하나가 10칸을 지나며, 도메인 예외 변환이 빠져 서버 에러 문자열이 화면에 뜨는 걸 찾았어요.'
   stack: 'Flutter, BLoC, dio, Clean Architecture'
 ---
