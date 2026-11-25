@@ -10,8 +10,8 @@ category: architecture
 tags: [Flutter, Architecture, BLoC]
 summary:
   problem: 'emit 은 불렸는데 에러 없이 화면이 바뀌지 않았어요.'
-  role: '언어 설정·팀 채팅 이중 소켓 등 화면이 안 바뀐 사례를 직접 고치며 원인을 다섯 칸으로 정리했어요.'
-  result: 'BLoC 146개·사이드 이펙트 89개를 살펴, 원인을 이벤트와 화면 사이 다섯 칸으로 정리했어요.'
+  role: '언어 설정·방장 위임·팀 채팅 이중 소켓을 직접 고치며, 화면이 안 바뀐 원인을 다섯 칸으로 정리했어요.'
+  result: '상태는 사실, 사이드 이펙트는 사건이라는 기준으로 BLoC 146개·사이드 이펙트 89개를 점검하는 다섯 칸을 만들었어요.'
   stack: 'Flutter, BLoC, flutter_bloc, bloc_concurrency, Equatable'
 ---
 
@@ -135,7 +135,7 @@ void emit(State state) {
 })
 ```
 
-두 번째 게이트는 위젯이었어요. 멤버십을 새로 emit 해도 `BlocBuilder` 의 `buildWhen` 이 코인과 배지 수만 비교했고, 아래 위젯은 `ValueKey(teamId)` 로 State 를 유지하며 옛 멤버십을 들고 있었어요. `buildWhen` 에 `prev.membership != curr.membership` 을 더해 고쳤어요.
+두 번째 게이트는 위젯이었어요. 멤버십을 새로 emit 해도 `BlocBuilder` 의 `buildWhen` 이 코인과 배지 수만 비교했고, 아래 위젯은 `ValueKey(teamId)` 로 State 를 유지하며 옛 멤버십을 들고 있었어요. 저는 핸들러에서 멤버십을 다시 받아 emit 하게 하고, `buildWhen` 에 `prev.membership != curr.membership` 을 더해 두 게이트를 함께 고쳤어요.
 
 두 게이트가 `presenter` 의 핸들러와 `app` 의 `buildWhen`, 서로 다른 패키지에 있어서 하나만 고치면 "고쳤는데 왜 안 되지"를 한 번 더 겪어요. `props` 에 빠진 필드도 같은 게이트예요. 저희 BLoC 가이드는 "항상 `buildWhen` 사용"을 권하고 지금 `app` 에 73곳이 있지만, `buildWhen` 은 비교하지 않은 필드의 변화를 버리겠다는 선언이기도 해요. 열흘 뒤 `presenter` 규칙 파일에는 이 한 줄이 들어갔어요.
 
