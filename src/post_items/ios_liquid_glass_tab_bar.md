@@ -11,7 +11,7 @@ category: ios-native
 tags: [Flutter, iOS]
 summary:
   problem: 'Flutter 로 흉내 낸 유리 탭바가 iOS 26 시스템 앱의 Liquid Glass 와 달라 보였어요.'
-  role: 'UITabBar PlatformView 설계·구현부터 성능 측정·출시 뒤 수정까지 혼자 맡았어요.'
+  role: '앱 재작성 대신 탭바 하나로 범위를 좁혀, PlatformView 설계·구현·성능 측정·출시 뒤 수정까지 혼자 맡았어요.'
   result: 'iOS 26 이상 기본 ON 으로 출시했고, 네이티브 합성 비용은 p99 1ms 남짓, hitch 0건이었어요.'
   stack: 'Flutter, UIKit UITabBar, PlatformView, MethodChannel, Xcode Instruments'
 ---
@@ -237,11 +237,9 @@ tabBar.items?[index].badgeValue = badgeCount > 0 ? "\(min(badgeCount, 99))" : (h
 	<figcaption>시스템 배지는 숫자 배지 크기로 아이콘을 덮어서, 6pt 점을 직접 그리기로 했어요.</figcaption>
 </figure>
 
-### 어디에 얹나: 아이콘 뷰 안이 아니라 그 위
+### 점을 어디에, 어떻게 얹나
 
 점 뷰를 아이콘 이미지 뷰의 자식으로 넣었더니, 시스템 틴트가 점까지 아이콘 색(라임·흰색)으로 칠했어요. 그래서 점은 탭바 계층 밖, 탭바를 담은 컨테이너 뷰에 얹고 위치만 아이콘에 맞춰요.
-
-### 아이콘 위치는 어떻게 아나: 에셋 이름으로 찾는다
 
 `UITabBarItem` 은 뷰가 아니라 아이콘의 화면 위치를 알려 주지 않아요. 단서는 `UIImage(named:)` 로 만든 이미지가 그 이름을 `accessibilityIdentifier` 로 갖는다는 점이라, 채널로 받은 아이콘 이름으로 탭바의 하위 뷰를 뒤져 찾아요. 함정이 하나 더 있었어요. iOS 26 탭바는 평소 아이콘과 선택 렌즈 안의 아이콘, 두 벌을 같은 이름으로 그려요. 그래서 같은 가로 중심에는 한 번만 달아요.
 
@@ -270,18 +268,7 @@ private func layoutRedDots() {
 
 다만 **탭바의 하위 뷰 계층은 Apple 의 공개 계약이 아니에요.** iOS 업데이트로 아이콘을 못 찾게 되면 큰 배지로 되돌리지도, 엉뚱한 자리에 그리지도 않고 점 없이 지나가기로 정했어요. 있으면 좋은 안내라, 사라지는 쪽이 아이콘을 덮는 쪽보다 나아요.
 
-### 언제 위치를 맞추나: 배치가 끝난 뒤, 두 번
-
-아이콘 위치는 탭바가 배치를 마쳐야 정해지고, 탭을 바꾸면 선택 렌즈가 미끄러지는 동안 아이콘이 흔들려요. 그래서 이번 런루프 끝과 애니메이션 끝 즈음, 두 번 맞춰요.
-
-```swift
-private func scheduleRedDotLayout() {
-    DispatchQueue.main.async { [weak self] in self?.layoutRedDots() }                     // 이번 런루프 끝
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in self?.layoutRedDots() } // 애니메이션 끝 즈음
-}
-```
-
-`update`·탭 선택 때와 컨테이너의 `layoutSubviews` 에서도 불러요. 그런데 점 뷰를 더하거나 빼면 `layoutSubviews` 가 또 불리는 무한 반복이 생길 수 있어요. 그래서 점 개수가 바뀔 때만 뷰를 더하고 빼고, 나머지는 `frame` 만 옮겨요.
+아이콘 위치는 탭바가 배치를 마쳐야 정해지고 탭을 바꾸면 선택 렌즈가 미끄러지는 동안 흔들려서, 이번 런루프 끝과 애니메이션이 끝날 즈음(0.4초 뒤) 두 번 맞춰요. 점 개수가 바뀔 때만 뷰를 더하고 빼고 나머지는 `frame` 만 옮겨서, `layoutSubviews` 가 다시 불리는 무한 반복도 막았어요.
 
 바꾼 뒤 실기기에서는 6pt 점이 챌린지 아이콘 오른쪽 위에 찍혔고, 그 탭을 선택해 아이콘이 라임 렌즈 안에 들어가도 점은 빨간색 그대로 같은 자리에 있었어요.
 
