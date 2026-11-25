@@ -20,9 +20,9 @@ tags: [Web, Git]
 npm create svelte@latest app
 ```
 
-## Change _adapter_[^1] to adapter-static[^2].
+## Change adapter to adapter-static.
 
-To use SveltKit as a _static site generator_(SSG)[^3], use _adapter-static_.
+To use SveltKit as a _static site generator_(SSG)[^3], change the _adapter_[^1] to _adapter-static_[^2].
 
 Install with
 
