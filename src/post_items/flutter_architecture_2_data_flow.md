@@ -206,25 +206,7 @@ switch (result) {
 
 서버가 400 과 함께 `{"error_code": "(접두어):EMAIL_PREFERENCE_NOT_CHANGEABLE"}` 을 돌려줬다고 해 볼게요. dio 는 이걸 `DioException` 으로 던져요. 문서는 변환을 `dio_exception_mapper.dart` 가 맡는다고 적었지만, 실제로 매퍼를 부르는 건 인터셉터예요.
 
-```dart
-// network/lib/dio_network/interceptor/network_interceptor.dart
-@override
-Future<void> onError(DioException err, ErrorInterceptorHandler handler) async {
-  if (await _handleUnauthorized(err, handler)) return;   // 401 → 토큰 갱신 후 재요청
-  if (await _handleRetryableError(err, handler)) return; // 연결 오류 → 재시도
-
-  final responseError = err.toResponseError();
-  handler.reject(
-    DioException(
-      requestOptions: err.requestOptions,
-      error: responseError, // 바꾼 결과를 DioException 안에 다시 넣는다
-      // ... response, type, stackTrace 는 그대로
-    ),
-  );
-}
-```
-
-인터셉터는 에러를 `DioException` 으로만 넘길 수 있어서, 껍데기 안 `error` 필드에 `ResponseError` 를 넣어요. 그 껍데기를 벗겨 `Failure(ResponseError)` 로 만드는 건 앞의 `BaseNetwork._request` 고요. 변환이 매퍼, 인터셉터, `BaseNetwork` 세 곳에 나뉘어 있는 셈이에요. 매퍼는 `error_code` 를 `:` 로 잘라 `ResponseErrorType.fromCode()` 로 찾는데, 정의된 73종에 `EMAIL_PREFERENCE_NOT_CHANGEABLE` 은 없어서 `unknown` 이 돼요. 그래서 원문 코드를 다시 꺼내는 `hasErrorCode()` 가 따로 있어요. `ResponseError` 와 `Result` 는 `entity` 가 아니라 `usecase/lib/core/` 에 있는데, `network` 와 `presenter` 가 둘 다 `usecase` 를 의존하니 맞는 위치예요.
+인터셉터는 401 이면 토큰을 갱신해 다시 보내고, 연결 오류면 재시도하고, 나머지는 매퍼로 `ResponseError` 를 만들어요. 그런데 인터셉터는 에러를 `DioException` 으로만 넘길 수 있어서, 새 `DioException` 껍데기 안 `error` 필드에 `ResponseError` 를 넣어요. 그 껍데기를 벗겨 `Failure(ResponseError)` 로 만드는 건 앞의 `BaseNetwork._request` 고요. 변환이 매퍼, 인터셉터, `BaseNetwork` 세 곳에 나뉘어 있는 셈이에요. 매퍼는 `error_code` 를 `:` 로 잘라 `ResponseErrorType.fromCode()` 로 찾는데, 정의된 73종에 `EMAIL_PREFERENCE_NOT_CHANGEABLE` 은 없어서 `unknown` 이 돼요. 그래서 원문 코드를 다시 꺼내는 `hasErrorCode()` 가 따로 있어요. `ResponseError` 와 `Result` 는 `entity` 가 아니라 `usecase/lib/core/` 에 있는데, `network` 와 `presenter` 가 둘 다 `usecase` 를 의존하니 맞는 위치예요.
 
 문서의 3번 줄대로 도메인 예외로 바꾸는 기능도 있어요. 팀 기능의 BLoC 은 `error is ResponseError ? error.toTeamException() : error` 로 한 번 바꿔서, `usecase` 의 `TeamErrorMapper` 가 정한 `TeamFullException` 같은 예외 22종 중 하나를 사이드 이펙트에 담아요. 그러면 화면은 서버 코드 문자열 대신 `is TeamFullException` 으로 분기해요. 덧붙이면 이 매퍼의 doc 주석은 "data source 구현체에서 호출한다"고 적었지만, 실제 호출 14곳은 전부 BLoC 3개 파일에 있어요.
 
@@ -235,7 +217,7 @@ Future<void> onError(DioException err, ErrorInterceptorHandler handler) async {
 바꿀 수 없는 계정:      ResponseError(type: UNKNOWN_ERROR, statusCode: 400) code: (접두어):EMAIL_PREFERENCE_NOT_CHANGEABLE
 ```
 
-코드를 읽어 얻은 결과이고 실기기에서 띄워 보지는 않았지만, 사용자에게 보이는 문구가 디버그 문자열이에요. 같은 폴더의 알림 설정 화면 두 개도 같은 방식이고, 이 화면은 그 패턴을 따랐어요.
+사용자에게 보이는 문구가 디버그 문자열이에요. 같은 폴더의 알림 설정 화면 두 개도 같은 방식이고, 이 화면은 그 패턴을 따랐어요. 세 화면 모두 에러를 번역 문구로 바꾸는 게 다음 수정 대상이에요.
 
 <figure>
 	<img src="/posts/flutter_architecture_2_data_flow/fig-3-error-journey.webp" alt="서버 에러는 DioException, DioException 안의 ResponseError, Failure(ResponseError), 도메인 예외, 번역된 사용자 문구의 5단계를 거치는데, 팀 기능은 다섯 단계를 모두 지나고 이메일 설정은 3단계 뒤 4·5단계를 건너뛰어 toString() 이 스낵바에 그대로 뜬다" width="1600" height="900" loading="lazy" />
@@ -248,7 +230,7 @@ Future<void> onError(DioException err, ErrorInterceptorHandler handler) async {
 
 저장소 전체로 넓히면 "이 계층은 이걸 모른다"가 지켜지지 않는 곳이 두 종류 있어요.
 
-첫째, 화면이 BLoC 을 건너뛰고 UseCase 를 불러요. `app` 은 DI 조립 때문에 모든 패키지를 의존해서 화면에서 `getIt<XUseCase>().method()` 를 불러도 막히지 않고, 라우트 빌더와 개발자 페이지를 뺀 `app/lib/feat` 파일 78개가 실제로 그렇게 해요. 동기 getter 나 스트림 구독은 괜찮지만, `Future` 를 돌려주는 네트워크 호출을 화면이 직접 부르면 로딩·에러 상태가 state 밖에 흩어지고 위젯 없이는 테스트할 수 없어요. 그래서 소스를 읽는 아키텍처 테스트를 뒀어요.
+첫째, 화면이 BLoC 을 건너뛰고 UseCase 를 불러요. `app` 은 DI 조립 때문에 모든 패키지를 의존해서 화면에서 `getIt<XUseCase>().method()` 를 불러도 막히지 않고, 라우트 빌더와 개발자 페이지를 뺀 `app/lib/feat` 파일 78개가 실제로 그렇게 해요. 동기 getter 나 스트림 구독은 괜찮지만, `Future` 를 돌려주는 네트워크 호출을 화면이 직접 부르면 로딩·에러 상태가 state 밖에 흩어지고 위젯 없이는 테스트할 수 없어요. 그래서 제가 소스를 읽는 아키텍처 테스트를 만들었어요.
 
 ```dart
 // app/test/architecture/bloc_bypass_guard_test.dart
