@@ -38,7 +38,7 @@ summary:
 	<figcaption>문서와 의존 목록이 injectable 을 말하는 동안, 코드는 처음부터 손으로 등록했어요.</figcaption>
 </figure>
 
-코드는 첫날부터 손으로 썼고, 문서 한 줄은 제가 DI 코드를 건드리지 않은 QA 수정 커밋에서 적었어요(어떻게 쓰게 됐는지는 기억에 없어요). 그 줄은 나중에 "(코드 생성)"까지 붙어 옮겨졌고, 쓰지 않는 패키지를 업그레이드까지 했어요. `entity` 문서의 "모델은 json_serializable"도 같은 경우예요. **의존 목록을 보고 쓴 문서는 의존 목록만큼만 정확했어요.**
+코드는 첫날부터 손으로 썼고, 문서 한 줄은 제가 DI 코드를 건드리지 않은 QA 수정 커밋에서 적었어요. 그 줄은 나중에 "(코드 생성)"까지 붙어 옮겨졌고, 쓰지 않는 패키지를 업그레이드까지 했어요. `entity` 문서의 "모델은 json_serializable"도 같은 경우예요. **의존 목록을 보고 쓴 문서는 의존 목록만큼만 정확했어요.**
 
 ## 손으로 등록해서 얻은 것과 잃은 것
 
@@ -55,7 +55,7 @@ getIt.registerLazySingleton<EmailPreferenceUseCase>(
 );
 ```
 
-얻은 건 DI 컨테이너를 아는 패키지가 `app` 하나뿐이라는 점이에요. 나머지 패키지의 `lib/` 에는 `get_it` import 가 0줄이고, BLoC 과 UseCase 는 생성자로 받기만 하니 `presenter/test`·`usecase/test` 에서 `getIt` 에 등록하는 파일도 0개예요. injectable 을 썼다면 어노테이션 때문에 이 패키지들도 injectable 을 알아야 했을 거예요(이걸 노리고 손으로 썼다는 기록은 없어요).
+얻은 건 DI 컨테이너를 아는 패키지가 `app` 하나뿐이라는 점이에요. 나머지 패키지의 `lib/` 에는 `get_it` import 가 0줄이고, BLoC 과 UseCase 는 생성자로 받기만 하니 `presenter/test`·`usecase/test` 에서 `getIt` 에 등록하는 파일도 0개예요. injectable 을 썼다면 어노테이션 때문에 이 패키지들도 injectable 을 알아야 했을 거예요.
 
 잃은 것도 있어요. 등록을 빠뜨려도 컴파일은 되고, 그 타입을 처음 꺼내는 화면에서야 에러가 나요. 부팅 중이면 더 아파요. get_it 8.3.0 에서는 비동기 싱글턴이 준비되지 않았어도 `isRegistered<T>()` 가 true 인데 `getIt<T>()` 는 `StateError` 를 던지고, `Error` 라서 `on Exception catch` 로는 안 잡혀요. 동료가 첫 화면이 영영 안 뜨는 문제를 고치며 싱글턴마다 8초 상한을 두고, 부팅 경로의 접근을 던지지 않는 함수로 감쌌어요.
 
@@ -76,7 +76,7 @@ T? safeGet<T extends Object>() {
 
 두 번째 비용은 파일 크기예요. `configurations.dart` 는 2026년 3월 1일 240줄·40곳에서 지금 1,656줄·227곳이 됐고(두 번째 파일 275줄·38곳 별도), 6월 1일 71곳에서만 세 배 넘게 늘었어요. 이 파일을 고친 커밋도 227개예요. 모든 기능이 지나가는 길목이 된 거고, 이게 진짜 문제가 된 건 AI 에이전트 여럿이 동시에 일할 때였어요.
 
-그럼 injectable 로 바꿔야 할까요? 저희는 누락 사고가 드물었고 사고 대부분은 코드 생성이 못 푸는 부팅 순서 문제였어요. 토큰 갱신용 네트워크 → 데이터 소스 → 일반 API 네트워크 같은 등록 순서가 코드에 그대로 보이는 것도 장점이고요. 그래서 바꾸지 않고, 문서에서 "injectable"을 지우고 쓰지 않는 의존을 빼기로 했어요. 순서와 무관한 단순 바인딩에 누락이 잦은 저장소라면 답이 반대일 거예요.
+그럼 injectable 로 바꿔야 할까요? 저희는 누락 사고가 드물었고 사고 대부분은 코드 생성이 못 푸는 부팅 순서 문제였어요. 토큰 갱신용 네트워크 → 데이터 소스 → 일반 API 네트워크 같은 등록 순서가 코드에 그대로 보이는 것도 장점이고요. 그래서 손으로 쓰는 등록은 그대로 두는 게 맞다고 봐요. 다음 할 일은 문서에서 "injectable"을 지우고 쓰지 않는 의존을 빼는 거예요. 순서와 무관한 단순 바인딩에 누락이 잦은 저장소라면 답이 반대일 거예요.
 
 ## BLoC 은 화면이 아니라 라우트 빌더가 만든다
 
@@ -110,9 +110,16 @@ static Future<void> push(BuildContext context) {
 	<figcaption>navigator 가 세 겹이라, 함정마다 원인은 이 코드가 어느 navigator 를 보고 있느냐였어요. 그냥 <code>context.pop()</code> 하면 가장 가까운 탭 navigator 에서 멈춰요.</figcaption>
 </figure>
 
-그래서 "navigator 는 하나"라고 가정한 곳마다 함정이 있었어요. 루트에 띄운 바텀시트는 `context.pop()` 으로 닫으면 깊은 탭에서만 안 닫혀 `rootNavigator: true` 로 닫아야 하고, 셸 `pageBuilder` 페이지는 `key: state.pageKey` 가 없으면 리다이렉트 순간 GlobalKey 충돌로 셸 전체가 깨져요. 살아 있는 탭에 `extra` 로 넘긴 값은 두 번째 진입부터 무시되고, 탭 화면이 구독한 루트의 `RouteObserver` 는 위에 화면이 덮여도 콜백을 주지 않아요. 함정 여섯 개 중 다섯 개가 에러 없이 조용히 실패했고, 원인은 매번 "이 코드는 어느 navigator 를 보고 있나"였어요.
+그래서 "navigator 는 하나"라고 가정한 곳마다 함정이 있었어요. 넷은 에러 없이 조용히 실패했어요.
 
-나머지 둘 중 하나는 백키를 눌렀더니 앱이 꺼진 일이에요. Android 의 predictive back(뒤로 가기 미리 보기)은 지금 누가 백을 처리하는지 미리 알아야 하는데, 셸 안쪽 라우트의 신호가 루트까지 모이지 않아 Android 가 액티비티를 내렸어요. 셸의 손자 라우트는 `parentNavigatorKey: rootNavigatorKey` 로 올리고 직속 자식은 루트 라우트 목록으로 옮겨 고쳤어요(§17).
+- **바텀시트가 안 닫힘**: 루트에 띄운 시트를 `context.pop()` 으로 닫으면 깊은 탭에서는 가장 가까운 탭 navigator 에서 멈춰요. `rootNavigator: true` 로 닫아야 해요.
+- **리다이렉트 순간 셸이 깨짐**: 셸 `pageBuilder` 페이지에 `key: state.pageKey` 가 없으면 GlobalKey 가 충돌해요.
+- **넘긴 값이 무시됨**: 살아 있는 탭에 `extra` 로 넘긴 값은 두 번째 진입부터 반영되지 않아요.
+- **화면이 가려져도 모름**: 탭 화면이 구독한 루트의 `RouteObserver` 는 위에 다른 화면이 덮여도 콜백을 주지 않아요.
+
+원인은 매번 "이 코드는 어느 navigator 를 보고 있나"였어요.
+
+나머지 둘은 더 아팠어요. 하나는 백키를 눌렀더니 앱이 꺼진 일이에요. Android 의 predictive back(뒤로 가기 미리 보기)은 지금 누가 백을 처리하는지 미리 알아야 하는데, 셸 안쪽 라우트의 신호가 루트까지 모이지 않아 Android 가 액티비티를 내렸어요. 셸의 손자 라우트는 `parentNavigatorKey: rootNavigatorKey` 로 올리고 직속 자식은 루트 라우트 목록으로 옮겨 고쳤어요(§17).
 
 다른 하나는 `await` 가 영영 끝나지 않은 일이에요. `await context.pushNamed(CreatePage.routeName);` 다음 줄에서 재조회하는데, `CreatePage` 가 `pushReplacementNamed` 로 완료 화면으로 바뀌면 go_router 14.8.1 은 마지막 라우트를 지우고 새 completer 로 push 해요. 지워진 라우트의 completer 는 완료되지 않으니 처음 `await` 는 영원히 기다리고, 챌린지 개설 후 목록이 갱신되지 않았어요. 이제 화면 간 갱신은 `await` 대신 UseCase 가 발행한 이벤트를 BLoC 이 구독해 재조회해요.
 
