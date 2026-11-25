@@ -11,7 +11,7 @@
 		'ios_crashlytics_zero_crashes',
 		'bloc_concurrency_refactor',
 		'live_activity_push_to_start',
-		'ai_agent_harness',
+		'ai_pr_review_skill',
 		'deferred_deeplink_in_house'
 	];
 
