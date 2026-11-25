@@ -114,7 +114,7 @@
       <title>SDK 비용 대신 1픽셀과 싸웠다 — 초대 코드를 서버에서 직접 이어 붙인 디퍼드 딥링크</title>
       <link>https://yesj1234.github.io/posts/deferred_deeplink_in_house</link>
       <guid isPermaLink="true">https://yesj1234.github.io/posts/deferred_deeplink_in_house</guid>
-      <description>친구 초대 링크로 앱을 설치한 사람을 첫 실행 때 초대자와 연결하려고, Android 는 Play Install Referrer 로, iOS 는 기기 신호 매칭으로 디퍼드 딥링크를 직접 만든 판단 과정과 그 대가를 정리했어요.</description>
+      <description>친구 초대 링크로 앱을 설치한 사람을 첫 실행 때 초대자와 연결하려고, Android 는 Play Install Referrer 로, iOS 는 서버 매칭으로 디퍼드 딥링크를 직접 만든 판단 과정과 그 대가를 정리했어요.</description>
       <pubDate>Mon, 05 Oct 2026 15:00:00 GMT</pubDate>
       <category>Django</category><category>iOS</category><category>Android</category>
     </item>
