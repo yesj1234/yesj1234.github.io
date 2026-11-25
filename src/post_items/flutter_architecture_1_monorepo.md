@@ -150,6 +150,8 @@ $ dart analyze   # depend_on_referenced_packages 를 켠 뒤
 	<figcaption>경계를 어긴 import 를 실제로 멈추는 건 컴파일러가 아니라 린트 경고와 리뷰였어요.</figcaption>
 </figure>
 
+이 글을 쓰는 지금도 세 패키지에서는 이 린트가 info 이고, CI 에도 분석 단계가 없어요. 다음 할 일은 두 린트(`depend_on_referenced_packages`, `implementation_imports`)를 모든 패키지에서 error 로 올리고, CI 가 `dart analyze` 를 돌리게 하는 거예요. 그래야 경계가 사람의 주의가 아니라 빌드로 지켜져요.
+
 ### barrel 은 `src/` 에 둔 패키지만 지켜진다
 
 "각 패키지는 barrel 로만 노출한다"는 규칙도 같은 식으로 확인했어요. 다른 패키지에서 오는 `import` 를 barrel 로 들어온 것과 내부 파일로 바로 들어온 것으로 나눠 셌어요.
@@ -165,7 +167,7 @@ $ dart analyze   # depend_on_referenced_packages 를 켠 뒤
 
 ### 선언은 했지만 새는 곳
 
-`pubspec.yaml` 에 적힌 의존은 린트도 막지 않아요. `usecase` 의 파일 10개가 건강 데이터 플러그인 `health` 를 직접 `import` 해서 Flutter 에 전혀 의존하지 않는 패키지는 `entity` 하나뿐이고, `presenter` 도 `in_app_purchase`·`video_player` 를 의존해요. 또 DI 조립 때문에 모든 패키지를 의존하는 `app` 에서는 화면·위젯 파일 78개가 `UseCase` 를 직접 꺼내요. 대부분은 BLoC 에 넘겨 주려는 것이지만, 위젯이 네트워크 메서드를 바로 부르는 곳도 섞여 있어요. 이건 위젯이 `UseCase` 의 `Future` 반환 메서드를 부르면 실패하는 아키텍처 테스트로 막고, 기존 위반 26곳은 허용 목록에 뒀어요. 이 이야기는 2편에서 이어 갈게요.
+`pubspec.yaml` 에 적힌 의존은 린트도 막지 않아요. `usecase` 의 파일 10개가 건강 데이터 플러그인 `health` 를 직접 `import` 해서 Flutter 에 전혀 의존하지 않는 패키지는 `entity` 하나뿐이고, `presenter` 도 `in_app_purchase`·`video_player` 를 의존해요. 또 DI 조립 때문에 모든 패키지를 의존하는 `app` 에서는 화면·위젯 파일 78개가 `UseCase` 를 직접 꺼내요. 대부분은 BLoC 에 넘겨 주려는 것이지만, 위젯이 네트워크 메서드를 바로 부르는 곳도 섞여 있어요. 이건 제가 위젯이 `UseCase` 의 `Future` 반환 메서드를 부르면 실패하는 아키텍처 테스트를 만들어 막고, 기존 위반 26곳은 허용 목록에 뒀어요. 이 이야기는 2편에서 이어 갈게요.
 
 ## 치른 비용
 
@@ -195,15 +197,7 @@ setpj:
 
 이걸 잊고 `.dart_tool/package_config.json` 없이 분석을 돌리면 멀쩡한 기존 심볼까지 "isn't defined" 로 무더기로 나와요. 코드가 맞는데 에러가 쏟아지면 먼저 의존성 해석을 의심하세요.
 
-툴체인도 여러 곳에서 맞아야 해요. Flutter 는 `.fvmrc`(지금 3.47.4)로 고정하지만, 전역 설치한 Melos 는 컴파일한 Dart 와 실행하는 Dart 의 버전이 다르면 죽어요.
-
-```yaml
-# `fvm exec` 로 실행해야 한다 — bare `melos` 는 runner PATH 의 전역 dart(옛 stable 3.9.2)로 돌아
-# fvm(.fvmrc 3.47.4/Dart 3.13) 로 컴파일된 melos kernel 을 못 읽고 "Invalid kernel binary format version" 으로 실패한다.
-fvm exec melos bootstrap
-```
-
-Flutter 를 올리면 `.fvmrc`, fvm 기본 버전, 전역 Melos 를 함께 올려야 하고, 하나만 올리면 로컬이나 CI 중 한쪽이 깨져요. 외부 패키지도 6개 `pubspec.yaml` 에 96종이 흩어져 있고, 15종은 중복이며 `equatable` 처럼 `^2.0.5`(3곳)와 `^2.0.7`(2곳)로 제약이 다른 것도 있어요. 잠금 파일 하나(`pubspec.lock`, 366개 패키지)로 해석해서 실제로는 한 버전만 쓰이지만, 제약을 올릴 때 하나를 빠뜨려도 아무 신호가 없어요.
+툴체인도 여러 곳에서 맞아야 해요. Flutter 를 올리면 `.fvmrc`, fvm 기본 버전, 전역으로 설치한 Melos 를 함께 올려야 하고, 하나만 올리면 로컬이나 CI 중 한쪽이 깨져요. 외부 패키지도 6개 `pubspec.yaml` 에 96종이 흩어져 있고, 15종은 중복이며 `equatable` 처럼 `^2.0.5`(3곳)와 `^2.0.7`(2곳)로 제약이 다른 것도 있어요. 잠금 파일 하나(`pubspec.lock`, 366개 패키지)로 해석해서 실제로는 한 버전만 쓰이지만, 제약을 올릴 때 하나를 빠뜨려도 아무 신호가 없어요.
 
 ### 코드 생성은 생각보다 적었고, 문서가 먼저 낡았다
 
