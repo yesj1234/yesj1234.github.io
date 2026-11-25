@@ -55,18 +55,18 @@
       <category>Flutter</category><category>Django</category><category>AI</category>
     </item>
     <item>
-      <title>AI 에게 규칙은 쓰는 것보다 읽히는 게 어렵다 — 12KB 규칙 예산과 리뷰 스킬</title>
+      <title>AI 에게 규칙은 쓰는 것보다 읽히는 게 어렵다 — 12KB 규칙 예산</title>
       <link>https://yesj1234.github.io/posts/ai_agent_harness</link>
       <guid isPermaLink="true">https://yesj1234.github.io/posts/ai_agent_harness</guid>
-      <description>리뷰 봇이 막힌 PR 을 대신 리뷰하는 스킬과, AI 코딩 에이전트가 매 세션 읽는 규칙 문서를 예산 안에 두는 구조를 만들어 온 기록이에요.</description>
+      <description>AI 코딩 에이전트가 매 세션 읽는 규칙 문서가 16바이트를 남기고 꽉 찬 뒤, 규칙을 한 곳에만 두고 층을 나누고 예산과 감사로 지켜 온 기록이에요.</description>
       <pubDate>Mon, 16 Nov 2026 15:00:00 GMT</pubDate>
-      <category>AI</category>
+      <category>AI</category><category>Architecture</category>
     </item>
     <item>
       <title>기준 없이 AI 와 1년, 연타 방지 코드가 270가지가 됐다</title>
       <link>https://yesj1234.github.io/posts/bloc_concurrency_refactor</link>
       <guid isPermaLink="true">https://yesj1234.github.io/posts/bloc_concurrency_refactor</guid>
-      <description>AI 와 함께 리뷰 없이 빠르게 쌓은 Flutter 코드를 처음으로 직접 읽고, 다시 AI 와 함께 BLoC 이벤트 겹침 처리를 정리한 기록이에요.</description>
+      <description>AI 와 함께 빠르게 쌓은 Flutter 코드를 처음으로 직접 읽고, 다시 AI 와 함께 BLoC 이벤트 겹침 처리를 정리한 기록이에요.</description>
       <pubDate>Mon, 16 Nov 2026 15:00:00 GMT</pubDate>
       <category>Flutter</category><category>BLoC</category><category>AI</category>
     </item>
@@ -101,6 +101,14 @@
       <description>Flutter 로 흉내 내던 유리 탭바를 iOS 26 시스템 UITabBar 로 바꿨어요. 화면은 Flutter 에 두고 탭바 한 장만 PlatformView 로 띄우면서 겪은 제스처 경쟁, 선택 어긋남, 시스템 배지를 버린 이유를 정리했어요.</description>
       <pubDate>Mon, 09 Nov 2026 15:00:00 GMT</pubDate>
       <category>Flutter</category><category>iOS</category>
+    </item>
+    <item>
+      <title>AI 리뷰어를 만들고 블라인드 시험을 봤다 — 리뷰 봇이 막힌 PR 을 대신 보는 스킬</title>
+      <link>https://yesj1234.github.io/posts/ai_pr_review_skill</link>
+      <guid isPermaLink="true">https://yesj1234.github.io/posts/ai_pr_review_skill</guid>
+      <description>리뷰 봇의 시간당 한도에 막힌 PR 이 리뷰 없이 머지되던 문제를, 코드를 쓰는 에이전트와 같은 규칙을 읽는 리뷰 스킬로 메운 기록이에요. 시험 설계, 심각도 기준, 보안 가드, 비용 절감까지 다뤄요.</description>
+      <pubDate>Tue, 13 Oct 2026 15:00:00 GMT</pubDate>
+      <category>AI</category><category>Git</category>
     </item>
     <item>
       <title>SDK 비용 대신 1픽셀과 싸웠다 — 초대 코드를 서버에서 직접 이어 붙인 디퍼드 딥링크</title>
@@ -236,14 +244,6 @@
       <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_ui_challenge3</guid>
       <description>Learn some advanced usage of StatefulWidget, Widget builder, AnimatedWidget, and Transform.</description>
       <pubDate>Tue, 15 Oct 2024 15:00:00 GMT</pubDate>
-      <category>Flutter</category>
-    </item>
-    <item>
-      <title>Flutter UI Challenge(2)</title>
-      <link>https://yesj1234.github.io/posts/flutter_ui_challenge2</link>
-      <guid isPermaLink="true">https://yesj1234.github.io/posts/flutter_ui_challenge2</guid>
-      <description>Learn how to use StatefulWidgets and animate the changes of Widget. Widgets related to animations are Animation, AnimationController, Tween, AnimatedWidget and etc..</description>
-      <pubDate>Sun, 06 Oct 2024 15:00:00 GMT</pubDate>
       <category>Flutter</category>
     </item>
   </channel>
