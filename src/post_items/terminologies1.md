@@ -141,4 +141,4 @@ token = switch (charCode) {
 };
 ```
 
-[1]: An expression statement is an expression used in a place where a statement is expected. The expression is evaluated and its result is discarded. Therefore it only makes sense only for expressions that make side effects, such as executing a function or updating a variable.[: information_source:](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/Expression_statement)
+[^1]: An expression statement is an expression used in a place where a statement is expected. The expression is evaluated and its result is discarded. Therefore it only makes sense only for expressions that make side effects, such as executing a function or updating a variable. ([MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/Expression_statement))

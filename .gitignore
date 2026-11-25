@@ -9,3 +9,6 @@ node_modules
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .github
+
+# graft 코드 색인 (도구가 생성)
+graft/

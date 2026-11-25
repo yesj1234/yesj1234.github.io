@@ -12,7 +12,7 @@ tags: [Flutter, iOS]
 summary:
   problem: 'CocoaPods trunk 가 읽기 전용이 되면 네이티브 SDK 36개를 새로 받을 수 없게 됐어요.'
   role: '플러그인 51개 조사부터 버전 고정·빌드 설정 대체·실기기 확인까지 전환 전체를 혼자 맡았어요.'
-  result: 'trunk 의존을 36개에서 0개로 줄였고, CocoaPods 에는 미지원 플러그인 5개만 남겼어요.'
+  result: 'trunk 의존을 36개에서 0개로 줄이고, 로그인·지도·권한 동작을 실기기와 빌드 산출물로 확인했어요.'
   stack: 'Flutter, Swift Package Manager, CocoaPods, Xcode, fastlane'
 ---
 
@@ -140,7 +140,7 @@ pod 'FBSDKLoginKit', :podspec => fbsdk_spec.call('FBSDKLoginKit', 'b/3/c')
 //              (PERMISSION_NOTIFICATIONS, PERMISSION_CRITICAL_ALERTS),
 ```
 
-SPM 판은 Podfile 대신 앱 `Info.plist` 에 사용 목적 키(`NSCameraUsageDescription` 등)가 있는지로 판정해서, 카메라·사진·ATT 는 그대로 켜지고 쓰지 않는 `PERMISSION_CRITICAL_ALERTS` 는 꺼져요. 실기기용 산출물을 `nm -u` 로 열어 `PHPhotoLibrary`·`AVCaptureDevice`·`ATTrackingManager` 참조도 확인했어요. `Info.plist` 를 바꾼 뒤에는 DerivedData 를 지워야 이 판정이 다시 돈다는 점도 기억해 두세요. 새 설치 상태의 권한 팝업은 아직 확인하지 못했어요.
+SPM 판은 Podfile 대신 앱 `Info.plist` 에 사용 목적 키(`NSCameraUsageDescription` 등)가 있는지로 판정해서, 카메라·사진·ATT 는 그대로 켜지고 쓰지 않는 `PERMISSION_CRITICAL_ALERTS` 는 꺼져요. 실기기용 산출물을 `nm -u` 로 열어 `PHPhotoLibrary`·`AVCaptureDevice`·`ATTrackingManager` 참조도 확인했어요. `Info.plist` 를 바꾼 뒤에는 DerivedData 를 지워야 이 판정이 다시 돈다는 점도 기억해 두세요.
 
 ## 머지 직후: 같은 모양의 사고 두 개
 
@@ -167,7 +167,7 @@ SPM 판은 Podfile 대신 앱 `Info.plist` 에 사용 목적 키(`NSCameraUsageD
 
 셋째, CI 가 빌드마다 DerivedData 를 지우니 그 아래 `SourcePackages/` 의 패키지 25개를 매번 새로 받아요. main 의 iOS 빌드 job 시간 중앙값은 전환 전 3주(10월 18일~11월 9일) 약 16분에서 전환 후(11월 10일~19일) 약 25분으로 늘었어요. 러너 부하 같은 요인도 섞여 있어 패키지 몫을 따로 떼어 보진 못했고, 필요하면 gym 의 `cloned_source_packages_path` 로 캐시할 계획이에요.
 
-pbxproj diff 가 커 보여도 `PBXFileSystemSynchronized*` 포맷 변경, `[CP] Embed Pods Frameworks` 단계 삭제, 스킴별 "Run Prepare Flutter Framework Script" pre-action 추가는 모두 정상이에요. `Podfile.lock` 은 615줄이 줄었고, 남은 건 SPM 을 지원하지 않는 플러그인 5개예요.
+`Podfile.lock` 은 615줄이 줄었고, 남은 건 SPM 을 지원하지 않는 플러그인 5개예요.
 
 ## SPM 전환 체크리스트
 
