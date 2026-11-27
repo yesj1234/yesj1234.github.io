@@ -6,7 +6,8 @@ export interface HeaderFile {
 	title: string;
 }
 
-const KEY = 'openedHeaderFiles';
+// v2: 이전 버전은 이동 중 다른 탭의 제목으로 덮어쓴 값이 저장돼 있을 수 있어 새 키로 비운다
+const KEY = 'openedHeaderFiles.v2';
 
 function readSaved(): HeaderFile[] {
 	if (!browser) return [];
@@ -42,4 +43,19 @@ export function openTab(file: HeaderFile) {
 		if (existing.title === file.title) return prev;
 		return prev.map((tab) => (tab.href === file.href ? file : tab));
 	});
+}
+
+/** 열린 탭마다 마지막 스크롤 위치. 이미 열린 글로 다시 가면 읽던 자리로 돌려놓는다 */
+const scrollPositions = new Map<string, number>();
+
+export function rememberScroll(href: string, y: number) {
+	scrollPositions.set(href, y);
+}
+
+export function savedScroll(href: string): number | undefined {
+	return scrollPositions.get(href);
+}
+
+export function forgetScroll(href: string) {
+	scrollPositions.delete(href);
 }

@@ -2,7 +2,7 @@
 	import '@fortawesome/fontawesome-free/css/all.min.css';
 	import '../app.pcss';
 	import { page } from '$app/stores';
-	import { afterNavigate } from '$app/navigation';
+	import { afterNavigate, beforeNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { dev } from '$app/environment';
 	import { GOATCOUNTER_CODE } from '$lib/site';
@@ -10,6 +10,7 @@
 	import Header from '$lib/components/header/Header.svelte';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import { activePanel, togglePanel, type SidebarPanel } from '$lib/stores/sidebar';
+	import { openedHeaderFiles, rememberScroll, savedScroll } from '$lib/stores/header';
 	import type { LayoutData } from './$types';
 
 	export let data: LayoutData;
@@ -24,8 +25,22 @@
 		drawerOpen = true;
 	}
 
+	// 글을 떠날 때 읽던 위치를 기억해 둔다
+	beforeNavigate(({ from }) => {
+		if (from?.url.pathname.startsWith('/posts/')) rememberScroll(from.url.pathname, window.scrollY);
+	});
+
 	afterNavigate((navigation) => {
 		drawerOpen = false;
+		// 이미 열려 있던 글로 링크·탭을 눌러 돌아오면 맨 위가 아니라 읽던 자리로 간다.
+		// 뒤로 가기(popstate)는 SvelteKit 이 복원하고, #앵커 링크는 그 앵커를 존중한다
+		const to = navigation.to?.url;
+		if (to && navigation.type !== 'popstate' && navigation.type !== 'enter' && !to.hash) {
+			const isOpenTab = $openedHeaderFiles.some((tab) => tab.href === to.pathname);
+			const y = savedScroll(to.pathname);
+			// 새 글의 본문이 그려진 뒤에 옮겨야 높이가 모자라 맨 위로 잘리지 않는다
+			if (isOpenTab && y !== undefined) requestAnimationFrame(() => window.scrollTo(0, y));
+		}
 		// 첫 진입은 스크립트가 로드되며 직접 센다. 그 뒤 화면 전환만 여기서 센다
 		if (!dev && navigation.type !== 'enter') {
 			window.goatcounter?.count({ path: location.pathname, referrer: '' });

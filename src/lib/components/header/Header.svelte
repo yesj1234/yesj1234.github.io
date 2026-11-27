@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import { openedHeaderFiles } from '$lib/stores/header';
+	import { forgetScroll, openedHeaderFiles } from '$lib/stores/header';
 
 	function closeTab(href: string) {
 		const tabs = $openedHeaderFiles;
 		const index = tabs.findIndex((tab) => tab.href === href);
 		const remaining = tabs.filter((tab) => tab.href !== href);
 		openedHeaderFiles.set(remaining);
+		forgetScroll(href);
 
 		if (href !== $page.url.pathname) return;
 		// 닫은 탭이 지금 화면이면 VS Code 처럼 옆 탭으로 옮겨 간다

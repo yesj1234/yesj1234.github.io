@@ -21,6 +21,7 @@ export const load: PageLoad = async ({ params }) => {
 	}
 
 	return {
+		slug: params.slug,
 		component: post.default,
 		frontmatter: post.metadata,
 		series: await loadSeries(modules, post.metadata.series)

@@ -15,7 +15,8 @@
 	$: component = data.component;
 	$: meta = data.frontmatter as unknown as App.BlogPost;
 	$: tags = (meta.tags ?? []) as unknown as string[];
-	$: if (browser) openTab({ href: $page.url.pathname, title: meta.title });
+	// 주소와 제목을 같은 load 결과에서 읽는다. $page.url 과 data 는 이동 중 한 틱 어긋날 수 있어, 섞으면 다른 탭의 제목을 덮어쓴다
+	$: if (browser) openTab({ href: `/posts/${data.slug}`, title: (data.frontmatter as unknown as App.BlogPost).title });
 
 	$: path = `/posts/${$page.params.slug}`;
 	$: publishedTime = toIsoDateTime(meta.date);
